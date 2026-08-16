@@ -2,6 +2,8 @@
 
 An open, Colab-ready laboratory for learning how transiting planets are found and for carrying out a reproducible first-pass search of public TESS data.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Biswajit1999/open-exoplanet-discovery-lab/blob/main/notebooks/Open_Exoplanet_Discovery_Lab.ipynb)
+
 > A dip in a light curve is **not automatically a planet**. This project finds and ranks signals. A credible planet claim also needs contamination checks, independent vetting, archive cross-matching, and usually follow-up observations.
 
 ## Two ways into the project
