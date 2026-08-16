@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-exoplanet-discovery-lab"
+version = "0.1.0"
+description = "A transparent, Colab-ready TESS transit-search and candidate-vetting laboratory"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Biswajit Jana"}]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "astropy>=5.3",
+  "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+tess = ["lightkurve>=2.4", "astroquery>=0.4.7", "transitleastsquares>=1.0.31"]
+test = ["pytest>=7.4"]
+
+[project.scripts]
+exolab = "exolab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, cite it and the mission/archive products used in your analysis."
+title: "Open Exoplanet Discovery Lab"
+type: software
+authors:
+  - family-names: Jana
+    given-names: Biswajit
+    orcid: "https://orcid.org/0009-0002-2411-1891"
+version: 0.1.0
+date-released: 2026-08-16
+license: MIT
+repository-code: "https://github.com/Biswajit1999/open-exoplanet-discovery-lab"
+url: "https://github.com/Biswajit1999/open-exoplanet-discovery-lab"
+keywords:
+  - exoplanets
+  - TESS
+  - transit photometry
+  - citizen science
+  - injection recovery
+  - reproducible research
