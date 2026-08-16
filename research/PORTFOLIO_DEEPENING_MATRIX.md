@@ -1,5 +1,9 @@
 # Scientific deepening programme for 31 exoplanet reports
 
+Implementation status, merged pull requests, headline measurements, and the
+next-session handoff are maintained in
+[`PORTFOLIO_PROGRESS.md`](PORTFOLIO_PROGRESS.md).
+
 ## Standard of evidence
 
 “No one else has done this” is not a result that can be established from a quick search. Each repository should use the following labels:

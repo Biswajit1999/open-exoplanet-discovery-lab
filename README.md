@@ -96,6 +96,11 @@ As of 16 August 2026, a live TAP census returned 6,336 confirmed planets, 8,113 
 
 [`research/PORTFOLIO_DEEPENING_MATRIX.md`](research/PORTFOLIO_DEEPENING_MATRIX.md) maps each of the existing 31 exoplanet reports to a distinct quantitative extension. The shared comparison layer is intentional, but each target receives a different lead question.
 
+Merged work and the exact cross-session handoff are tracked in
+[`research/PORTFOLIO_PROGRESS.md`](research/PORTFOLIO_PROGRESS.md). Five target
+upgrades are complete; LHS 475 b is the next recommended spectral-robustness
+case.
+
 ## Citation and authorship
 
 Developed by **Biswajit Jana** as an independent open-science project. Cite the archive products and papers associated with every dataset in addition to this software.
