@@ -1,0 +1,34 @@
+{
+  "analysis_date": "2026-09-23",
+  "scope": "Baseline public-data diagnostics; not a discovery analysis",
+  "nets3": {
+    "analysed_targets": 41,
+    "median_observations_per_target": 92.0,
+    "median_baseline_days": 1001.9525500000454,
+    "median_internal_error_mps": 0.34,
+    "median_raw_wrms_mps": 2.062429784885697,
+    "median_era_demeaned_wrms_mps": 1.7935947342021028,
+    "targets_with_shk_regression": 40,
+    "targets_where_linear_shk_regression_reduces_wrms": 40,
+    "caveat": "The in-sample weighted linear regression is diagnostic. A reduction in WRMS is expected from fitting an additional covariate and is not evidence that the correction is astrophysically valid."
+  },
+  "nets4_hd190360": {
+    "n_neid": 93,
+    "baseline_days": 1266.8382999999449,
+    "fixed_period_days": 88.69,
+    "neid_only_circular_k_mps": 0.7019705130812122,
+    "neid_only_circular_k_formal_error_mps": 0.04828143447633221,
+    "trend_mps_per_day": -0.009917434058934305,
+    "residual_wrms_mps": 4.435138406397201,
+    "published_context_k_mps": 1.48,
+    "interpretation": "This intentionally simplified NEID-only circular-plus-linear-trend check is not the published multi-planet/multi-instrument solution. The discrepancy is treated as a model-adequacy warning, not a revised planet amplitude."
+  },
+  "atmospheric_metadata": {
+    "spectrum_rows": 1826,
+    "unique_planets": 289,
+    "planets_with_multiple_spectra": 245,
+    "planets_with_multiple_publications": 149,
+    "planets_with_multiple_instruments": 172,
+    "caveat": "Multiple spectrum records are candidates for reproducibility analysis; some can be alternate reductions of the same photons and are not automatically statistically independent."
+  }
+}
