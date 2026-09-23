@@ -72,7 +72,7 @@ def main() -> int:
         .agg(
             s_ra=("s_ra", "median"),
             s_dec=("s_dec", "median"),
-            n_nirps_products=("dp_id", "nunique"),
+            n_nirps_products=("obs_publisher_did", "nunique"),
             nirps_t_min=("t_min", "min"),
             nirps_t_max=("t_max", "max"),
         )
@@ -117,7 +117,7 @@ def main() -> int:
                 "s_ra": row.s_ra,
                 "s_dec": row.s_dec,
                 "n_nirps_products": int(row.n_nirps_products),
-                "n_harps_products": int(harps["dp_id"].nunique()) if not harps.empty and "dp_id" in harps else 0,
+                "n_harps_products": int(harps["obs_publisher_did"].nunique()) if not harps.empty and "obs_publisher_did" in harps else 0,
                 "n_nirps_epochs": int(tn.size),
                 "n_harps_epochs": int(th.size),
                 "nirps_first_mjd": float(np.min(tn)) if tn.size else np.nan,
