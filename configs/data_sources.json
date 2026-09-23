@@ -1,0 +1,99 @@
+{
+  "schema_version": "0.1.0",
+  "registry_date": "2026-09-23",
+  "author": "Biswajit Jana",
+  "sources": [
+    {
+      "id": "nets3",
+      "work_packages": ["WP0", "WP1"],
+      "name": "NEID Earth Twin Survey III",
+      "status": "ready",
+      "primary_reference": "https://arxiv.org/abs/2506.23704",
+      "archive": "VizieR / NEID archive",
+      "notes": "41-star EPRV survey with RV and activity time series; instrument-era offsets must be modelled."
+    },
+    {
+      "id": "nirps_phase3",
+      "work_packages": ["WP0", "WP2"],
+      "name": "ESO NIRPS Phase-3",
+      "status": "census",
+      "doi": "10.18727/archive/92",
+      "archive": "ESO Science Archive",
+      "release_description": "https://www.eso.org/rm/api/v1/public/releaseDescriptions/233",
+      "quality_notice": "https://archive.eso.org/cms/eso-archive-news/issue-on-reduced-nirps-data.html",
+      "notes": "Dynamic open-stream release. Precision-RV analyses must exclude affected DRS 3.2.6 products from 2025-04-01 12:00 to 2025-07-24 12:00 unless corrected with DRS 3.2.7."
+    },
+    {
+      "id": "harps",
+      "work_packages": ["WP0", "WP2"],
+      "name": "HARPS public archive",
+      "status": "census",
+      "archive": "ESO Science Archive",
+      "url": "https://archive.eso.org/scienceportal/home",
+      "notes": "Crossmatch and exact epoch-overlap census required before sample freeze."
+    },
+    {
+      "id": "spores_hwo_ii",
+      "work_packages": ["WP0", "WP3"],
+      "name": "SPORES-HWO II",
+      "status": "wait",
+      "catalog": "J/AJ/170/343",
+      "url": "https://cdsarc.cds.unistra.fr/viz-bin/w/VizieR-3?-source=J%2FAJ%2F170%2F343",
+      "available_after": "2026-10-04",
+      "notes": "Do not ingest inaccessible VizieR tables. Verify any alternate official deposit before use."
+    },
+    {
+      "id": "tess_sector_106",
+      "work_packages": ["WP0", "WP4"],
+      "name": "TESS Sector 106",
+      "status": "ready",
+      "archive": "MAST",
+      "notes": "Method/control sector for temporal validation."
+    },
+    {
+      "id": "tess_sector_107",
+      "work_packages": ["WP0", "WP4"],
+      "name": "TESS Sector 107",
+      "status": "active",
+      "archive": "MAST",
+      "holdings": "https://outerspace.stsci.edu/spaces/TESS/pages/35094700/TESS%2BHoldings%2BAvailable%2Bby%2BMAST%2BService",
+      "notes": "Weekly FFI ingest is still evolving on registry date; every query must be versioned."
+    },
+    {
+      "id": "rocky_worlds",
+      "work_packages": ["WP0", "WP5"],
+      "name": "Rocky Worlds DDT HLSP",
+      "status": "active",
+      "doi": "10.17909/qsyr-ny68",
+      "archive": "MAST",
+      "url": "https://archive.stsci.edu/hlsp/rocky-worlds",
+      "notes": "Repeated JWST/MIRI eclipse and HST stellar-UV products; active updates require frozen manifests."
+    },
+    {
+      "id": "nasa_atmospheres",
+      "work_packages": ["WP0", "WP5"],
+      "name": "NASA Exoplanet Archive Atmospheric Spectroscopy",
+      "status": "ready",
+      "archive": "NASA Exoplanet Archive",
+      "url": "https://exoplanetarchive.ipac.caltech.edu/",
+      "notes": "Use native published spectra and references; distinguish independent observations from alternate reductions."
+    },
+    {
+      "id": "gaia_dr3",
+      "work_packages": ["WP0", "WP6"],
+      "name": "Gaia DR3",
+      "status": "ready",
+      "archive": "Gaia Archive",
+      "url": "https://gea.esac.esa.int/archive/",
+      "notes": "Current public astrometric context and canonical-source identity."
+    },
+    {
+      "id": "gaia_dr4",
+      "work_packages": ["WP6"],
+      "name": "Gaia DR4",
+      "status": "future",
+      "url": "https://www.cosmos.esa.int/web/gaia/dr4",
+      "notes": "Adapter only. Do not hard-code final schema or use unreleased products."
+    }
+  ]
+}
