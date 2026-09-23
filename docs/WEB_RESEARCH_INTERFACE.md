@@ -1,0 +1,290 @@
+# Web Research Interface
+
+## Purpose
+
+The website is the public research surface for the Open Exoplanet Evidence Lab. It must help an astronomer inspect evidence, provenance, assumptions, and uncertainty without turning the project into a marketing dashboard.
+
+The canonical science remains in the Python package and frozen generated products. The web layer consumes versioned machine-readable outputs; it does not recompute publication-critical results in the browser.
+
+## Design references
+
+Use these as interaction/design references, not templates to copy:
+
+- Motion: https://motion.dev/
+- Framer Motion context: https://www.framer.com/dictionary/framer-motion
+- Framer motion components: https://www.framer.com/marketplace/components/tags/motion/
+- UI/UX Pro Max skill: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+- 21st.dev: https://21st.dev/
+
+Motion is the current name of the library formerly known as Framer Motion. Use the current Motion package/documentation for a custom React implementation.
+
+## Visual direction
+
+Scientific editorial rather than cyberpunk.
+
+Characteristics:
+- dark-neutral and light modes;
+- high information density without clutter;
+- restrained spectral accents;
+- typography optimised for figures, tables, and long-form methods;
+- uncertainty visible by default;
+- units always visible;
+- motion used to preserve context rather than decorate;
+- no excessive glow, particle effects, fake telemetry, or meaningless animated backgrounds.
+
+The interface should feel closer to a modern observatory analysis console plus journal supplement than a startup landing page.
+
+## Information architecture
+
+### 1. Research overview
+Shows:
+- central scientific question;
+- active work packages;
+- current data-release status;
+- frozen manifest version;
+- most recent reproducible release;
+- explicit provisional/final status.
+
+### 2. Target atlas
+Every target receives a stable route with:
+- identifiers;
+- stellar/planet context;
+- instruments;
+- epoch counts and baselines;
+- public-source links;
+- quality summary;
+- known literature;
+- work-package membership.
+
+### 3. RV laboratory
+Views:
+- RV versus time;
+- uncertainty;
+- instrument colouring;
+- instrument-era boundaries;
+- activity indicators;
+- window function;
+- GLS periodogram;
+- model residuals;
+- posterior summaries;
+- leave-one-era/instrument checks.
+
+### 4. Optical/NIR coherence
+For HARPS/NIRPS targets:
+- aligned observing timelines;
+- exact simultaneity windows;
+- K_VIS and K_NIR posteriors;
+- phase comparison;
+- activity-proxy comparison;
+- wavelength-coherence status;
+- pipeline-version warning badges.
+
+### 5. Completeness laboratory
+Interactive but deterministic visualisation of precomputed:
+- C(P,K);
+- K50(P);
+- K90(P);
+- Delta C between models;
+- leave-one-instrument differences;
+- eccentricity-model differences.
+
+Users may change display filters, but publication values are loaded from frozen outputs.
+
+### 6. TESS context
+Shows:
+- sector coverage;
+- light curves;
+- rotation/activity period evidence;
+- transit ephemeris;
+- partial versus final release comparison when relevant;
+- crowding/contamination context where available.
+
+### 7. Atmosphere reproducibility
+Shows:
+- repeated eclipse depths;
+- instrument/reduction grouping;
+- spectra on native and carefully harmonised wavelength views;
+- residuals over overlapping wavelength ranges;
+- between-study variance estimates;
+- covariance limitations.
+
+### 8. Provenance inspector
+Every plot/table has an expandable provenance drawer with:
+- manifest version;
+- source archive;
+- original product IDs;
+- source query;
+- access date;
+- pipeline version;
+- software commit;
+- analysis configuration hash;
+- output checksum.
+
+This is a mandatory feature, not an optional developer view.
+
+### 9. Methods and literature
+Long-form pages for:
+- statistical model;
+- injection/recovery;
+- null tests;
+- instrument systematics;
+- literature novelty gates;
+- known limitations.
+
+### 10. Paper mode
+A route that disables nonessential interaction and renders:
+- static figure numbering;
+- publication captions;
+- downloadable source tables;
+- DOI/citation information;
+- methods links.
+
+## Interaction principles
+
+### Motion should communicate state
+Good uses:
+- smooth transition between target and instrument views;
+- expanding provenance drawers;
+- animating a selected time window into a zoomed panel;
+- crossfading between baseline and alternative completeness maps;
+- layout transitions when filtering instruments;
+- progress indication during local data loading.
+
+Bad uses:
+- endlessly moving background stars;
+- orbit animations unrelated to the data;
+- scrolling effects that hide axis labels;
+- spring motion on scientific plots during measurement;
+- animation that changes apparent quantitative values.
+
+### Reduced motion
+Respect prefers-reduced-motion. Every scientific view must remain fully usable with motion disabled.
+
+### Deep links
+Filters and selected targets should be serialisable into the URL where practical so a scientist can share the exact view used in a discussion.
+
+## Proposed stack
+
+Web:
+- React
+- TypeScript
+- Vite
+- Motion
+- a small accessible component system
+- SVG/Canvas only where justified by plot size
+- static JSON/Parquet-to-JSON exports generated by Python
+
+Science:
+- Python package in src/exolab
+- Astropy, NumPy, SciPy, pandas
+- specialist libraries added only per work-package need
+- Matplotlib for canonical static figures
+
+Do not make a browser plotting library the source of publication calculations.
+
+## Data contract between Python and web
+
+Each web-facing product should have:
+- schema_version;
+- project_release;
+- manifest_hash;
+- analysis_commit;
+- target_id;
+- work_package;
+- generated_at;
+- source_products;
+- arrays/tables;
+- units;
+- uncertainty semantics;
+- caveats.
+
+The UI must reject unknown schema versions rather than silently guess.
+
+## Accessibility
+
+Minimum:
+- WCAG-conscious contrast;
+- keyboard navigation;
+- visible focus states;
+- semantic headings;
+- table alternatives for plots;
+- screen-reader summaries for key figures;
+- no information encoded by colour alone;
+- reduced-motion support.
+
+## Performance
+
+Target:
+- overview shell loads immediately;
+- large target datasets load on demand;
+- never ship raw archive FITS files to the browser;
+- precompute expensive posteriors and completeness grids;
+- compress JSON where appropriate;
+- virtualise very large tables.
+
+Motion performance must be audited after implementation. Prefer transform/opacity animations and avoid layout thrashing.
+
+## Scientific integrity in UI
+
+Every result card must distinguish:
+- measured;
+- fitted;
+- derived;
+- simulated;
+- provisional;
+- literature value.
+
+Never use a green check mark to imply "planet confirmed" unless the external scientific status supports that wording.
+
+Never hide rejected observations. Provide a rejected-data view with reasons.
+
+Never round away meaningful uncertainty.
+
+## Landing-page concept
+
+Hero copy should be short and technical:
+
+Open Exoplanet Evidence Lab
+
+A provenance-first framework for testing how instrument systematics, stellar activity, wavelength, cadence, and cross-archive evidence change exoplanet inference.
+
+Primary actions:
+- Explore targets
+- Inspect data releases
+- Read methods
+- Reproduce results
+
+Below the hero, show the pipeline as a restrained animated sequence:
+
+Archive → Provenance → QC → Model → Injection/Recovery → Cross-check → Robustness
+
+The animation should pause on hover/focus and disappear entirely under reduced-motion settings.
+
+## Component concepts
+
+Build original components inspired by the references:
+
+- DataReleaseStatus
+- ProvenanceDrawer
+- InstrumentTimeline
+- TargetEvidenceCard
+- ModelComparisonRail
+- CompletenessMapViewer
+- ChromaticCoherencePanel
+- NullTestMatrix
+- SpectrumAgreementPanel
+- ReproducibilityBadge
+- LiteratureGate
+
+These should be project-specific, not generic marketplace clones.
+
+## Design review gate
+
+The website is ready for public release only when:
+1. a scientist can trace any headline result to a manifest and source archive;
+2. every interactive plot has units and uncertainty;
+3. keyboard-only navigation works;
+4. reduced-motion mode is complete;
+5. mobile layout does not destroy scientific meaning;
+6. static paper figures remain available;
+7. there is no decorative animation that can be mistaken for data.
