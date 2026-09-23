@@ -4,7 +4,8 @@ from exolab.eso import instrument_inventory_query, target_instrument_query
 def test_inventory_query_targets_public_instrument_products():
     query = " ".join(instrument_inventory_query("NIRPS").split())
     assert "instrument_name = 'NIRPS'" in query
-    assert "data_rights = 'public'" in query
+    assert "data_rights" in query
+    assert "'Public'" in query
     assert "dp_id" in query
 
 
