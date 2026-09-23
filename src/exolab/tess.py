@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Iterable
 
 import numpy as np
+from astropy.timeseries import LombScargle
 
 from .periodogram import PeriodogramResult, generalized_lomb_scargle
 from .timeseries import SinusoidFit, fit_sinusoid, wrapped_phase_difference
@@ -22,6 +23,45 @@ class TemporalCoherence:
     test: SinusoidFit
     amplitude_ratio: float
     phase_difference_radians: float
+
+
+def circular_shift_max_power_pvalue(
+    time: Iterable[float],
+    value: Iterable[float],
+    error: Iterable[float],
+    group: Iterable[int],
+    period_grid: Iterable[float],
+    observed_max_power: float,
+    *,
+    n_permutations: int = 200,
+    seed: int = 20260923,
+) -> float:
+    """Calibrate max-GLS power with within-sector circular shifts."""
+    t = np.asarray(time, dtype=float)
+    y = np.asarray(value, dtype=float)
+    e = np.asarray(error, dtype=float)
+    labels = np.asarray(group)
+    periods = np.asarray(period_grid, dtype=float)
+    if not (t.shape == y.shape == e.shape == labels.shape and t.ndim == 1):
+        raise ValueError("time, value, error, and group must be matching 1D arrays")
+    if n_permutations < 1 or np.any(periods <= 0):
+        raise ValueError("permutations and period grid must be positive")
+    frequency = 1.0 / periods
+    rng = np.random.default_rng(seed)
+    exceed = 0
+    unique = np.unique(labels)
+    for _ in range(n_permutations):
+        shifted = y.copy()
+        for label in unique:
+            indices = np.flatnonzero(labels == label)
+            if indices.size > 1:
+                shift = int(rng.integers(1, indices.size))
+                shifted[indices] = np.roll(y[indices], shift)
+        power = LombScargle(t, shifted, dy=e, fit_mean=True, center_data=True).power(
+            frequency, normalization="standard"
+        )
+        exceed += int(float(np.nanmax(power)) >= observed_max_power)
+    return float((exceed + 1) / (n_permutations + 1))
 
 
 def quality_normalize(

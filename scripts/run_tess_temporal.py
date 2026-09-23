@@ -16,7 +16,13 @@ import numpy as np
 import pandas as pd
 
 from exolab.provenance import FileRecord, canonical_json_sha256, sha256_file
-from exolab.tess import activity_periodogram, quality_normalize, temporal_coherence, time_bin
+from exolab.tess import (
+    activity_periodogram,
+    circular_shift_max_power_pvalue,
+    quality_normalize,
+    temporal_coherence,
+    time_bin,
+)
 
 
 def sector_number(mission: object) -> int:
@@ -108,6 +114,7 @@ def main() -> int:
     parser.add_argument("--cache", default="data/raw/tess")
     parser.add_argument("--output", default="outputs/tess_temporal")
     parser.add_argument("--software-commit", default="working-tree")
+    parser.add_argument("--permutations", type=int, default=200)
     args = parser.parse_args()
 
     output = Path(args.output)
@@ -134,6 +141,25 @@ def main() -> int:
     test_pg = activity_periodogram(
         test["time_btjd"], test["relative_flux_ppm"], test["relative_flux_error_ppm"]
     )
+    control_empirical_p = circular_shift_max_power_pvalue(
+        control["time_btjd"],
+        control["relative_flux_ppm"],
+        control["relative_flux_error_ppm"],
+        control["sector"],
+        control_pg.period,
+        control_pg.best_power,
+        n_permutations=args.permutations,
+    )
+    test_empirical_p = circular_shift_max_power_pvalue(
+        test["time_btjd"],
+        test["relative_flux_ppm"],
+        test["relative_flux_error_ppm"],
+        test["sector"],
+        test_pg.period,
+        test_pg.best_power,
+        n_permutations=args.permutations,
+        seed=20260924,
+    )
     coherence = temporal_coherence(
         control["time_btjd"],
         control["relative_flux_ppm"],
@@ -151,6 +177,7 @@ def main() -> int:
         "cadence_seconds": args.cadence,
         "quality_rule": "QUALITY == 0, finite positive errors, 7-MAD clip, 30-min weighted bins",
         "period_search_days": [2.0, 30.0],
+        "empirical_calibration": f"{args.permutations} within-sector circular shifts",
     }
     summary = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -161,12 +188,14 @@ def main() -> int:
         "test_sectors": args.test_sectors,
         "control_period_days": control_pg.best_period,
         "control_analytic_fap": control_pg.false_alarm_probability,
+        "control_circular_shift_pvalue": control_empirical_p,
         "test_period_days": test_pg.best_period,
         "test_analytic_fap": test_pg.false_alarm_probability,
+        "test_circular_shift_pvalue": test_empirical_p,
         "test_to_control_amplitude_ratio_at_control_period": coherence.amplitude_ratio,
         "phase_difference_radians_at_control_period": coherence.phase_difference_radians,
         "interpretation": (
-            "Photometric activity-period and temporal-coherence diagnostic. Periodogram peaks are not planet confirmations."
+            "Photometric activity-period and temporal-coherence diagnostic. Circular-shift p-values preserve within-sector ordering; periodogram peaks are not planet confirmations."
         ),
     }
     (output / "summary.json").write_text(

@@ -1,6 +1,12 @@
 import numpy as np
 
-from exolab.tess import quality_normalize, temporal_coherence, time_bin
+from exolab.tess import (
+    activity_periodogram,
+    circular_shift_max_power_pvalue,
+    quality_normalize,
+    temporal_coherence,
+    time_bin,
+)
 
 
 def test_quality_normalize_preserves_explicit_indices():
@@ -31,3 +37,21 @@ def test_time_bin_and_temporal_coherence():
     tb, yb, eb = time_bin(t1, y1, e, width_minutes=180)
     assert len(tb) < len(t1)
     assert tb.shape == yb.shape == eb.shape
+
+
+def test_circular_shift_pvalue_is_bounded_and_deterministic():
+    time = np.linspace(0, 20, 240)
+    value = np.sin(2 * np.pi * time / 4.2)
+    error = np.full(time.size, 0.1)
+    group = np.repeat([1, 2], 120)
+    periodogram = activity_periodogram(
+        time, value, error, min_period_days=2, max_period_days=8
+    )
+    first = circular_shift_max_power_pvalue(
+        time, value, error, group, periodogram.period, periodogram.best_power, n_permutations=20
+    )
+    second = circular_shift_max_power_pvalue(
+        time, value, error, group, periodogram.period, periodogram.best_power, n_permutations=20
+    )
+    assert 0 < first <= 1
+    assert first == second

@@ -3,10 +3,12 @@
 from .activity import ActivityRegression, weighted_activity_regression
 from .archives import ExoplanetArchiveClient
 from .atmosphere import (
+    BandMean,
     RandomEffectsEstimate,
     RandomEffectsResult,
     estimate_extra_scatter,
     random_effects_mean,
+    weighted_band_mean,
 )
 from .chromatic import (
     ChromaticSignalComparison,
@@ -50,6 +52,7 @@ from .vizier import VizierClient
 
 __all__ = [
     "ActivityRegression",
+    "BandMean",
     "ChromaticSignalComparison",
     "CoherenceResult",
     "DataSource",
@@ -109,6 +112,7 @@ __all__ = [
     "weighted_activity_regression",
     "weighted_mean",
     "weighted_rms",
+    "weighted_band_mean",
     "write_manifest",
     "write_result",
 ]

@@ -30,6 +30,54 @@ class RandomEffectsResult:
     n: int
 
 
+@dataclass(frozen=True)
+class BandMean:
+    """Inverse-variance mean for a stated wavelength interval."""
+
+    mean: float
+    error: float
+    n_bins: int
+    wavelength_min: float
+    wavelength_max: float
+
+
+def weighted_band_mean(
+    wavelength: Iterable[float],
+    value: Iterable[float],
+    error: Iterable[float],
+    wavelength_min: float,
+    wavelength_max: float,
+) -> BandMean:
+    """Summarise independent spectral bins inside an explicit common band.
+
+    This descriptive calculation cannot correct for unpublished spectral
+    covariance. Callers must retain that limitation in result metadata.
+    """
+    x = np.asarray(wavelength, dtype=float)
+    y = np.asarray(value, dtype=float)
+    e = np.asarray(error, dtype=float)
+    if not (x.shape == y.shape == e.shape):
+        raise ValueError("wavelength, value, and error must have matching shapes")
+    mask = (
+        np.isfinite(x)
+        & np.isfinite(y)
+        & np.isfinite(e)
+        & (e > 0)
+        & (x >= wavelength_min)
+        & (x <= wavelength_max)
+    )
+    if not np.any(mask):
+        raise ValueError("no valid bins fall inside the requested wavelength interval")
+    weight = 1.0 / np.square(e[mask])
+    return BandMean(
+        mean=float(np.sum(weight * y[mask]) / np.sum(weight)),
+        error=float(np.sqrt(1.0 / np.sum(weight))),
+        n_bins=int(mask.sum()),
+        wavelength_min=float(wavelength_min),
+        wavelength_max=float(wavelength_max),
+    )
+
+
 def _weighted_location(y: np.ndarray, sigma: np.ndarray, tau: float) -> tuple[float, float]:
     variance = np.square(sigma) + tau**2
     w = 1.0 / variance
