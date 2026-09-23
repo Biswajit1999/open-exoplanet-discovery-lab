@@ -69,7 +69,7 @@ function Figure({ src, alt, caption, number }: { src: string; alt: string; capti
   )
 }
 
-export default function ResultsSection() {
+export default function ResultsSection({ onInspect }: { onInspect: (id: string) => void }) {
   const reduced = useReducedMotion()
   const [data, setData] = useState<ResultsData | null>(null)
 
@@ -128,6 +128,7 @@ export default function ResultsSection() {
               <div><dt>Permutations / star / model</dt><dd>{data.nets_completeness.permutations_per_target_model}</dd></div>
             </dl>
             <p className="scopeNote">Interpretation: sensitivity measurement from circular injections. A recovered period is not classified as a planet.</p>
+            <button className="provenanceTrigger" onClick={() => onInspect("nets3-completeness")}>Inspect provenance <span aria-hidden="true">→</span></button>
           </div>
           <Figure
             number="01"
@@ -149,6 +150,7 @@ export default function ResultsSection() {
                 Sector-preserving circular shifts give p = {data.tess.control_circular_shift_pvalue.toFixed(3)} for the control and p = {data.tess.test_circular_shift_pvalue.toFixed(3)} for the later test.
               </p>
               <p className="scopeNote">Activity context only: neither a planet confirmation nor a secure stellar-rotation measurement.</p>
+              <button className="provenanceTrigger" onClick={() => onInspect("tess-hd10780")}>Inspect provenance <span aria-hidden="true">→</span></button>
             </div>
             <Figure
               number="02"
@@ -170,6 +172,7 @@ export default function ResultsSection() {
                 Fitted inter-visit scatter is {data.atmosphere_reproducibility.hansolo_extra_scatter_ppm.toFixed(1)} ppm and {data.atmosphere_reproducibility.stark_extra_scatter_ppm.toFixed(1)} ppm, respectively.
               </p>
               <p className="scopeNote">The reductions share photons and lack published spectral covariance; no independent-pipeline significance is claimed.</p>
+              <button className="provenanceTrigger" onClick={() => onInspect("atmosphere-55cnce")}>Inspect provenance <span aria-hidden="true">→</span></button>
             </div>
             <Figure
               number="03"
@@ -198,6 +201,7 @@ export default function ResultsSection() {
             <div><dt>With a ≤1 h epoch pair</dt><dd>{data.eso_census.simultaneous_1h.toLocaleString()}</dd></div>
           </dl>
           <p className="censusFoot">Complete live TAP run · {data.eso_census.query_errors} query errors · target labels are archive identities, not a deduplicated stellar catalogue.</p>
+          <button className="provenanceTrigger" onClick={() => onInspect("eso-nirps-harps")}>Inspect provenance <span aria-hidden="true">→</span></button>
         </section>
       )}
 
