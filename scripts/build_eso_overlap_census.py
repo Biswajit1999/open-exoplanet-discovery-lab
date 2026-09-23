@@ -1,0 +1,175 @@
+"""Build a public NIRPS/HARPS metadata overlap census from ESO TAP.
+
+The first pass uses coordinates from the NIRPS Phase-3 products and a small cone
+around each target to avoid relying on exact target-name spelling. Product-level
+metadata are retained; epoch counts use de-duplicated t_min values.
+"""
+
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+from exolab.chromatic import simultaneity_counts
+from exolab.eso import ESOArchiveClient, instrument_inventory_query, target_instrument_query
+from exolab.provenance import DatasetRecord, FileRecord, write_manifest
+
+
+def unique_epochs(frame: pd.DataFrame) -> np.ndarray:
+    values = pd.to_numeric(frame.get("t_min"), errors="coerce").dropna().to_numpy(dtype=float)
+    if not values.size:
+        return values
+    return np.unique(np.round(values, 8))
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default="outputs/eso_overlap_census")
+    parser.add_argument("--radius-arcsec", type=float, default=5.0)
+    parser.add_argument("--max-targets", type=int, default=0)
+    args = parser.parse_args()
+
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    client = ESOArchiveClient(timeout=180)
+
+    nirps_query = instrument_inventory_query("NIRPS")
+    nirps = client.query(nirps_query)
+    nirps_path = output / "nirps_public_products.csv"
+    nirps.to_csv(nirps_path, index=False)
+
+    target_rows = (
+        nirps.dropna(subset=["s_ra", "s_dec"])
+        .groupby("target_name", dropna=False)
+        .agg(
+            s_ra=("s_ra", "median"),
+            s_dec=("s_dec", "median"),
+            n_nirps_products=("dp_id", "nunique"),
+            nirps_t_min=("t_min", "min"),
+            nirps_t_max=("t_max", "max"),
+        )
+        .reset_index()
+        .sort_values("n_nirps_products", ascending=False)
+    )
+    if args.max_targets > 0:
+        target_rows = target_rows.head(args.max_targets)
+
+    harps_frames: list[pd.DataFrame] = []
+    summary_rows: list[dict[str, object]] = []
+    for row in target_rows.itertuples(index=False):
+        query = target_instrument_query(
+            "HARPS",
+            ra_deg=float(row.s_ra),
+            dec_deg=float(row.s_dec),
+            radius_deg=float(args.radius_arcsec) / 3600.0,
+        )
+        try:
+            harps = client.query(query)
+        except Exception as exc:
+            summary_rows.append(
+                {
+                    "target_name": row.target_name,
+                    "s_ra": row.s_ra,
+                    "s_dec": row.s_dec,
+                    "n_nirps_products": int(row.n_nirps_products),
+                    "n_harps_products": 0,
+                    "n_nirps_epochs": np.nan,
+                    "n_harps_epochs": np.nan,
+                    "pair_1h": np.nan,
+                    "pair_6h": np.nan,
+                    "pair_1d": np.nan,
+                    "pair_3d": np.nan,
+                    "pair_7d": np.nan,
+                    "query_error": repr(exc),
+                }
+            )
+            continue
+        if not harps.empty:
+            harps = harps.copy()
+            harps["nirps_anchor_target"] = row.target_name
+            harps_frames.append(harps)
+
+        nirps_target = nirps[nirps["target_name"] == row.target_name]
+        tn = unique_epochs(nirps_target)
+        th = unique_epochs(harps)
+        pairs = simultaneity_counts(th, tn) if th.size and tn.size else {
+            "1h": 0, "6h": 0, "1d": 0, "3d": 0, "7d": 0
+        }
+        summary_rows.append(
+            {
+                "target_name": row.target_name,
+                "s_ra": row.s_ra,
+                "s_dec": row.s_dec,
+                "n_nirps_products": int(row.n_nirps_products),
+                "n_harps_products": int(harps["dp_id"].nunique()) if not harps.empty else 0,
+                "n_nirps_epochs": int(tn.size),
+                "n_harps_epochs": int(th.size),
+                "nirps_first_mjd": float(np.min(tn)) if tn.size else np.nan,
+                "nirps_last_mjd": float(np.max(tn)) if tn.size else np.nan,
+                "harps_first_mjd": float(np.min(th)) if th.size else np.nan,
+                "harps_last_mjd": float(np.max(th)) if th.size else np.nan,
+                "pair_1h": pairs["1h"],
+                "pair_6h": pairs["6h"],
+                "pair_1d": pairs["1d"],
+                "pair_3d": pairs["3d"],
+                "pair_7d": pairs["7d"],
+                "query_error": "",
+            }
+        )
+
+    harps_all = pd.concat(harps_frames, ignore_index=True) if harps_frames else pd.DataFrame()
+    harps_path = output / "harps_public_matches.csv"
+    harps_all.to_csv(harps_path, index=False)
+    summary = pd.DataFrame(summary_rows)
+    summary_path = output / "nirps_harps_overlap_summary.csv"
+    summary.to_csv(summary_path, index=False)
+
+    files = [
+        FileRecord.from_path(nirps_path, source_product_id="NIRPS-ObsCore"),
+        FileRecord.from_path(harps_path, source_product_id="HARPS-cone-matches"),
+        FileRecord.from_path(summary_path, source_product_id="NIRPS-HARPS-overlap-summary"),
+    ]
+    record = DatasetRecord.create(
+        source_id="nirps_harps_overlap",
+        source_state="census",
+        archive="ESO Science Archive TAP",
+        query=nirps_query,
+        files=files,
+        selection_rules={
+            "nirps_instrument_name": "NIRPS",
+            "harps_instrument_name": "HARPS",
+            "public_only": True,
+            "coordinate_match_radius_arcsec": args.radius_arcsec,
+            "epoch_dedup_round_days": 8,
+            "simultaneity_windows": ["1h", "6h", "1d", "3d", "7d"],
+        },
+        notes=[
+            "This is an ObsCore product/epoch census, not a precision-RV table.",
+            "FITS PROCSOFT must be inspected before using NIRPS velocities.",
+            "The documented DRS 3.2.6 precision-RV interval remains excluded by policy.",
+        ],
+    )
+    write_manifest(record, output / "nirps_harps_overlap_manifest.json")
+
+    metadata = {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "nirps_products": int(len(nirps)),
+        "targets_queried": int(len(summary)),
+        "targets_with_harps_products": int((summary["n_harps_products"] > 0).sum()) if len(summary) else 0,
+        "manifest_hash": record.manifest_hash,
+    }
+    (output / "census_summary.json").write_text(
+        json.dumps(metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(metadata, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
