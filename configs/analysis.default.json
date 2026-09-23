@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.0",
+  "rv": {
+    "min_period_days": 1.0,
+    "max_period_days": 500.0,
+    "samples_per_peak": 8.0,
+    "fap_threshold": 0.01,
+    "period_tolerance_fraction": 0.05,
+    "allow_harmonics": true
+  },
+  "injection_recovery": {
+    "phase_count": 12,
+    "seed": 20260923,
+    "report_contours": [0.5, 0.9]
+  },
+  "chromatic": {
+    "simultaneity_windows_hours": [1, 6, 24, 72, 168],
+    "max_crossmatch_arcsec": 3.0
+  },
+  "quality": {
+    "require_finite_uncertainty": true,
+    "require_positive_uncertainty": true,
+    "preserve_rejected_rows": true
+  }
+}

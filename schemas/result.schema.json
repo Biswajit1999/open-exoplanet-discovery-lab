@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Biswajit1999/open-exoplanet-discovery-lab/schemas/result.schema.json",
+  "title": "Exolab derived result",
+  "type": "object",
+  "required": [
+    "schema_version", "work_package", "result_status",
+    "input_manifest_hash", "software_commit", "method_version"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "work_package": {"type": "string"},
+    "target_id": {"type": ["string", "null"]},
+    "result_status": {
+      "enum": ["measurement", "fitted", "derived", "simulated", "literature", "provisional"]
+    },
+    "method_version": {"type": "string"},
+    "configuration_hash": {"type": ["string", "null"]},
+    "input_manifest_hash": {"type": "string"},
+    "software_commit": {"type": "string"},
+    "output_checksum": {"type": ["string", "null"]},
+    "value": {},
+    "uncertainty": {},
+    "unit": {"type": ["string", "null"]},
+    "caveats": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

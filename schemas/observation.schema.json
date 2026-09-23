@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Biswajit1999/open-exoplanet-discovery-lab/schemas/observation.schema.json",
+  "title": "Exolab observation record",
+  "type": "object",
+  "required": [
+    "target_id", "archive", "instrument", "product_id",
+    "observation_time", "time_scale", "observable", "value", "unit", "provenance_id"
+  ],
+  "properties": {
+    "target_id": {"type": "string", "minLength": 1},
+    "canonical_name": {"type": ["string", "null"]},
+    "archive": {"type": "string", "minLength": 1},
+    "collection": {"type": ["string", "null"]},
+    "instrument": {"type": "string", "minLength": 1},
+    "mode": {"type": ["string", "null"]},
+    "product_id": {"type": "string", "minLength": 1},
+    "observation_time": {"type": "number"},
+    "time_scale": {"type": "string", "minLength": 1},
+    "observable": {"type": "string", "minLength": 1},
+    "value": {"type": "number"},
+    "uncertainty": {"type": ["number", "null"], "exclusiveMinimum": 0},
+    "unit": {"type": "string"},
+    "pipeline_version": {"type": ["string", "null"]},
+    "quality_state": {"enum": ["accepted", "rejected", "review"]},
+    "quality_reason": {"type": ["string", "null"]},
+    "provenance_id": {"type": "string", "minLength": 1},
+    "source_reference": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}
