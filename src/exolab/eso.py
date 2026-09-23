@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from io import StringIO
+from io import BytesIO
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 import pandas as pd
+from astropy.io.votable import parse_single_table
 
 
 class ESOArchiveClient:
@@ -19,7 +20,7 @@ class ESOArchiveClient:
         params = {
             "REQUEST": "doQuery",
             "LANG": "ADQL",
-            "FORMAT": "csv",
+            "FORMAT": "votable",
             "QUERY": " ".join(adql.split()),
         }
         if maxrec is not None:
@@ -29,8 +30,9 @@ class ESOArchiveClient:
             headers={"User-Agent": "open-exoplanet-evidence-lab/0.3"},
         )
         with urlopen(request, timeout=self.timeout) as response:
-            payload = response.read().decode("utf-8")
-        return pd.read_csv(StringIO(payload))
+            payload = response.read()
+        table = parse_single_table(BytesIO(payload)).to_table()
+        return table.to_pandas()
 
     def obscore_columns(self) -> list[str]:
         frame = self.query(
