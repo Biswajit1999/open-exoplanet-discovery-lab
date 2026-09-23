@@ -1,0 +1,32 @@
+{
+  "snapshot_date": "2026-09-23",
+  "source": "GitHub Actions public-snapshot run against authoritative public archives",
+  "nasa_exoplanet_archive": {
+    "confirmed_planets": 6366,
+    "toi_rows": 8148,
+    "toi_dispositions": {
+      "APC": 485,
+      "CP": 818,
+      "FA": 100,
+      "FP": 1301,
+      "KP": 607,
+      "PC": 4823,
+      "unclassified": 14
+    },
+    "atmospheric_spectra_rows": 1826,
+    "unique_atmospheric_planets": 289,
+    "manifest_hash": "85926cde0633af8ac90d52a75c75243a8453abe4e3f709d33e7467cbace2276d"
+  },
+  "nets3": {
+    "catalog": "J/AJ/170/264",
+    "survey_targets": 41,
+    "rv_rows": 5920,
+    "activity_rows": 5920,
+    "manifest_hash": "c00da6170d0df6d5808791b4cf5cb2b4fcf6d9d628afbe7fa25cf91315dee26c"
+  },
+  "nets4_hd190360": {
+    "catalog": "J/AJ/171/286",
+    "neid_rv_rows": 93,
+    "manifest_hash": "af250af75cb7b2a81683260442fa8a804017a5f99df50636ff0f52f4facd5bc7"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "configuration_hash": "d830f21983178a9dce13c6cc3a405886466fcd61e2cfbfa9f0aa1fdb0bbeee83",
+  "control_analytic_fap": 9.617639919059334e-78,
+  "control_period_days": 5.762155803576307,
+  "control_sectors": [
+    24,
+    25
+  ],
+  "generated_at_utc": "2026-09-23T08:55:22.829262+00:00",
+  "interpretation": "Photometric activity-period and temporal-coherence diagnostic. Periodogram peaks are not planet confirmations.",
+  "phase_difference_radians_at_control_period": -1.7159649162435757,
+  "software_commit": "working-tree",
+  "target": "HD 10780",
+  "test_analytic_fap": 1.9487025023436545e-120,
+  "test_period_days": 6.0942231322754346,
+  "test_sectors": [
+    85,
+    86
+  ],
+  "test_to_control_amplitude_ratio_at_control_period": 1.1133924473284451
+}

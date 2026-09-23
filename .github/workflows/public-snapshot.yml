@@ -1,0 +1,33 @@
+name: public-snapshot
+
+on:
+  pull_request:
+    paths:
+      - "scripts/build_public_snapshot.py"
+      - "src/exolab/archives.py"
+      - "src/exolab/provenance.py"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .[archives]
+      - run: python scripts/build_public_snapshot.py --output outputs/public_snapshot
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-archive-snapshot
+          path: outputs/public_snapshot/
+          if-no-files-found: warn

@@ -1,15 +1,80 @@
-"""Optical/near-infrared coherence diagnostics for RV time series."""
+"""Optical/near-infrared radial-velocity coherence diagnostics."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Iterable, Mapping
+
 import numpy as np
 
-from .rv import fit_shared_sinusoid
+from .timeseries import SinusoidFit, fit_sinusoid, wrapped_phase_difference
+from .rv import fit_shared_sinusoid as fit_release_02_sinusoid
 
 
-def wrap_phase(delta: float) -> float:
-    return float((delta + np.pi) % (2.0 * np.pi) - np.pi)
+def matched_epoch_pairs(
+    left_time: Iterable[float],
+    right_time: Iterable[float],
+    tolerance_days: float,
+) -> list[tuple[int, int, float]]:
+    """Greedy one-to-one nearest epoch matching.
+
+    Returns (left_index, right_index, signed_delta_days). A right-hand epoch is
+    never reused. The function is for simultaneity accounting, not interpolation.
+    """
+    if tolerance_days < 0:
+        raise ValueError("tolerance_days must be non-negative")
+    left = np.asarray(left_time, dtype=float)
+    right = np.asarray(right_time, dtype=float)
+    available = set(np.flatnonzero(np.isfinite(right)).tolist())
+    pairs: list[tuple[int, int, float]] = []
+    for i in np.flatnonzero(np.isfinite(left)):
+        if not available:
+            break
+        candidates = np.array(sorted(available), dtype=int)
+        delta = right[candidates] - left[i]
+        j_local = int(np.argmin(np.abs(delta)))
+        j = int(candidates[j_local])
+        if abs(float(delta[j_local])) <= tolerance_days:
+            pairs.append((int(i), j, float(delta[j_local])))
+            available.remove(j)
+    return pairs
+
+
+def simultaneity_counts(
+    optical_time: Iterable[float],
+    nir_time: Iterable[float],
+    windows_days: Iterable[float] = (1 / 24, 6 / 24, 1, 3, 7),
+    *,
+    windows_hours: Iterable[float] | None = None,
+) -> dict[str, int] | dict[float, int]:
+    if windows_hours is not None:
+        return {
+            float(hours): len(
+                matched_epoch_pairs(optical_time, nir_time, float(hours) / 24.0)
+            )
+            for hours in windows_hours
+        }
+    result: dict[str, int] = {}
+    for window in windows_days:
+        hours = float(window) * 24.0
+        if hours < 24:
+            label = f"{hours:g}h"
+        else:
+            label = f"{float(window):g}d"
+        result[label] = len(matched_epoch_pairs(optical_time, nir_time, float(window)))
+    return result
+
+
+@dataclass(frozen=True)
+class ChromaticSignalComparison:
+    period: float
+    optical: SinusoidFit
+    nir: SinusoidFit
+    amplitude_ratio_nir_to_optical: float
+    amplitude_ratio_error: float
+    phase_difference_radians: float
+    phase_difference_error_radians: float
+    simultaneity: Mapping[str, int]
 
 
 @dataclass(frozen=True)
@@ -23,31 +88,72 @@ class CoherenceResult:
     phase_delta: float
 
 
-def compare_bands(time_a, rv_a, err_a, time_b, rv_b, err_b, *, period: float) -> CoherenceResult:
-    a = fit_shared_sinusoid(time_a, rv_a, err_a, period=period)
-    b = fit_shared_sinusoid(time_b, rv_b, err_b, period=period)
-    ratio = np.nan if a.semi_amplitude == 0 else b.semi_amplitude / a.semi_amplitude
-    return CoherenceResult(
+def compare_fixed_period_signal(
+    optical_time: Iterable[float],
+    optical_rv: Iterable[float],
+    optical_error: Iterable[float],
+    nir_time: Iterable[float],
+    nir_rv: Iterable[float],
+    nir_error: Iterable[float],
+    period: float,
+    *,
+    optical_groups: Iterable[str] | None = None,
+    nir_groups: Iterable[str] | None = None,
+) -> ChromaticSignalComparison:
+    optical = fit_sinusoid(
+        optical_time, optical_rv, optical_error, period, groups=optical_groups
+    )
+    nir = fit_sinusoid(nir_time, nir_rv, nir_error, period, groups=nir_groups)
+    if optical.semi_amplitude <= 0:
+        ratio = float("nan")
+        ratio_error = float("nan")
+    else:
+        ratio = nir.semi_amplitude / optical.semi_amplitude
+        rel = 0.0
+        if nir.semi_amplitude > 0:
+            rel += (nir.semi_amplitude_error / nir.semi_amplitude) ** 2
+        rel += (optical.semi_amplitude_error / optical.semi_amplitude) ** 2
+        ratio_error = abs(ratio) * float(np.sqrt(rel))
+    phase_delta = wrapped_phase_difference(nir.phase_radians, optical.phase_radians)
+    phase_error = float(
+        np.sqrt(nir.phase_error_radians**2 + optical.phase_error_radians**2)
+    )
+    return ChromaticSignalComparison(
         period=float(period),
-        k_a=a.semi_amplitude,
-        k_b=b.semi_amplitude,
-        amplitude_ratio=float(ratio),
-        phase_a=a.phase,
-        phase_b=b.phase,
-        phase_delta=wrap_phase(b.phase - a.phase),
+        optical=optical,
+        nir=nir,
+        amplitude_ratio_nir_to_optical=float(ratio),
+        amplitude_ratio_error=float(ratio_error),
+        phase_difference_radians=phase_delta,
+        phase_difference_error_radians=phase_error,
+        simultaneity=simultaneity_counts(optical_time, nir_time),
     )
 
 
-def simultaneity_counts(time_a, time_b, windows_hours=(1.0, 6.0, 24.0, 72.0, 168.0)):
-    """Count A epochs with at least one B epoch within each symmetric window.
-
-    Times are expected in days in the same standard (e.g. BJD_TDB).
-    """
-    a = np.sort(np.asarray(time_a, dtype=float))
-    b = np.sort(np.asarray(time_b, dtype=float))
-    if a.ndim != 1 or b.ndim != 1 or not np.isfinite(np.r_[a, b]).all():
-        raise ValueError("times must be finite 1D arrays")
-    if len(a) == 0 or len(b) == 0:
-        return {float(w): 0 for w in windows_hours}
-    nearest = np.min(np.abs(a[:, None] - b[None, :]), axis=1)
-    return {float(w): int(np.sum(nearest <= float(w) / 24.0)) for w in windows_hours}
+def compare_bands(
+    time_a,
+    rv_a,
+    err_a,
+    time_b,
+    rv_b,
+    err_b,
+    *,
+    period: float,
+) -> CoherenceResult:
+    """Release-0.2 comparison with each series referenced to its own median."""
+    band_a = fit_release_02_sinusoid(time_a, rv_a, err_a, period=period)
+    band_b = fit_release_02_sinusoid(time_b, rv_b, err_b, period=period)
+    ratio = (
+        np.nan
+        if band_a.semi_amplitude == 0
+        else band_b.semi_amplitude / band_a.semi_amplitude
+    )
+    return CoherenceResult(
+        period=float(period),
+        k_a=band_a.semi_amplitude,
+        k_b=band_b.semi_amplitude,
+        amplitude_ratio=float(ratio),
+        phase_a=band_a.phase,
+        phase_b=band_b.phase,
+        phase_delta=wrapped_phase_difference(band_b.phase, band_a.phase),
+    )

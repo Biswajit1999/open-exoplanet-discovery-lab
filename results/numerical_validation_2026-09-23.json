@@ -1,0 +1,29 @@
+{
+  "validation_date": "2026-09-23",
+  "status": "pass",
+  "test_suite": {
+    "pytest_passed": 30,
+    "python_matrix": ["3.10", "3.12"]
+  },
+  "synthetic_checks": {
+    "grouped_signal_amplitude": true,
+    "grouped_signal_phase": true,
+    "activity_regression_improves_wrms": true,
+    "chromatic_ratio": true,
+    "repeatability_detects_extra_scatter": true,
+    "injected_signal_recovered": true
+  },
+  "synthetic_metrics": {
+    "injected_k_mps": 2.4,
+    "recovered_k_mps": 2.3999999999999955,
+    "phase_error_rad": -8.881784197001252e-16,
+    "nir_to_optical_k_ratio": 0.700000000000001,
+    "activity_raw_wrms": 0.7019185035474765,
+    "activity_corrected_wrms": 0.10580891165404631,
+    "extra_scatter": 8.381527307120082,
+    "injection_period_days": 23.7,
+    "injection_detected_period_days": 23.603102145387915,
+    "injection_fap": 1.3218370025013526e-288
+  },
+  "interpretation": "These values validate implementation behaviour on deterministic controls. They are not measurements of real exoplanet systems."
+}

@@ -3,12 +3,26 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Iterable
+
 import numpy as np
-from scipy.optimize import minimize_scalar
+from scipy.optimize import brentq
+
+
+@dataclass(frozen=True)
+class RandomEffectsEstimate:
+    mean: float
+    mean_error: float
+    extra_scatter: float
+    chi2: float
+    dof: int
+    reduced_chi2: float
 
 
 @dataclass(frozen=True)
 class RandomEffectsResult:
+    """Backward-compatible name and field layout for release 0.2 clients."""
+
     mean: float
     mean_error: float
     extra_sigma: float
@@ -16,40 +30,95 @@ class RandomEffectsResult:
     n: int
 
 
-def _profile_nll(tau: float, y: np.ndarray, e: np.ndarray) -> float:
-    var = e**2 + tau**2
-    w = 1.0 / var
-    mu = np.sum(w * y) / np.sum(w)
-    return float(0.5 * np.sum(np.log(var) + (y - mu) ** 2 / var))
+def _weighted_location(y: np.ndarray, sigma: np.ndarray, tau: float) -> tuple[float, float]:
+    variance = np.square(sigma) + tau**2
+    w = 1.0 / variance
+    mean = float(np.sum(w * y) / np.sum(w))
+    mean_error = float(np.sqrt(1.0 / np.sum(w)))
+    return mean, mean_error
 
 
-def random_effects_mean(values, errors, *, max_extra_sigma: float | None = None) -> RandomEffectsResult:
-    """Estimate a common mean plus non-negative between-measurement scatter.
+def estimate_extra_scatter(
+    value: Iterable[float],
+    error: Iterable[float],
+) -> RandomEffectsEstimate:
+    """Estimate an additional independent scatter term.
 
-    The extra-scatter term is a profile-likelihood estimate. It is an empirical
-    reproducibility scale, not automatically an astrophysical variability term.
+    tau is the non-negative value that brings chi2/dof to unity when possible.
+    This is a transparent reproducibility diagnostic, not a substitute for a
+    full covariance model.
+    """
+    y = np.asarray(value, dtype=float)
+    e = np.asarray(error, dtype=float)
+    mask = np.isfinite(y) & np.isfinite(e) & (e > 0)
+    y, e = y[mask], e[mask]
+    if y.size < 2:
+        raise ValueError("at least two independent measurements are required")
+    dof = int(y.size - 1)
+
+    def objective(tau: float) -> float:
+        mean, _ = _weighted_location(y, e, tau)
+        chi2 = float(np.sum(np.square(y - mean) / (np.square(e) + tau**2)))
+        return chi2 / dof - 1.0
+
+    if objective(0.0) <= 0:
+        tau = 0.0
+    else:
+        upper = max(float(np.std(y, ddof=1)), float(np.max(e)), 1e-12)
+        while objective(upper) > 0 and upper < 1e12:
+            upper *= 2.0
+        tau = float(brentq(objective, 0.0, upper))
+
+    mean, mean_error = _weighted_location(y, e, tau)
+    chi2 = float(np.sum(np.square(y - mean) / (np.square(e) + tau**2)))
+    return RandomEffectsEstimate(
+        mean=mean,
+        mean_error=mean_error,
+        extra_scatter=tau,
+        chi2=chi2,
+        dof=dof,
+        reduced_chi2=chi2 / dof,
+    )
+
+
+def standardized_pairwise_differences(
+    value: Iterable[float],
+    error: Iterable[float],
+) -> np.ndarray:
+    y = np.asarray(value, dtype=float)
+    e = np.asarray(error, dtype=float)
+    mask = np.isfinite(y) & np.isfinite(e) & (e > 0)
+    y, e = y[mask], e[mask]
+    values: list[float] = []
+    for i in range(y.size):
+        for j in range(i + 1, y.size):
+            values.append(float((y[i] - y[j]) / np.hypot(e[i], e[j])))
+    return np.asarray(values, dtype=float)
+
+
+def random_effects_mean(
+    values: Iterable[float],
+    errors: Iterable[float],
+    *,
+    max_extra_sigma: float | None = None,
+) -> RandomEffectsResult:
+    """Compatibility wrapper around :func:`estimate_extra_scatter`.
+
+    ``max_extra_sigma`` is retained for API compatibility. The transparent
+    chi-square estimator does not need an optimisation bound; a fitted value
+    above the caller's bound is clipped only when the bound is supplied.
     """
     y = np.asarray(values, dtype=float)
-    e = np.asarray(errors, dtype=float)
-    if y.ndim != 1 or y.shape != e.shape or len(y) < 2:
-        raise ValueError("values/errors must be matching 1D arrays with n >= 2")
-    if np.any(e <= 0) or not np.isfinite(np.r_[y, e]).all():
-        raise ValueError("measurements must be finite and errors > 0")
-    spread = max(float(np.ptp(y)), float(np.max(e)))
-    upper = float(max_extra_sigma) if max_extra_sigma is not None else max(1e-12, 10.0 * spread)
-    if upper <= 0:
-        raise ValueError("max_extra_sigma must be positive")
-    opt = minimize_scalar(
-        lambda tau: _profile_nll(float(tau), y, e),
-        bounds=(0.0, upper),
-        method="bounded",
-        options={"xatol": max(1e-12, upper * 1e-10)},
+    estimate = estimate_extra_scatter(y, errors)
+    tau = estimate.extra_scatter
+    if max_extra_sigma is not None:
+        if max_extra_sigma <= 0:
+            raise ValueError("max_extra_sigma must be positive")
+        tau = min(tau, float(max_extra_sigma))
+    return RandomEffectsResult(
+        mean=estimate.mean,
+        mean_error=estimate.mean_error,
+        extra_sigma=tau,
+        reduced_chi2=estimate.reduced_chi2,
+        n=int(np.isfinite(y).sum()),
     )
-    tau = max(0.0, float(opt.x))
-    var = e**2 + tau**2
-    w = 1.0 / var
-    mu = float(np.sum(w * y) / np.sum(w))
-    mu_err = float(np.sqrt(1.0 / np.sum(w)))
-    dof = max(1, len(y) - 1)
-    rchi2 = float(np.sum((y - mu) ** 2 / var) / dof)
-    return RandomEffectsResult(mu, mu_err, tau, rchi2, len(y))

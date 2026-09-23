@@ -1,0 +1,97 @@
+{
+  "release": "2026.09",
+  "author": "Biswajit Jana",
+  "title": "Open Exoplanet Evidence Lab",
+  "question": "How stable are exoplanet inferences and survey-completeness claims when instrumental zero points, stellar activity, chromatic RV behaviour, temporal sampling, reduction provenance and independent observing modalities are modelled explicitly?",
+  "sources": [
+    {
+      "id": "NETS-III",
+      "name": "NEID Earth Twin Survey III",
+      "status": "ready",
+      "role": "EPRV completeness and instrument-era benchmark",
+      "detail": "41 public survey targets with VizieR RV and activity time-series products."
+    },
+    {
+      "id": "NETS-IV",
+      "name": "HD 190360 / NETS IV",
+      "status": "ready",
+      "role": "Known low-amplitude recovery control",
+      "detail": "Public NEID benchmark around the published 88.69 d signal; used for validation, not rediscovery."
+    },
+    {
+      "id": "NIRPS",
+      "name": "ESO NIRPS Phase-3",
+      "status": "census",
+      "role": "Near-infrared RV and chromaticity",
+      "detail": "Dynamic public reduced-data stream with explicit DRS provenance and the documented 2025 precision-RV quality gate."
+    },
+    {
+      "id": "HARPS",
+      "name": "ESO HARPS archive",
+      "status": "census",
+      "role": "Optical RV counterpart",
+      "detail": "Coordinate-based archive crossmatch and exact epoch-overlap accounting feed the optical/NIR experiment."
+    },
+    {
+      "id": "TESS-106/107",
+      "name": "TESS recent sectors",
+      "status": "active",
+      "role": "Rotation, transit and temporal context",
+      "detail": "Sector 106 is a mature control; Sector 107 is treated as a versioned evolving release."
+    },
+    {
+      "id": "ROCKY-WORLDS",
+      "name": "JWST/HST Rocky Worlds",
+      "status": "active",
+      "role": "Repeated eclipse and UV reproducibility",
+      "detail": "Versioned MIRI eclipse products and HST stellar products support visit-to-visit repeatability tests."
+    },
+    {
+      "id": "NEA-SPECTRA",
+      "name": "NASA Atmospheric Spectroscopy",
+      "status": "ready",
+      "role": "Cross-publication spectral reproducibility",
+      "detail": "Unified spectrum-level metadata with publication provenance; independent observations are separated from alternate reductions."
+    },
+    {
+      "id": "SPORES-HWO-II",
+      "name": "SPORES-HWO II",
+      "status": "wait",
+      "role": "Long-baseline RV robustness",
+      "detail": "Analysis remains gated until the consolidated public tables are verifiably accessible."
+    },
+    {
+      "id": "GAIA-DR4",
+      "name": "Gaia DR4",
+      "status": "future",
+      "role": "Future astrometric adapter",
+      "detail": "No current result depends on unreleased DR4 products or an assumed final archive schema."
+    }
+  ],
+  "validation": [
+    {
+      "name": "Known-signal recovery",
+      "meaning": "Deterministic tests recover injected circular RV amplitudes, phases and instrument-era offsets."
+    },
+    {
+      "name": "Chromatic consistency",
+      "meaning": "Synthetic optical/NIR tests recover a known semi-amplitude ratio and phase relationship."
+    },
+    {
+      "name": "Completeness classification",
+      "meaning": "Recovery logic distinguishes exact periods, accepted harmonics and misses under frozen rules."
+    },
+    {
+      "name": "Atmospheric repeatability",
+      "meaning": "Random-effects tests return zero extra scatter for statistically consistent repeats and positive scatter for overdispersed repeats."
+    },
+    {
+      "name": "Provenance integrity",
+      "meaning": "Manifest hashes and file checksums detect both metadata and input-file tampering."
+    },
+    {
+      "name": "Instrument quality gates",
+      "meaning": "NIRPS precision-RV tests reject the documented affected DRS interval unless corrected processing is verified."
+    }
+  ]
+}

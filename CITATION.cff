@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-message: "If you use this software, cite it and the original mission/archive products and papers used in your analysis."
+message: "If you use this software, cite this repository and the original mission/archive products and papers used in the analysis."
 title: "Open Exoplanet Evidence Lab"
 type: software
 authors:
   - family-names: Jana
     given-names: Biswajit
     orcid: "https://orcid.org/0009-0002-2411-1891"
-version: 0.2.0
+version: 0.3.0
 date-released: 2026-09-23
 license: MIT
 repository-code: "https://github.com/Biswajit1999/open-exoplanet-discovery-lab"
@@ -22,5 +22,5 @@ keywords:
   - atmospheric spectroscopy
   - injection recovery
   - stellar activity
-  - reproducible research
+  - reproducible astronomy
   - provenance

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "release_family": "2026-eprv-evidence",
+  "author": "Biswajit Jana",
+  "simultaneity_windows_days": [0.0416666666667, 0.25, 1.0, 3.0, 7.0],
+  "period_search": {
+    "samples_per_peak": 12,
+    "default_fap_threshold": 0.01,
+    "recovery_fractional_period_tolerance": 0.02,
+    "accepted_harmonic_factors": [0.5, 1.0, 2.0]
+  },
+  "nirps": {
+    "precision_rv_exclusion": {
+      "drs_version": "3.2.6",
+      "start_utc": "2025-04-01T12:00:00Z",
+      "end_utc": "2025-07-24T12:00:00Z",
+      "precision_threshold_mps": 10.0,
+      "corrected_minimum_version": "3.2.7",
+      "reference": "https://archive.eso.org/cms/eso-archive-news/issue-on-reduced-nirps-data.html"
+    }
+  },
+  "source_policy": {
+    "ready": "analysis permitted after local manifest freeze",
+    "census": "inventory and sample-freeze work permitted; no population result before freeze",
+    "active": "analysis permitted only with dated product manifest",
+    "wait": "do not analyse unavailable products",
+    "future": "adapter/schema preparation only"
+  },
+  "result_states": ["measured", "derived", "fitted", "simulated", "literature", "provisional"]
+}

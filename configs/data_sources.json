@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "registry_date": "2026-09-23",
   "author": "Biswajit Jana",
   "sources": [
@@ -9,8 +9,21 @@
       "name": "NEID Earth Twin Survey III",
       "status": "ready",
       "primary_reference": "https://arxiv.org/abs/2506.23704",
+      "doi": "10.3847/1538-3881/ae0339",
+      "catalog": "J/AJ/170/264",
       "archive": "VizieR / NEID archive",
-      "notes": "41-star EPRV survey with RV and activity time series; instrument-era offsets must be modelled."
+      "notes": "41-star EPRV survey with 5920 public RV rows and 5920 activity-indicator rows in VizieR; instrument-era offsets must be modelled."
+    },
+    {
+      "id": "nets4_hd190360",
+      "work_packages": ["WP0", "WP1"],
+      "name": "NEID Earth Twin Survey IV — HD 190360",
+      "status": "ready",
+      "primary_reference": "https://arxiv.org/abs/2508.18169",
+      "doi": "10.3847/1538-3881/ae48f1",
+      "catalog": "J/AJ/171/286",
+      "archive": "VizieR / NEID archive",
+      "notes": "93 public NEID RV rows for HD 190360; published 2026 benchmark with an 88.69 d low-amplitude planet and long-baseline RV/astrometric context."
     },
     {
       "id": "nirps_phase3",
@@ -21,7 +34,7 @@
       "archive": "ESO Science Archive",
       "release_description": "https://www.eso.org/rm/api/v1/public/releaseDescriptions/233",
       "quality_notice": "https://archive.eso.org/cms/eso-archive-news/issue-on-reduced-nirps-data.html",
-      "notes": "Dynamic open-stream release. Precision-RV analyses must exclude affected DRS 3.2.6 products from 2025-04-01 12:00 to 2025-07-24 12:00 unless corrected with DRS 3.2.7."
+      "notes": "Dynamic open-stream release from 2023-04-01 onward. Precision-RV analyses must exclude affected DRS 3.2.6 products from 2025-04-01 12:00 to 2025-07-24 12:00 unless corrected with DRS 3.2.7."
     },
     {
       "id": "harps",
@@ -30,7 +43,7 @@
       "status": "census",
       "archive": "ESO Science Archive",
       "url": "https://archive.eso.org/scienceportal/home",
-      "notes": "Crossmatch and exact epoch-overlap census required before sample freeze."
+      "notes": "Crossmatch and exact epoch-overlap census required before optical/NIR population analysis."
     },
     {
       "id": "spores_hwo_ii",
@@ -48,7 +61,7 @@
       "name": "TESS Sector 106",
       "status": "ready",
       "archive": "MAST",
-      "notes": "Method/control sector for temporal validation."
+      "notes": "Completed mission data ingest; used as a mature temporal-validation control."
     },
     {
       "id": "tess_sector_107",
@@ -57,7 +70,7 @@
       "status": "active",
       "archive": "MAST",
       "holdings": "https://outerspace.stsci.edu/spaces/TESS/pages/35094700/TESS%2BHoldings%2BAvailable%2Bby%2BMAST%2BService",
-      "notes": "Weekly FFI ingest is still evolving on registry date; every query must be versioned."
+      "notes": "Weekly FFI ingest is evolving on registry date; every query must be versioned."
     },
     {
       "id": "rocky_worlds",
@@ -76,7 +89,7 @@
       "status": "ready",
       "archive": "NASA Exoplanet Archive",
       "url": "https://exoplanetarchive.ipac.caltech.edu/",
-      "notes": "Use native published spectra and references; distinguish independent observations from alternate reductions."
+      "notes": "Unified spectra table replacing retired emission/transmission tables; use native publication links and distinguish independent observations from alternate reductions."
     },
     {
       "id": "gaia_dr3",

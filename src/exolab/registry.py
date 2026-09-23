@@ -1,59 +1,91 @@
-"""Versioned source-registry helpers and access-state gates."""
+"""Data-source registry and release-state gates."""
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
+import json
 from pathlib import Path
 from typing import Any
 
 
-_ALLOWED = {"ready", "census", "active", "wait", "future"}
+VALID_STATES = {"ready", "census", "active", "wait", "future"}
 
 
 @dataclass(frozen=True)
-class SourceSpec:
-    id: str
+class DataSource:
+    source_id: str
     name: str
     status: str
+    archive: str | None
     payload: dict[str, Any]
 
     @property
-    def usable_now(self) -> bool:
+    def immediately_usable(self) -> bool:
         return self.status in {"ready", "census", "active"}
 
+    @property
+    def id(self) -> str:
+        return self.source_id
+
+    @property
+    def usable_now(self) -> bool:
+        return self.immediately_usable
+
     def require_public(self) -> None:
-        if not self.usable_now:
+        if not self.immediately_usable:
             raise RuntimeError(
-                f"{self.name} is registered as {self.status!r}; "
-                "the project will not treat it as a current public science input."
+                f"{self.name} is registered as {self.status!r}; the project will "
+                "not treat it as a current public science input."
             )
 
 
-def load_registry(path: str | Path = "configs/data_sources.json") -> dict[str, SourceSpec]:
-    payload = json.loads(Path(path).read_text(encoding="utf-8"))
-    sources: dict[str, SourceSpec] = {}
-    for row in payload.get("sources", []):
-        status = str(row["status"])
-        if status not in _ALLOWED:
-            raise ValueError(f"Unknown source status {status!r}")
-        spec = SourceSpec(
-            id=str(row["id"]),
-            name=str(row["name"]),
-            status=status,
-            payload=dict(row),
+SourceSpec = DataSource
+
+
+def default_registry_path() -> Path:
+    return Path(__file__).resolve().parents[2] / "configs" / "data_sources.json"
+
+
+def load_registry(path: str | Path | None = None) -> dict[str, DataSource]:
+    registry_path = Path(path) if path is not None else default_registry_path()
+    payload = json.loads(registry_path.read_text(encoding="utf-8"))
+    result: dict[str, DataSource] = {}
+    for item in payload.get("sources", []):
+        state = str(item["status"]).lower()
+        if state not in VALID_STATES:
+            raise ValueError(f"Unknown data-source state {state!r}")
+        source_id = str(item["id"])
+        if source_id in result:
+            raise ValueError(f"Duplicate source id {source_id!r}")
+        result[source_id] = DataSource(
+            source_id=source_id,
+            name=str(item["name"]),
+            status=state,
+            archive=item.get("archive"),
+            payload=dict(item),
         )
-        if spec.id in sources:
-            raise ValueError(f"Duplicate source id {spec.id!r}")
-        sources[spec.id] = spec
-    return sources
+    return result
 
 
-def require_source(source_id: str, path: str | Path = "configs/data_sources.json") -> SourceSpec:
-    registry = load_registry(path)
-    try:
-        source = registry[source_id]
-    except KeyError as exc:
-        raise KeyError(f"Unknown source id {source_id!r}") from exc
-    source.require_public()
+def require_source(
+    source_id: str,
+    path: str | Path | None = None,
+    *,
+    allow_active: bool = True,
+    allow_census: bool = True,
+) -> DataSource:
+    sources = load_registry(path)
+    if source_id not in sources:
+        raise KeyError(f"Unknown source {source_id!r}")
+    source = sources[source_id]
+    allowed = {"ready"}
+    if allow_active:
+        allowed.add("active")
+    if allow_census:
+        allowed.add("census")
+    if source.status not in allowed:
+        raise RuntimeError(
+            f"Source {source_id!r} is gated with status={source.status!r}; "
+            "the archive state must be verified before analysis."
+        )
     return source

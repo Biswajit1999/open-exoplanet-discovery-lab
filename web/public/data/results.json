@@ -1,0 +1,26 @@
+{
+  "snapshot_date": "2026-09-23",
+  "nets3": {
+    "targets": 41,
+    "rv_rows": 5920,
+    "median_epochs": 92,
+    "median_baseline_days": 1001.9525500000454,
+    "median_internal_error_mps": 0.34,
+    "median_raw_wrms_mps": 2.062429784885697,
+    "median_era_demeaned_wrms_mps": 1.7935947342021028
+  },
+  "hd190360": {
+    "epochs": 93,
+    "baseline_days": 1266.8382999999449,
+    "fixed_period_days": 88.69,
+    "neid_only_k_mps": 0.7019705130812122,
+    "published_context_k_mps": 1.48
+  },
+  "atmosphere": {
+    "spectra": 1826,
+    "planets": 289,
+    "multi_spectrum": 245,
+    "multi_publication": 149,
+    "multi_instrument": 172
+  }
+}
