@@ -3,14 +3,19 @@
   "scope": "Baseline public-data diagnostics; not a discovery analysis",
   "nets3": {
     "analysed_targets": 41,
-    "median_observations_per_target": 92.0,
+    "median_observations_per_target": 92,
     "median_baseline_days": 1001.9525500000454,
     "median_internal_error_mps": 0.34,
     "median_raw_wrms_mps": 2.062429784885697,
     "median_era_demeaned_wrms_mps": 1.7935947342021028,
     "targets_with_shk_regression": 40,
     "targets_where_linear_shk_regression_reduces_wrms": 40,
-    "caveat": "The in-sample weighted linear regression is diagnostic. A reduction in WRMS is expected from fitting an additional covariate and is not evidence that the correction is astrophysically valid."
+    "caveat": "The in-sample weighted linear regression is diagnostic. A reduction in WRMS is expected from fitting an additional covariate and is not evidence that the correction is astrophysically valid.",
+    "median_between_run_weighted_mean_span_mps": 2.1048981586427544,
+    "median_run_demean_wrms_change_pct": 13.046234250333733,
+    "targets_with_between_run_span_gt_1_mps": 35,
+    "targets_with_run_demean_wrms_change_gt_20_pct": 13,
+    "run_sensitivity_caveat": "Between-run weighted-mean differences contain both instrumental and astrophysical long-timescale structure. Per-run de-meaning is a sensitivity diagnostic and can absorb real companions."
   },
   "nets4_hd190360": {
     "n_neid": 93,
