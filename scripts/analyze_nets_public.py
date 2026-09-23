@@ -64,6 +64,14 @@ def analyse_nets3(snapshot: Path, output: Path) -> dict[str, object]:
         group = group[group["erv_mps"] > 0].sort_values("BJD")
         if len(group) < 5:
             continue
+        run_means = []
+        for _, run_group in group.groupby("Run"):
+            run_error = run_group["erv_mps"].to_numpy(dtype=float)
+            run_velocity = run_group["rv_mps"].to_numpy(dtype=float)
+            run_weight = 1.0 / np.square(run_error)
+            run_means.append(float(np.sum(run_weight * run_velocity) / np.sum(run_weight)))
+        run_mean_span = float(np.ptp(run_means)) if len(run_means) > 1 else 0.0
+
         group["rv_era_resid_mps"] = _era_demean(group)
         t = group["BJD"].to_numpy(dtype=float)
         y = group["rv_era_resid_mps"].to_numpy(dtype=float)
@@ -90,6 +98,16 @@ def analyse_nets3(snapshot: Path, output: Path) -> dict[str, object]:
             "median_internal_error_mps": float(np.median(e)),
             "raw_wrms_mps": weighted_rms(raw_centered, e),
             "era_demeaned_wrms_mps": weighted_rms(y, e),
+            "between_run_weighted_mean_span_mps": run_mean_span,
+            "run_demean_wrms_change_pct": float(
+                100.0 * (
+                    1.0
+                    - weighted_rms(y, e)
+                    / weighted_rms(raw_centered, e)
+                )
+            )
+            if weighted_rms(raw_centered, e) > 0
+            else np.nan,
             "gls_best_period_days": gls.best_period,
             "gls_best_power": gls.best_power,
             "gls_analytic_fap": gls.false_alarm_probability,
@@ -134,6 +152,18 @@ def analyse_nets3(snapshot: Path, output: Path) -> dict[str, object]:
         "median_internal_error_mps": float(diagnostics["median_internal_error_mps"].median()),
         "median_raw_wrms_mps": float(diagnostics["raw_wrms_mps"].median()),
         "median_era_demeaned_wrms_mps": float(diagnostics["era_demeaned_wrms_mps"].median()),
+        "median_between_run_weighted_mean_span_mps": float(
+            diagnostics["between_run_weighted_mean_span_mps"].median()
+        ),
+        "median_run_demean_wrms_change_pct": float(
+            diagnostics["run_demean_wrms_change_pct"].median()
+        ),
+        "targets_with_between_run_span_gt_1_mps": int(
+            (diagnostics["between_run_weighted_mean_span_mps"] > 1.0).sum()
+        ),
+        "targets_with_run_demean_wrms_change_gt_20_pct": int(
+            (diagnostics["run_demean_wrms_change_pct"] > 20.0).sum()
+        ),
         "targets_with_shk_regression": int((diagnostics["activity_pairs"] >= 10).sum()),
         "targets_where_linear_shk_regression_reduces_wrms": int(
             (
