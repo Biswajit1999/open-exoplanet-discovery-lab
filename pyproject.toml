@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "open-exoplanet-discovery-lab"
-version = "0.1.0"
-description = "A transparent, Colab-ready TESS transit-search and candidate-vetting laboratory"
+version = "0.2.0"
+description = "A provenance-first multi-archive exoplanet and EPRV robustness research framework"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
