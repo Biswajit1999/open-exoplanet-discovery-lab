@@ -1,110 +1,173 @@
-# Open Exoplanet Discovery Lab
+# Open Exoplanet Evidence Lab
 
-An open, Colab-ready laboratory for learning how transiting planets are found and for carrying out a reproducible first-pass search of public TESS data.
+**A provenance-first 2026 research programme for extreme-precision radial velocity, stellar activity, transit context, atmospheric reproducibility, and future astrometric cross-validation.**
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Biswajit1999/open-exoplanet-discovery-lab/blob/main/notebooks/Open_Exoplanet_Discovery_Lab.ipynb)
+Developed by **Biswajit Jana**.
 
-> A dip in a light curve is **not automatically a planet**. This project finds and ranks signals. A credible planet claim also needs contamination checks, independent vetting, archive cross-matching, and usually follow-up observations.
+> This repository is being rebuilt as a scientist-facing research platform. The objective is not to maximise the number of plots or candidate labels. The objective is to quantify how strongly exoplanet conclusions depend on instrumental systematics, stellar variability, cadence, wavelength, reduction provenance, and cross-archive evidence.
 
-## Two ways into the project
+## Central scientific question
 
-### Explorer mode
+**How stable are exoplanet inferences and survey-completeness claims when instrumental zero points, stellar activity, chromatic RV behaviour, temporal sampling, and independent observing modalities are modelled explicitly rather than treated as secondary corrections?**
 
-Imagine watching a lighthouse. If a tiny object repeatedly passes in front of its lamp, the light becomes slightly dimmer at regular times. TESS performs a related measurement for thousands of stars. In the notebook you will:
+The project separates three things that are often mixed together:
 
-1. choose a public target;
-2. download its brightness measurements;
-3. remove slow instrumental and stellar trends;
-4. search for repeating transit-shaped dips;
-5. test whether the signal behaves more like a planet or a false positive;
-6. hide artificial planets in the data to measure which ones the search could recover.
+1. **measurement** — what an archive actually reports;
+2. **inference** — what model converts those measurements into a planet or non-detection statement;
+3. **robustness** — whether that statement survives alternative but defensible assumptions.
 
-Start with [`notebooks/Open_Exoplanet_Discovery_Lab.ipynb`](notebooks/Open_Exoplanet_Discovery_Lab.ipynb) in Google Colab.
+A positive result may be a more reliable planet constraint. A scientifically useful null result may be evidence that a simpler published method is already robust.
 
-### Researcher mode
+## Programme architecture
 
-The package provides a transparent baseline pipeline rather than a black-box classifier:
+This is one repository with multiple scientifically isolated work packages that share acquisition, provenance, statistics, validation, and reporting infrastructure.
 
-- live NASA Exoplanet Archive TAP queries for confirmed planets and TOIs;
-- MAST/Lightkurve access to SPOC and TESS-SPOC light curves;
-- robust cleaning and time-scale-controlled detrending;
-- Box Least Squares searches with explicit period and duration grids;
-- odd/even, secondary-eclipse, transit-count and signal-to-noise diagnostics;
-- injection–recovery experiments and harmonic-aware recovery rules;
-- machine-readable candidate scorecards.
+### WP0 — Archive registry and provenance
+Create frozen machine-readable manifests for every dataset, recording query, access date, archive identifier, DOI, pipeline/reduction version, file checksum, time system, units, quality flags, and selection rules.
 
-The repository deliberately does **not** assign a statistical validation probability. Packages such as `vespa` or `TRICERATOPS`, difference-image centroiding, high-resolution imaging and reconnaissance spectroscopy belong in later validation stages.
+### WP1 — NETS III: EPRV completeness under realistic noise models
+Use the public **NEID Earth Twin Survey III** RV and activity time series to measure how planet-detection completeness changes when zero-point epochs, activity correlations, temporal covariance, and held-out instrumental eras are included.
 
-The synthetic regression test and a real-data recovery of the catalogued TOI-1204.01 signal are documented in [`research/VALIDATION.md`](research/VALIDATION.md).
+Primary output: baseline completeness C(P,K) versus instrument/activity-aware completeness C*(P,K), reported as Delta C(P,K), K50(P), and K90(P).
 
-## Why this is more useful than another periodogram repository
+### WP2 — NIRPS × HARPS: optical/NIR coherence
+Build a verified overlap sample and test whether RV signals remain coherent in period, phase, and semi-amplitude between optical HARPS and near-infrared NIRPS measurements.
 
-A periodogram answers “where is the strongest repeating box?” It does not answer “how many planets would this pipeline have missed?” or “could a background eclipsing binary produce this signal?” The lab therefore treats discovery as a sequence:
+This work package is explicitly sensitive to pipeline provenance. NIRPS products reduced with DRS 3.2.6 between 2025-04-01 and 2025-07-24 must not be used for sub-10 m/s science; corrected Phase-3 products were reprocessed with DRS 3.2.7.
 
-```text
-archive census -> target selection -> light curve -> transit search
-               -> automated vetting -> injection/recovery -> human review
-               -> independent follow-up
-```
+### WP3 — SPORES-HWO II: long-baseline RV robustness
+When the consolidated public tables are accessible, reproduce selected published companion-sensitivity maps and test their robustness to eccentric injections, correlated stellar noise, and leave-one-instrument-out experiments.
 
-Injection–recovery is essential: a non-detection is scientifically interpretable only after the search completeness is measured.
+This is **not** a second generic planet search.
 
-## Quick start
+### WP4 — TESS: photometric context and temporal validation
+Use recent TESS releases for stellar rotation/activity context, transit ephemerides, and out-of-sample temporal validation. Sector 106 can serve as a mature control for Sector 107 while weekly FFI ingestion is still evolving.
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-pip install -e .[tess,test]
-pytest -q
-```
+### WP5 — Atmospheric reproducibility
+Treat JWST/HST **Rocky Worlds** products and the NASA Exoplanet Archive atmospheric-spectroscopy collection as independent evidence streams. The scientific question is reproducibility: how much additional inter-visit, inter-reduction, or inter-instrument variance is required for published spectra/eclipses to be mutually consistent?
 
-Run a live archive census without downloading light curves:
+This work package is statistically separate from the RV likelihood unless a target-specific physical model explicitly justifies a joint analysis.
 
-```bash
-python -m exolab.cli census
-python -m exolab.cli candidates --limit 20 --max-tmag 11.5 --max-radius 4
-```
+### WP6 — Gaia astrometry interface
+Use Gaia DR3/current products where appropriate and design a versioned adapter for Gaia DR4 **only after DR4 is public and its final schema is verified**. Future astrometry can convert RV minimum masses into stronger orbit/mass constraints, but no present result will depend on unreleased DR4 data.
 
-Run the synthetic end-to-end demonstration:
+## Why these pieces belong in one project
 
-```bash
-python -m exolab.cli demo --output outputs/demo
-```
+The common object is not a particular telescope. It is the **credibility of an exoplanet inference**.
 
-## Candidate-search guardrails
+    archive products
+        ↓
+    identity + provenance
+        ↓
+    quality control
+        ↓
+    instrument / stellar nuisance model
+        ↓
+    signal search or known-signal fit
+        ↓
+    null tests + injection/recovery
+        ↓
+    cross-wavelength / cross-epoch / cross-archive checks
+        ↓
+    robustness statement
+        ↓
+    reproducible figure, table, and machine-readable result
 
-- Prefer `PDCSAP_FLUX`, but inspect `SAP_FLUX`, quality flags and target pixels when a signal matters.
-- Record the TESS sector and pipeline provenance; reprocessed sectors can produce different TCE sets.
-- Reject or flag period harmonics, odd/even depth differences, secondary eclipses and too-few-transit events.
-- Inspect difference images and nearby Gaia sources before attributing a dip to the intended star.
-- Cross-match NASA Exoplanet Archive TOIs/TCEs, ExoFOP and SIMBAD before calling a signal new.
-- Publish null results and completeness maps, not only attractive detections.
-- Never describe a candidate as a planet without appropriate validation or confirmation.
+The repository must never combine heterogeneous measurements merely because they are available. Every cross-archive join needs a stated physical reason.
 
-## Public data foundations
+## Scientific guardrails
 
-- [NASA Exoplanet Archive TAP](https://exoplanetarchive.ipac.caltech.edu/docs/TAP/usingTAP.html) — confirmed planets and the live TOI table.
-- [MAST TESScut API](https://mast.stsci.edu/tesscut/docs/) — cutouts from calibrated TESS full-frame images.
-- [TESS data products](https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html) — light curves, target pixels, FFIs and validation products.
-- [Lightkurve transit-search tutorial](https://lightkurve.github.io/lightkurve/tutorials/3-science-examples/exoplanets-identifying-transiting-planet-signals.html) — an accessible BLS introduction.
-- Hippke & Heller (2019), [Transit Least Squares](https://arxiv.org/abs/1901.02015) — a limb-darkened search algorithm and injection–recovery comparison.
-- Jenkins et al. (2016), [TESS SPOC pipeline](https://heasarc.gsfc.nasa.gov/docs/tess/docs/jenkinsSPIE2016-copyright.pdf) — the mission pipeline and its validation diagnostics.
+- A periodic signal is not automatically a planet.
+- Improved residual RMS is not automatically improved inference.
+- A Gaussian process is not automatically a better activity model.
+- A near-infrared activity amplitude is not assumed to be smaller than its optical counterpart.
+- A non-detection is interpreted only after completeness is measured.
+- A candidate is not described as confirmed without appropriate independent evidence.
+- Archive display values are not substituted for publication-native quantities when the archive warns against that use.
+- Pipeline versions, instrument upgrades, time systems, and zero points are part of the model, not footnotes.
+- No result is labelled novel until its exact question has passed a literature audit.
+- No fabricated or demonstration data may appear in a science-results directory.
 
-As of 16 August 2026, a live TAP census returned 6,336 confirmed planets, 8,113 TOI rows and 4,927 TOIs with the ExoFOP working-group disposition `PC`. Those counts are snapshots; the notebook queries them again each time it runs.
+## Current public-data anchors
 
-## Portfolio research programme
+| Stream | Current role | Access state |
+|---|---|---|
+| NEID Earth Twin Survey III | Core EPRV benchmark | public |
+| ESO NIRPS Phase-3 stream | NIR RV / chromaticity | public, dynamic |
+| HARPS archive | optical RV comparison | public products available by target |
+| SPORES-HWO II | long-baseline robustness | VizieR tables scheduled after 2026-10-04; verify alternate official deposit before use |
+| TESS S106/S107 | photometric/activity context | S107 ingestion still evolving on 2026-09-23 |
+| Rocky Worlds HLSP | repeated rocky-planet eclipse + UV context | public, actively updated |
+| NASA Exoplanet Archive atmospheric spectra | cross-study reproducibility | public |
+| Gaia DR3 | current astrometric context | public |
+| Gaia DR4 | future extension only | not treated as public until verified |
 
-[`research/PORTFOLIO_DEEPENING_MATRIX.md`](research/PORTFOLIO_DEEPENING_MATRIX.md) maps each of the existing 31 exoplanet reports to a distinct quantitative extension. The shared comparison layer is intentional, but each target receives a different lead question.
+See [research/DATA_RELEASE_REGISTRY.md](research/DATA_RELEASE_REGISTRY.md) for versioned source notes and access gates.
 
-Merged work and the exact cross-session handoff are tracked in
-[`research/PORTFOLIO_PROGRESS.md`](research/PORTFOLIO_PROGRESS.md). Five target
-upgrades are complete; LHS 475 b is the next recommended spectral-robustness
-case.
+## Repository map
 
-## Citation and authorship
+    open-exoplanet-discovery-lab/
+    ├── configs/                    archive/source contracts and analysis configs
+    ├── data/                       local data only; raw archive payloads not committed by default
+    ├── docs/                       architecture, web interface, reproducibility docs
+    ├── notebooks/                  exploration only; canonical science lives in src/
+    ├── outputs/                    generated tables/figures, reproducible from manifests
+    ├── research/                   hypotheses, literature gates, statistical analysis plans
+    ├── src/exolab/                 reusable Python science package
+    ├── tests/                      scientific invariants + software tests
+    └── web/                        scientist-facing React/TypeScript interface, added in staged build
 
-Developed by **Biswajit Jana** as an independent open-science project. Cite the archive products and papers associated with every dataset in addition to this software.
+Notebooks are for explanation and exploratory checks; they are not the source of truth.
+
+## A-to-Z build reference
+
+The complete project lifecycle is maintained in [research/A_TO_Z_BLUEPRINT.md](research/A_TO_Z_BLUEPRINT.md).
+
+The first milestones are:
+
+- **M0 — frozen archive census and manifests**
+- **M1 — acquisition/provenance layer**
+- **M2 — EPRV and activity diagnostics**
+- **M3 — joint / chromatic modelling**
+- **M4 — injection–recovery and null tests**
+- **M5 — population and cross-archive analysis**
+- **M6 — paper-quality reproducibility release + research interface**
+
+No later milestone is allowed to silently change the M0 inclusion rules. Any change requires a new manifest version.
+
+## Web research interface
+
+The website is a **research interface**, not a dashboard substitute for the science pipeline.
+
+It will use a custom React/TypeScript implementation with Motion for restrained transitions and interaction. Motion, Framer, 21st.dev, and the UI/UX Pro Max skill are design references only; components and layouts will not be copied wholesale.
+
+The interface must expose target-level evidence pages, provenance drawers, RV/activity/window-function/periodogram/posterior views, completeness maps, optical/NIR coherence comparisons, transit/rotation context, atmospheric repeatability panels, uncertainty and null-test status by default, primary-source links, reduced-motion support, and a paper mode with static citable figures.
+
+See [docs/WEB_RESEARCH_INTERFACE.md](docs/WEB_RESEARCH_INTERFACE.md).
+
+## Reproducibility target
+
+The intended end state is a cloneable environment in which a frozen manifest drives scripted archive acquisition, checksum verification, deterministic preprocessing, analysis, validation/null tests, and regeneration of figures, tables, and machine-readable results.
+
+Large third-party archive data should normally be downloaded from the authoritative source rather than mirrored in Git.
+
+## Reference sources
+
+- NEID / NETS III paper: https://arxiv.org/abs/2506.23704
+- ESO NIRPS Phase-3 DOI: https://doi.org/10.18727/archive/92
+- ESO NIRPS DRS issue notice: https://archive.eso.org/cms/eso-archive-news/issue-on-reduced-nirps-data.html
+- Rocky Worlds HLSP: https://archive.stsci.edu/hlsp/rocky-worlds
+- NASA Exoplanet Archive: https://exoplanetarchive.ipac.caltech.edu/
+- TESS archive holdings: https://outerspace.stsci.edu/spaces/TESS/pages/35094700/TESS%2BHoldings%2BAvailable%2Bby%2BMAST%2BService
+- Gaia: https://www.cosmos.esa.int/web/gaia/
+
+## Authorship
+
+**Biswajit Jana**  
+Independent/open-science research project.
+
+Cite the original archives, data releases, software, and scientific papers associated with every result in addition to this repository.
 
 ## License
 
-MIT. Archive data retain their original acknowledgements and citation requirements.
+Software in this repository is MIT-licensed unless a file states otherwise. External archive data retain their original licences, access policies, acknowledgements, and citation requirements.
