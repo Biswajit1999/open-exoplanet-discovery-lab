@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "open-exoplanet-discovery-lab"
-version = "0.2.0"
+version = "0.3.0"
 description = "A provenance-first multi-archive exoplanet and EPRV robustness research framework"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -19,7 +19,17 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+archives = ["astroquery>=0.4.7"]
 tess = ["lightkurve>=2.4", "astroquery>=0.4.7", "transitleastsquares>=1.0.31"]
+inference = ["emcee>=3.1", "dynesty>=2.1", "celerite2>=0.3"]
+full = [
+  "astroquery>=0.4.7",
+  "lightkurve>=2.4",
+  "transitleastsquares>=1.0.31",
+  "emcee>=3.1",
+  "dynesty>=2.1",
+  "celerite2>=0.3",
+]
 test = ["pytest>=7.4"]
 
 [project.scripts]
