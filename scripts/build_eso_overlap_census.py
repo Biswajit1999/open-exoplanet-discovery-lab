@@ -1,12 +1,9 @@
 """Build a public NIRPS/HARPS metadata overlap census from ESO TAP.
 
-The census starts from public NIRPS Phase-3/ObsCore products. HARPS searches are
-coordinate based rather than name based, and independent targets are queried in
-a bounded worker pool to keep the full census practical without hiding query
-errors.
-
-This is metadata-level census work. Precision-RV science still requires FITS
-header / PROCSOFT verification and product-specific RV extraction.
+The census starts from public NIRPS products. HARPS searches are coordinate
+based rather than name based, and independent targets are queried in a bounded
+worker pool. This is a metadata-level census; precision-RV science still
+requires product-level FITS/PROCSOFT verification and RV extraction.
 """
 
 from __future__ import annotations
@@ -34,7 +31,12 @@ def unique_epochs(frame: pd.DataFrame) -> np.ndarray:
     return np.unique(np.round(values, 8))
 
 
-def query_harps(row: object, radius_arcsec: float, timeout: int, available_columns: list[str]) -> tuple[object, pd.DataFrame, str]:
+def query_harps(
+    row: object,
+    radius_arcsec: float,
+    timeout: int,
+    available_columns: list[str],
+) -> tuple[object, pd.DataFrame, str]:
     client = ESOArchiveClient(timeout=timeout)
     query = target_instrument_query(
         "HARPS",
@@ -47,6 +49,13 @@ def query_harps(row: object, radius_arcsec: float, timeout: int, available_colum
         return row, client.query(query), ""
     except Exception as exc:
         return row, pd.DataFrame(), repr(exc)
+
+
+def product_id_column(frame: pd.DataFrame) -> str:
+    for name in ("dp_id", "obs_publisher_did", "obs_id"):
+        if name in frame.columns:
+            return name
+    raise RuntimeError("ESO ObsCore result lacks dp_id, obs_publisher_did and obs_id")
 
 
 def main() -> int:
@@ -63,9 +72,23 @@ def main() -> int:
     client = ESOArchiveClient(timeout=args.timeout)
 
     available_columns = client.obscore_columns()
-    (output / "eso_obscore_columns.json").write_text(\n        json.dumps(sorted(available_columns), indent=2) + "\\n", encoding="utf-8"\n    )
-    nirps_query = instrument_inventory_query("NIRPS", available_columns=available_columns)
+    (output / "eso_obscore_columns.json").write_text(
+        json.dumps(sorted(available_columns), indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    nirps_query = instrument_inventory_query(
+        "NIRPS",
+        available_columns=available_columns,
+    )
     nirps = client.query(nirps_query)
+    if nirps.empty:
+        raise RuntimeError(
+            "ESO ObsCore returned no public rows with instrument_name='NIRPS'; "
+            "the live instrument naming/schema must be inspected before proceeding"
+        )
+
+    pid = product_id_column(nirps)
     nirps_path = output / "nirps_public_products.csv"
     nirps.to_csv(nirps_path, index=False)
 
@@ -75,7 +98,7 @@ def main() -> int:
         .agg(
             s_ra=("s_ra", "median"),
             s_dec=("s_dec", "median"),
-            n_nirps_products=(product_id_column, "nunique"),
+            n_nirps_products=(pid, "nunique"),
             nirps_t_min=("t_min", "min"),
             nirps_t_max=("t_max", "max"),
         )
@@ -89,17 +112,22 @@ def main() -> int:
     workers = max(1, min(int(args.workers), 12))
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = [
-            pool.submit(query_harps, row, args.radius_arcsec, args.timeout, available_columns)
+            pool.submit(
+                query_harps,
+                row,
+                args.radius_arcsec,
+                args.timeout,
+                available_columns,
+            )
             for row in target_rows.itertuples(index=False)
         ]
         for future in as_completed(futures):
             raw_results.append(future.result())
 
-    # Deterministic output ordering despite concurrent archive queries.
     raw_results.sort(key=lambda item: str(item[0].target_name))
-
     harps_frames: list[pd.DataFrame] = []
     summary_rows: list[dict[str, object]] = []
+
     for row, harps, query_error in raw_results:
         if not harps.empty:
             harps = harps.copy()
@@ -114,13 +142,15 @@ def main() -> int:
             if th.size and tn.size
             else {"1h": 0, "6h": 0, "1d": 0, "3d": 0, "7d": 0}
         )
+
+        hpid = product_id_column(harps) if not harps.empty else None
         summary_rows.append(
             {
                 "target_name": row.target_name,
                 "s_ra": row.s_ra,
                 "s_dec": row.s_dec,
                 "n_nirps_products": int(row.n_nirps_products),
-                "n_harps_products": int(harps[product_id_column].nunique()) if not harps.empty and product_id_column in harps else 0,
+                "n_harps_products": int(harps[hpid].nunique()) if hpid else 0,
                 "n_nirps_epochs": int(tn.size),
                 "n_harps_epochs": int(th.size),
                 "nirps_first_mjd": float(np.min(tn)) if tn.size else np.nan,
@@ -136,7 +166,11 @@ def main() -> int:
             }
         )
 
-    harps_all = pd.concat(harps_frames, ignore_index=True) if harps_frames else pd.DataFrame()
+    harps_all = (
+        pd.concat(harps_frames, ignore_index=True)
+        if harps_frames
+        else pd.DataFrame()
+    )
     harps_path = output / "harps_public_matches.csv"
     harps_all.to_csv(harps_path, index=False)
 
@@ -147,7 +181,10 @@ def main() -> int:
     files = [
         FileRecord.from_path(nirps_path, source_product_id="NIRPS-ObsCore"),
         FileRecord.from_path(harps_path, source_product_id="HARPS-cone-matches"),
-        FileRecord.from_path(summary_path, source_product_id="NIRPS-HARPS-overlap-summary"),
+        FileRecord.from_path(
+            summary_path,
+            source_product_id="NIRPS-HARPS-overlap-summary",
+        ),
     ]
     record = DatasetRecord.create(
         source_id="nirps_harps_overlap",
@@ -158,7 +195,7 @@ def main() -> int:
         selection_rules={
             "nirps_instrument_name": "NIRPS",
             "harps_instrument_name": "HARPS",
-            "public_only": True,
+            "public_only_when_data_rights_exposed": True,
             "coordinate_match_radius_arcsec": args.radius_arcsec,
             "epoch_dedup_round_days": 8,
             "simultaneity_windows": ["1h", "6h", "1d", "3d", "7d"],
@@ -178,10 +215,22 @@ def main() -> int:
         "nirps_products": int(len(nirps)),
         "nirps_targets_in_census": int(len(target_rows)),
         "targets_queried": int(len(summary)),
-        "targets_with_harps_products": int((summary["n_harps_products"] > 0).sum()) if len(summary) else 0,
-        "targets_with_1h_pairs": int((summary["pair_1h"] > 0).sum()) if len(summary) else 0,
-        "targets_with_1d_pairs": int((summary["pair_1d"] > 0).sum()) if len(summary) else 0,
-        "query_errors": int((summary["query_error"].astype(str).str.len() > 0).sum()) if len(summary) else 0,
+        "targets_with_harps_products": int(
+            (summary["n_harps_products"] > 0).sum()
+        )
+        if len(summary)
+        else 0,
+        "targets_with_1h_pairs": int((summary["pair_1h"] > 0).sum())
+        if len(summary)
+        else 0,
+        "targets_with_1d_pairs": int((summary["pair_1d"] > 0).sum())
+        if len(summary)
+        else 0,
+        "query_errors": int(
+            (summary["query_error"].astype(str).str.len() > 0).sum()
+        )
+        if len(summary)
+        else 0,
         "manifest_hash": record.manifest_hash,
     }
     (output / "census_summary.json").write_text(
