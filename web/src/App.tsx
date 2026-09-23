@@ -1,6 +1,11 @@
 import { motion, useReducedMotion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 import ResultsSection from "./ResultsSection"
+import ResearchWorkbench, {
+  ProvenanceDialog,
+  type LabData,
+  type ProvenanceRecord,
+} from "./ResearchWorkbench"
 
 type Source = {
   id: string
@@ -66,6 +71,11 @@ function SourceRow({ source }: { source: Source }) {
 function App() {
   const reduced = useReducedMotion()
   const [data, setData] = useState<ProjectData | null>(null)
+  const [lab, setLab] = useState<LabData | null>(null)
+  const [selectedProvenance, setSelectedProvenance] = useState<ProvenanceRecord | null>(null)
+  const [paperMode, setPaperMode] = useState(
+    () => new URL(window.location.href).searchParams.get("mode") === "paper",
+  )
 
   useEffect(() => {
     fetch(import.meta.env.BASE_URL + "data/project.json")
@@ -76,6 +86,40 @@ function App() {
       .then(setData)
       .catch(() => setData(null))
   }, [])
+
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + "data/lab.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("Research interface data unavailable")
+        return response.json()
+      })
+      .then((payload: LabData) => {
+        if (payload.schema_version !== "1.0.0") {
+          throw new Error(`Unsupported research-interface schema: ${payload.schema_version}`)
+        }
+        setLab(payload)
+      })
+      .catch(() => setLab(null))
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("paper-mode", paperMode)
+    return () => document.documentElement.classList.remove("paper-mode")
+  }, [paperMode])
+
+  function togglePaperMode() {
+    const next = !paperMode
+    setPaperMode(next)
+    const url = new URL(window.location.href)
+    if (next) url.searchParams.set("mode", "paper")
+    else url.searchParams.delete("mode")
+    window.history.replaceState({}, "", url)
+  }
+
+  function inspectProvenance(id: string) {
+    const record = lab?.provenance.find((item) => item.id === id) ?? null
+    setSelectedProvenance(record)
+  }
 
   const sourceCounts = useMemo(() => {
     if (!data) return { usable: 0, gated: 0 }
@@ -96,11 +140,14 @@ function App() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#results">Results</a>
-          <a href="#evidence">Data</a>
-          <a href="#methods">Methods</a>
-          <a href="#provenance">Reproduce</a>
+          <a href="#atlas">Targets</a>
+          <a href="#completeness">Completeness</a>
+          <a href="#provenance-index">Provenance</a>
         </nav>
-        <a className="githubLink" href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">View repository <span aria-hidden="true">↗</span></a>
+        <div className="topbarActions">
+          <button className="paperModeButton" onClick={togglePaperMode} aria-pressed={paperMode}>{paperMode ? "Exit paper mode" : "Paper mode"}</button>
+          <a className="githubLink" href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">Repository <span aria-hidden="true">↗</span></a>
+        </div>
       </header>
 
       <section className="hero" id="main-content">
@@ -143,10 +190,14 @@ function App() {
         <div><strong>41</strong><span>NETS III stars</span></div>
         <div><strong>5,920</strong><span>public RV epochs</span></div>
         <div><strong>1,826</strong><span>atmosphere records</span></div>
-        <div><strong>47</strong><span>scientific tests passing</span></div>
+        <div><strong>48</strong><span>scientific tests passing</span></div>
       </section>
 
-      <ResultsSection />
+      <ResultsSection onInspect={inspectProvenance} />
+
+      {lab ? <ResearchWorkbench data={lab} onInspect={inspectProvenance} /> : (
+        <section className="labUnavailable" role="status">The research-interface data contract could not be loaded. The static release figures remain available above.</section>
+      )}
 
       <section className="questionSection">
         <p className="sectionKicker">Research question</p>
@@ -202,6 +253,7 @@ function App() {
         <div><strong>Open Exoplanet Evidence Lab</strong><span>Biswajit Jana · independent open science</span></div>
         <p>Public astronomical data retain their original citation and acknowledgement requirements.</p>
       </footer>
+      <ProvenanceDialog record={selectedProvenance} onClose={() => setSelectedProvenance(null)} />
     </main>
   )
 }

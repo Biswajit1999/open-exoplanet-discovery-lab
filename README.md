@@ -102,12 +102,15 @@ python scripts/run_validation_suite.py --output outputs/validation
 Build the research interface:
 
 ```bash
+PYTHONPATH=src python scripts/build_web_release_data.py
 cd web
 npm ci
 npm run build
 ```
 
-The current suite contains 47 scientific/software tests. The deterministic validation recovers its declared synthetic 2.4 m s⁻¹, 23.7 d signal and 0.7 optical/NIR amplitude ratio. Those values validate numerical behaviour only.
+The public interface provides a target atlas, exact numeric completeness grids, model-difference and held-out-era views, literature claim gates, result-level provenance records, shareable view state and a print-safe paper mode. Its browser data contract is generated only from the frozen result directories; publication-critical calculations stay in Python.
+
+The current suite contains 48 scientific/software tests. The deterministic validation recovers its declared synthetic 2.4 m s⁻¹, 23.7 d signal and 0.7 optical/NIR amplitude ratio. Those values validate numerical behaviour only.
 
 Canonical analysis entry points are:
 
@@ -117,6 +120,7 @@ scripts/run_nets_completeness.py
 scripts/build_eso_overlap_census.py
 scripts/run_tess_temporal.py
 scripts/run_atmosphere_reproducibility.py
+scripts/build_web_release_data.py
 ```
 
 Every result directory contains its configuration, provenance, checksums or query manifest, and machine-readable tables. Raw third-party archive payloads are not mirrored by default.
