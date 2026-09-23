@@ -1,0 +1,57 @@
+{
+  "access_time_utc": "2026-09-23T12:49:50.813740Z",
+  "archive": "ESO Science Archive TAP",
+  "files": [
+    {
+      "path": "results\\eso_nirps_harps_2026-09-23\\nirps_public_products.csv",
+      "pipeline_version": null,
+      "sha256": "609ead5a857786550f1b0f778ec741a445ba10d1be9f4ba9f3eb92d6b7457a04",
+      "size_bytes": 10592355,
+      "source_product_id": "NIRPS-ObsCore",
+      "source_url": null
+    },
+    {
+      "path": "results\\eso_nirps_harps_2026-09-23\\harps_public_matches.csv",
+      "pipeline_version": null,
+      "sha256": "df14d72dd68681cc7257c226fb73a796960adada73e46226bda1dbdc0e7d503d",
+      "size_bytes": 4491101,
+      "source_product_id": "HARPS-cone-matches",
+      "source_url": null
+    },
+    {
+      "path": "results\\eso_nirps_harps_2026-09-23\\nirps_harps_overlap_summary.csv",
+      "pipeline_version": null,
+      "sha256": "0f6e560c6f3462546214c2ed0e05cce0473b77d84535e4e99bc839cb6ddb1dab",
+      "size_bytes": 94757,
+      "source_product_id": "NIRPS-HARPS-overlap-summary",
+      "source_url": null
+    }
+  ],
+  "manifest_hash": "9577f94051f1f339bf0b8bb38daaa3fb42f78052c300b6e2c0f0a942d3592c0a",
+  "notes": [
+    "ObsCore product/epoch census; it is not a precision-RV table.",
+    "FITS PROCSOFT must be inspected before using NIRPS velocities.",
+    "The documented DRS 3.2.6 precision-RV interval remains excluded by policy."
+  ],
+  "product_ids": [],
+  "query": "\n        SELECT target_name,s_ra,s_dec,t_min,t_max,t_exptime,dp_id,obs_id,obs_publisher_did,obs_collection,instrument_name,dataproduct_type,dataproduct_subtype,calib_level,obs_release_date,access_url,access_estsize\n        FROM ivoa.ObsCore\n        WHERE instrument_name = 'NIRPS'\n        \n    ",
+  "selection_rules": {
+    "coordinate_match_radius_arcsec": 5.0,
+    "epoch_dedup_round_days": 8,
+    "harps_instrument_name": "HARPS",
+    "max_targets": 0,
+    "nirps_instrument_name": "NIRPS",
+    "public_only_when_data_rights_exposed": true,
+    "retry_attempts": 5,
+    "simultaneity_windows": [
+      "1h",
+      "6h",
+      "1d",
+      "3d",
+      "7d"
+    ],
+    "workers": 2
+  },
+  "source_id": "nirps_harps_overlap",
+  "source_state": "census"
+}

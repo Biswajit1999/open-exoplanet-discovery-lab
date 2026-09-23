@@ -1,173 +1,146 @@
 # Open Exoplanet Evidence Lab
 
-**A provenance-first 2026 research programme for extreme-precision radial velocity, stellar activity, transit context, atmospheric reproducibility, and future astrometric cross-validation.**
+[![tests](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/tests.yml)
+[![science validation](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml)
+[![web build](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml)
 
-Developed by **Biswajit Jana**.
+**Biswajit Jana · public-data research release 0.3.0 · 23 September 2026**
 
-> This repository is being rebuilt as a scientist-facing research platform. The objective is not to maximise the number of plots or candidate labels. The objective is to quantify how strongly exoplanet conclusions depend on instrumental systematics, stellar variability, cadence, wavelength, reduction provenance, and cross-archive evidence.
+[Research interface](https://biswajit1999.github.io/open-exoplanet-discovery-lab/) · [validated result record](research/RESULTS_2026-09-23.md) · [data-release registry](research/DATA_RELEASE_REGISTRY.md)
 
-## Central scientific question
+## Abstract
 
-**How stable are exoplanet inferences and survey-completeness claims when instrumental zero points, stellar activity, chromatic RV behaviour, temporal sampling, and independent observing modalities are modelled explicitly rather than treated as secondary corrections?**
+The Open Exoplanet Evidence Lab tests whether exoplanet inferences remain stable when instrument eras, stellar activity, cadence, wavelength and reduction provenance are modelled explicitly. This release completes four public-data studies: a NETS III extreme-precision radial-velocity completeness experiment, an ESO NIRPS × HARPS archive census, a temporally calibrated TESS activity comparison and a 55 Cnc e atmospheric-reduction reproducibility analysis. It makes **no new-planet claim**.
 
-The project separates three things that are often mixed together:
+The central result is methodological but quantitative: a nuisance model can improve short-period recovery while suppressing long-period sensitivity. Across 40 NETS III stars, adding run and activity terms changes mean completeness by only +0.0205, yet individual population-grid cells differ by as much as 0.4542. At 500 d, the richer model removes substantial injected signal power. A model that lowers residual scatter is therefore not automatically a better detection model.
 
-1. **measurement** — what an archive actually reports;
-2. **inference** — what model converts those measurements into a planet or non-detection statement;
-3. **robustness** — whether that statement survives alternative but defensible assumptions.
+## Validated results
 
-A positive result may be a more reliable planet constraint. A scientifically useful null result may be evidence that a simpler published method is already robust.
+### NETS III: completeness depends on the nuisance model
 
-## Programme architecture
+The public NETS III tables contain 5,920 RV rows for 41 survey stars. Forty stars have at least 20 complete RV, uncertainty, run and S-index rows, supplying 5,782 measurements to the injection/recovery experiment.
 
-This is one repository with multiple scientifically isolated work packages that share acquisition, provenance, statistics, validation, and reporting infrastructure.
+Three declared models were tested on a grid of six periods (5–500 d), six semi-amplitudes (0.5–5 m s⁻¹), six phases and 100 deterministic residual permutations per target and model:
 
-### WP0 — Archive registry and provenance
-Create frozen machine-readable manifests for every dataset, recording query, access date, archive identifier, DOI, pipeline/reduction version, file checksum, time system, units, quality flags, and selection rules.
+1. one global offset;
+2. run offsets plus per-run white jitter;
+3. run offsets, per-run jitter and a linear S-index term.
 
-### WP1 — NETS III: EPRV completeness under realistic noise models
-Use the public **NEID Earth Twin Survey III** RV and activity time series to measure how planet-detection completeness changes when zero-point epochs, activity correlations, temporal covariance, and held-out instrumental eras are included.
+![NETS III population completeness under baseline and era-plus-activity models](web/public/figures/nets3_population_completeness.png)
 
-Primary output: baseline completeness C(P,K) versus instrument/activity-aware completeness C*(P,K), reported as Delta C(P,K), K50(P), and K90(P).
+| Period | Baseline K50 | Run-offset K50 | Run + activity K50 |
+|---:|---:|---:|---:|
+| 5 d | 2.00 m s⁻¹ | 1.57 m s⁻¹ | 1.43 m s⁻¹ |
+| 10 d | 1.98 m s⁻¹ | 1.58 m s⁻¹ | 1.36 m s⁻¹ |
+| 30 d | 1.93 m s⁻¹ | 1.56 m s⁻¹ | 1.43 m s⁻¹ |
+| 100 d | 2.15 m s⁻¹ | 1.77 m s⁻¹ | 1.52 m s⁻¹ |
+| 300 d | 2.38 m s⁻¹ | 4.04 m s⁻¹ | 3.80 m s⁻¹ |
+| 500 d | 2.58 m s⁻¹ | not reached | not reached |
 
-### WP2 — NIRPS × HARPS: optical/NIR coherence
-Build a verified overlap sample and test whether RV signals remain coherent in period, phase, and semi-amplitude between optical HARPS and near-infrared NIRPS measurements.
+K90 is deliberately not reported as a number: the tested amplitude grid does not bracket 90% population recovery. Leave-one-run-out projection retains a median 98.6% of a 5 d signal, 95.3% at 100 d, 88.4% at 300 d and 89.2% at 500 d; the worst-phase median falls to 69.6% at 500 d.
 
-This work package is explicitly sensitive to pipeline provenance. NIRPS products reduced with DRS 3.2.6 between 2025-04-01 and 2025-07-24 must not be used for sub-10 m/s science; corrected Phase-3 products were reprocessed with DRS 3.2.7.
+The descriptive sample has a median 92 epochs per target, 1,001.95 d baseline, 0.34 m s⁻¹ quoted internal uncertainty and a 13.05% median change between raw and run-demeaned weighted RMS. Run de-meaning is not treated as harmless cleaning because it can absorb astrophysical power.
 
-### WP3 — SPORES-HWO II: long-baseline RV robustness
-When the consolidated public tables are accessible, reproduce selected published companion-sensitivity maps and test their robustness to eccentric injections, correlated stellar noise, and leave-one-instrument-out experiments.
+Machine-readable outputs: [`results/nets3_completeness_2026-09-23/`](results/nets3_completeness_2026-09-23/)
 
-This is **not** a second generic planet search.
+### ESO NIRPS × HARPS: a large overlap, not yet a chromatic-RV result
 
-### WP4 — TESS: photometric context and temporal validation
-Use recent TESS releases for stellar rotation/activity context, transit ephemerides, and out-of-sample temporal validation. Sector 106 can serve as a mature control for Sector 107 while weekly FFI ingestion is still evolving.
+A complete live ESO TAP run returned 34,751 public NIRPS products, matching an independent count query. Those products group into 852 **archive target identities**. Coordinate queries found public HARPS products for 696 identities, including 662 with at least one NIRPS/HARPS epoch pair within one hour and 664 within one day. All 852 target queries completed with zero errors.
 
-### WP5 — Atmospheric reproducibility
-Treat JWST/HST **Rocky Worlds** products and the NASA Exoplanet Archive atmospheric-spectroscopy collection as independent evidence streams. The scientific question is reproducibility: how much additional inter-visit, inter-reduction, or inter-instrument variance is required for published spectra/eclipses to be mutually consistent?
+These counts describe archive products and labels, not a deduplicated stellar catalogue or homogeneous RV time series. A precision optical/NIR comparison still requires FITS-level product inspection, duplicate handling, and DRS/PROCSOFT verification. NIRPS products from the documented DRS 3.2.6 affected interval must not be used for precision-RV science unless corrected reprocessing is verified. No chromatic semi-amplitude conclusion is made in this release.
 
-This work package is statistically separate from the RV likelihood unless a target-specific physical model explicitly justifies a joint analysis.
+Machine-readable outputs: [`results/eso_nirps_harps_2026-09-23/`](results/eso_nirps_harps_2026-09-23/)
 
-### WP6 — Gaia astrometry interface
-Use Gaia DR3/current products where appropriate and design a versioned adapter for Gaia DR4 **only after DR4 is public and its final schema is verified**. Future astrometry can convert RV minimum masses into stronger orbit/mass constraints, but no present result will depend on unreleased DR4 data.
+### TESS: analytic significance does not survive the correlated null
 
-## Why these pieces belong in one project
+Public SPOC 120 s light curves for HD 10780 were split into control sectors 24–25 and later test sectors 85–86. With `QUALITY == 0`, finite positive uncertainties, a 7-MAD clip and 30-minute weighted bins, the strongest generalized Lomb–Scargle periods are 5.762 d and 6.094 d.
 
-The common object is not a particular telescope. It is the **credibility of an exoplanet inference**.
+![HD 10780 TESS temporal activity comparison](web/public/figures/tess_temporal_context.png)
 
-    archive products
-        ↓
-    identity + provenance
-        ↓
-    quality control
-        ↓
-    instrument / stellar nuisance model
-        ↓
-    signal search or known-signal fit
-        ↓
-    null tests + injection/recovery
-        ↓
-    cross-wavelength / cross-epoch / cross-archive checks
-        ↓
-    robustness statement
-        ↓
-    reproducible figure, table, and machine-readable result
+The analytic false-alarm probabilities are extremely small, but sector-preserving circular shifts give p = 0.950 for the control peak and p = 0.0149 for the test peak. The fixed-control-period phase difference is −1.716 rad and the fitted test/control amplitude ratio is 1.113. This is activity context only: it is neither a planet detection nor a secure stellar-rotation measurement.
 
-The repository must never combine heterogeneous measurements merely because they are available. Every cross-archive join needs a stated physical reason.
+Machine-readable outputs: [`results/tess_hd10780_2026-09-23/`](results/tess_hd10780_2026-09-23/)
 
-## Scientific guardrails
+### 55 Cnc e: the reduction pipeline is part of the measurement
 
-- A periodic signal is not automatically a planet.
-- Improved residual RMS is not automatically improved inference.
-- A Gaussian process is not automatically a better activity model.
-- A near-infrared activity amplitude is not assumed to be smaller than its optical counterpart.
-- A non-detection is interpreted only after completeness is measured.
-- A candidate is not described as confirmed without appropriate independent evidence.
-- Archive display values are not substituted for publication-native quantities when the archive warns against that use.
-- Pipeline versions, instrument upgrades, time systems, and zero points are part of the model, not footnotes.
-- No result is labelled novel until its exact question has passed a literature audit.
-- No fabricated or demonstration data may appear in a science-results directory.
+The atmospheric metadata snapshot contains 1,826 spectrum records for 289 planets. The release analysis uses all 15 public Patel et al. (2024) NIRCam products for 55 Cnc e: five independent eclipse visits, two alternate reductions of each visit and five two-band products.
 
-## Current public-data anchors
+![55 Cnc e inter-visit and inter-reduction reproducibility](web/public/figures/atmosphere_reproducibility.png)
 
-| Stream | Current role | Access state |
-|---|---|---|
-| NEID Earth Twin Survey III | Core EPRV benchmark | public |
-| ESO NIRPS Phase-3 stream | NIR RV / chromaticity | public, dynamic |
-| HARPS archive | optical RV comparison | public products available by target |
-| SPORES-HWO II | long-baseline robustness | VizieR tables scheduled after 2026-10-04; verify alternate official deposit before use |
-| TESS S106/S107 | photometric/activity context | S107 ingestion still evolving on 2026-09-23 |
-| Rocky Worlds HLSP | repeated rocky-planet eclipse + UV context | public, actively updated |
-| NASA Exoplanet Archive atmospheric spectra | cross-study reproducibility | public |
-| Gaia DR3 | current astrometric context | public |
-| Gaia DR4 | future extension only | not treated as public until verified |
+Across the common 3.95363–4.91020 μm interval, the median absolute HANSOLO–stark band-mean difference is 64.03 ppm. Descriptive random-effects fits require 14.11 ppm additional inter-visit scatter for HANSOLO and 37.14 ppm for stark; the stark broadband series require 35.30 ppm at 2.12 μm and 41.03 ppm at 4.50 μm.
 
-See [research/DATA_RELEASE_REGISTRY.md](research/DATA_RELEASE_REGISTRY.md) for versioned source notes and access gates.
+The reductions share photons and the archive products do not publish a spectral covariance matrix. The comparison therefore bounds reduction and visit reproducibility; it does not establish atmospheric composition or assign an independent-pipeline significance.
 
-## Repository map
+Machine-readable outputs: [`results/atmosphere_55cnce_2026-09-23/`](results/atmosphere_55cnce_2026-09-23/)
 
-    open-exoplanet-discovery-lab/
-    ├── configs/                    archive/source contracts and analysis configs
-    ├── data/                       local data only; raw archive payloads not committed by default
-    ├── docs/                       architecture, web interface, reproducibility docs
-    ├── notebooks/                  exploration only; canonical science lives in src/
-    ├── outputs/                    generated tables/figures, reproducible from manifests
-    ├── research/                   hypotheses, literature gates, statistical analysis plans
-    ├── src/exolab/                 reusable Python science package
-    ├── tests/                      scientific invariants + software tests
-    └── web/                        scientist-facing React/TypeScript interface, added in staged build
+### HD 190360: a retained model-adequacy warning
 
-Notebooks are for explanation and exploratory checks; they are not the source of truth.
+A deliberately restricted circular, NEID-only fit at the published 88.69 d period returns K = 0.702 ± 0.048 m s⁻¹ with 4.435 m s⁻¹ residual weighted RMS, compared with approximately 1.48 m s⁻¹ in the published multi-instrument context. The discrepancy is retained as evidence that the restricted model is inadequate, not presented as a revised planet amplitude.
 
-## A-to-Z build reference
+## Evidence boundaries
 
-The complete project lifecycle is maintained in [research/A_TO_Z_BLUEPRINT.md](research/A_TO_Z_BLUEPRINT.md).
+- **Gaia DR4** remains gated. No result uses unreleased DR4 products or assumes a final archive schema.
+- **SPORES-HWO II** remains gated until the consolidated public tables are accessible and verified.
+- A recovered injected period is a sensitivity measurement, not a candidate classification.
+- Alternate reductions of the same photons are not independent observations.
+- Archive target identities are not automatically unique astrophysical objects.
+- Synthetic validation values test the software and are never reported as astronomical measurements.
 
-The first milestones are:
+## Reproduce the release
 
-- **M0 — frozen archive census and manifests**
-- **M1 — acquisition/provenance layer**
-- **M2 — EPRV and activity diagnostics**
-- **M3 — joint / chromatic modelling**
-- **M4 — injection–recovery and null tests**
-- **M5 — population and cross-archive analysis**
-- **M6 — paper-quality reproducibility release + research interface**
+Python 3.10–3.12 is supported. The website CI uses Node 22.
 
-No later milestone is allowed to silently change the M0 inclusion rules. Any change requires a new manifest version.
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e ".[test,archives,tess]"
+pytest -q
+python scripts/run_validation_suite.py --output outputs/validation
+```
 
-## Web research interface
+Build the research interface:
 
-The website is a **research interface**, not a dashboard substitute for the science pipeline.
+```bash
+cd web
+npm ci
+npm run build
+```
 
-It will use a custom React/TypeScript implementation with Motion for restrained transitions and interaction. Motion, Framer, 21st.dev, and the UI/UX Pro Max skill are design references only; components and layouts will not be copied wholesale.
+The current suite contains 47 scientific/software tests. The deterministic validation recovers its declared synthetic 2.4 m s⁻¹, 23.7 d signal and 0.7 optical/NIR amplitude ratio. Those values validate numerical behaviour only.
 
-The interface must expose target-level evidence pages, provenance drawers, RV/activity/window-function/periodogram/posterior views, completeness maps, optical/NIR coherence comparisons, transit/rotation context, atmospheric repeatability panels, uncertainty and null-test status by default, primary-source links, reduced-motion support, and a paper mode with static citable figures.
+Canonical analysis entry points are:
 
-See [docs/WEB_RESEARCH_INTERFACE.md](docs/WEB_RESEARCH_INTERFACE.md).
+```text
+scripts/build_public_snapshot.py
+scripts/run_nets_completeness.py
+scripts/build_eso_overlap_census.py
+scripts/run_tess_temporal.py
+scripts/run_atmosphere_reproducibility.py
+```
 
-## Reproducibility target
+Every result directory contains its configuration, provenance, checksums or query manifest, and machine-readable tables. Raw third-party archive payloads are not mirrored by default.
 
-The intended end state is a cloneable environment in which a frozen manifest drives scripted archive acquisition, checksum verification, deterministic preprocessing, analysis, validation/null tests, and regeneration of figures, tables, and machine-readable results.
+## Repository structure
 
-Large third-party archive data should normally be downloaded from the authoritative source rather than mirrored in Git.
+```text
+configs/     versioned source and analysis contracts
+research/    hypotheses, release registry and validated report
+scripts/     canonical acquisition and analysis entry points
+src/exolab/  reusable scientific package
+tests/       scientific invariants and software tests
+results/     frozen machine-readable release outputs
+web/         React/TypeScript research interface
+```
 
-## Reference sources
+## Data and software acknowledgements
 
-- NEID / NETS III paper: https://arxiv.org/abs/2506.23704
-- ESO NIRPS Phase-3 DOI: https://doi.org/10.18727/archive/92
-- ESO NIRPS DRS issue notice: https://archive.eso.org/cms/eso-archive-news/issue-on-reduced-nirps-data.html
-- Rocky Worlds HLSP: https://archive.stsci.edu/hlsp/rocky-worlds
-- NASA Exoplanet Archive: https://exoplanetarchive.ipac.caltech.edu/
-- TESS archive holdings: https://outerspace.stsci.edu/spaces/TESS/pages/35094700/TESS%2BHoldings%2BAvailable%2Bby%2BMAST%2BService
-- Gaia: https://www.cosmos.esa.int/web/gaia/
+This work uses public products and services from the NEID Earth Twin Survey, VizieR/CDS, the ESO Science Archive, MAST/TESS, the NASA Exoplanet Archive and the JWST/HST archive ecosystem. Consult [`research/DATA_RELEASE_REGISTRY.md`](research/DATA_RELEASE_REGISTRY.md) for release-specific source notes and access gates, and cite the original archives, data releases, software and scientific papers alongside this repository.
 
-## Authorship
+Software in this repository is MIT-licensed unless a file states otherwise. External archive data retain their original licences, access policies, acknowledgements and citation requirements.
 
-**Biswajit Jana**  
-Independent/open-science research project.
+## Author
 
-Cite the original archives, data releases, software, and scientific papers associated with every result in addition to this repository.
+**Biswajit Jana**
 
-## License
-
-Software in this repository is MIT-licensed unless a file states otherwise. External archive data retain their original licences, access policies, acknowledgements, and citation requirements.
+Independent open-science research project

@@ -1,0 +1,9 @@
+{
+  "atmosphere_reproducibility.png": "843c8c71a997a4cef291273d61ff17eee810f93ea0be2cea1369083d93a6b1af",
+  "broadband_visit_depths.csv": "2e7ff0588ceace3e0566c49ac5f35613d8e49835003bb832cd7c300eee652319",
+  "common_band_visit_means.csv": "fda84f22f486ee781a05f55eea07b6bf15bdf2bd60cfa7dddd30142b0bdcaabc",
+  "paired_pipeline_differences.csv": "f43b461bfed21e773914225e93b46cd94d1211a3c7706c12f80724eae7c549d7",
+  "source_provenance.csv": "e7e7ea124918e79c3ff5858a6b9b2214996ae43febe9e6ae4704c5ffe9e0d342",
+  "spectral_bins.csv": "2345616de8e0b6b116a23a8280c43f1876ec53247f0bcca7b8c9c5055d9828da",
+  "summary.json": "43e3c6560eaeefd7b9564ed53404bd5e3b06e5d94c829fd69681c0e503614877"
+}

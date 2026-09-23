@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-09-23T12:49:50.817835+00:00",
+  "manifest_hash": "9577f94051f1f339bf0b8bb38daaa3fb42f78052c300b6e2c0f0a942d3592c0a",
+  "nirps_products": 34751,
+  "nirps_products_count_query": 34751,
+  "nirps_targets_in_census": 852,
+  "query_errors": 0,
+  "targets_queried": 852,
+  "targets_with_1d_pairs": 664,
+  "targets_with_1h_pairs": 662,
+  "targets_with_harps_products": 696
+}

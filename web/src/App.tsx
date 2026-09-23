@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 import ResultsSection from "./ResultsSection"
 
@@ -20,104 +20,52 @@ type ProjectData = {
 }
 
 const statusLabels: Record<Source["status"], string> = {
-  ready: "Public / ready",
-  census: "Public / census",
-  active: "Public / evolving",
-  wait: "Access gated",
-  future: "Future adapter",
+  ready: "Ready",
+  census: "Census",
+  active: "Evolving",
+  wait: "Gated",
+  future: "Future",
 }
 
 function PipelineFlow({ reduced }: { reduced: boolean | null }) {
-  const stages = ["Archive", "Provenance", "QC", "Model", "Injection / recovery", "Cross-check", "Robustness"]
+  const stages = ["Archive", "Provenance", "Quality control", "Nuisance model", "Injection / recovery", "Cross-check", "Robustness"]
   return (
-    <div className="pipeline" aria-label="Scientific evidence pipeline">
+    <ol className="pipeline" aria-label="Scientific evidence pipeline">
       {stages.map((stage, index) => (
-        <div className="pipelineWrap" key={stage}>
-          <motion.div
-            className="pipelineStage"
-            initial={reduced ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: reduced ? 0 : index * 0.055, duration: 0.34 }}
-          >
-            <span className="pipelineIndex">{String(index + 1).padStart(2, "0")}</span>
-            <span>{stage}</span>
-          </motion.div>
-          {index < stages.length - 1 && <span className="pipelineArrow" aria-hidden="true">→</span>}
-        </div>
+        <motion.li
+          key={stage}
+          initial={reduced ? false : { opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: reduced ? 0 : index * 0.04, duration: 0.28 }}
+        >
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <strong>{stage}</strong>
+        </motion.li>
       ))}
-    </div>
+    </ol>
   )
 }
 
-function SourceCard({ source }: { source: Source }) {
+function SourceRow({ source }: { source: Source }) {
   return (
-    <article className="sourceCard">
-      <div className="sourceTopline">
-        <span className={"status status-" + source.status}>{statusLabels[source.status]}</span>
+    <article className="sourceRow">
+      <div className="sourceIdentity">
+        <span className={`status status-${source.status}`}>{statusLabels[source.status]}</span>
         <span className="sourceId">{source.id}</span>
       </div>
-      <h3>{source.name}</h3>
-      <p className="sourceRole">{source.role}</p>
-      <p>{source.detail}</p>
+      <div>
+        <h3>{source.name}</h3>
+        <p className="sourceRole">{source.role}</p>
+      </div>
+      <p className="sourceDetail">{source.detail}</p>
     </article>
-  )
-}
-
-function ProvenanceDrawer() {
-  const [open, setOpen] = useState(false)
-  return (
-    <section className="provenanceSection">
-      <button
-        className="drawerButton"
-        type="button"
-        aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <span>Provenance contract</span>
-        <span aria-hidden="true">{open ? "−" : "+"}</span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            className="drawerBody"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <div className="provenanceGrid">
-              <div><small>01</small><strong>Archive identity</strong><p>Product IDs, collection, instrument and target identity.</p></div>
-              <div><small>02</small><strong>Reduction identity</strong><p>Pipeline version, observing mode, era and quality state.</p></div>
-              <div><small>03</small><strong>Analysis identity</strong><p>Manifest hash, configuration hash and software commit.</p></div>
-              <div><small>04</small><strong>Result identity</strong><p>Units, uncertainty semantics and measured/fitted/simulated state.</p></div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  )
-}
-
-function MiniSignal() {
-  const points = Array.from({ length: 120 }, (_, i) => {
-    const x = i / 119
-    const y = 0.5 + 0.18 * Math.sin(x * Math.PI * 7.2) + 0.04 * Math.sin(x * Math.PI * 31)
-    return [x, y]
-  })
-  const d = points
-    .map(([x, y], index) => (index === 0 ? "M" : "L") + " " + (x * 760).toFixed(2) + " " + (y * 180).toFixed(2))
-    .join(" ")
-  return (
-    <svg className="signal" viewBox="0 0 760 180" role="img" aria-label="Illustrative radial-velocity signal trace">
-      <line x1="0" y1="90" x2="760" y2="90" className="axisLine" />
-      <path d={d} className="signalPath" />
-    </svg>
   )
 }
 
 function App() {
   const reduced = useReducedMotion()
   const [data, setData] = useState<ProjectData | null>(null)
-  const [active, setActive] = useState<"evidence" | "validation" | "method">("evidence")
 
   useEffect(() => {
     fetch(import.meta.env.BASE_URL + "data/project.json")
@@ -132,151 +80,126 @@ function App() {
   const sourceCounts = useMemo(() => {
     if (!data) return { usable: 0, gated: 0 }
     return {
-      usable: data.sources.filter((s) => ["ready", "census", "active"].includes(s.status)).length,
-      gated: data.sources.filter((s) => ["wait", "future"].includes(s.status)).length,
+      usable: data.sources.filter((source) => ["ready", "census", "active"].includes(source.status)).length,
+      gated: data.sources.filter((source) => ["wait", "future"].includes(source.status)).length,
     }
   }, [data])
 
   return (
     <main>
+      <a className="skipLink" href="#main-content">Skip to main content</a>
+
       <header className="topbar">
-        <a href="#top" className="wordmark">OEEL</a>
-        <nav aria-label="Primary">
-          <a href="#evidence">Evidence</a>
+        <a href="#main-content" className="wordmark" aria-label="Open Exoplanet Evidence Lab home">
+          <span className="mark" aria-hidden="true">O</span>
+          <span>Open Exoplanet<br />Evidence Lab</span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="#results">Results</a>
+          <a href="#evidence">Data</a>
           <a href="#methods">Methods</a>
-          <a href="#provenance">Provenance</a>
-          <a href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">GitHub</a>
+          <a href="#provenance">Reproduce</a>
         </nav>
+        <a className="githubLink" href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">View repository <span aria-hidden="true">↗</span></a>
       </header>
 
-      <section className="hero" id="top">
+      <section className="hero" id="main-content">
         <div className="heroCopy">
-          <p className="eyebrow">Extreme-precision radial velocity · cross-archive inference</p>
+          <p className="eyebrow">2026 public research release · Biswajit Jana</p>
           <motion.h1
-            initial={reduced ? false : { opacity: 0, y: 16 }}
+            initial={reduced ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.5 }}
           >
-            Open Exoplanet<br />Evidence Lab
+            Evidence before <em>inference.</em>
           </motion.h1>
           <p className="lede">
-            A provenance-first framework for testing how instrument systematics, stellar activity,
-            wavelength, cadence and independent observations change exoplanet inference.
+            An open laboratory for testing whether exoplanet conclusions survive
+            instrument systematics, stellar activity, wavelength, cadence and
+            independent observations.
           </p>
-          <div className="heroMeta">
-            <span>Biswajit Jana</span>
-            <span>2026 research release</span>
-            <span>Python + public astronomical archives</span>
+          <div className="heroActions">
+            <a className="primaryAction" href="#results">Read the results <span aria-hidden="true">↓</span></a>
+            <a className="secondaryAction" href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">Inspect the code <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-        <div className="heroFigure">
-          <div className="figureLabel"><span>RV TRACE</span><span>illustrative · not a detection</span></div>
-          <MiniSignal />
-          <div className="figureStats">
-            <div><small>analysis principle</small><strong>measurement ≠ inference</strong></div>
-            <div><small>validation principle</small><strong>nulls remain results</strong></div>
+
+        <aside className="releaseNote" aria-label="Release scope">
+          <div className="releaseNoteTop">
+            <span>Release note / 01</span>
+            <span>23 Sep 2026</span>
           </div>
-        </div>
+          <p className="releaseQuote">“A null result is only meaningful after sensitivity has been measured.”</p>
+          <dl>
+            <div><dt>Usable public streams</dt><dd>{sourceCounts.usable || "—"}</dd></div>
+            <div><dt>Explicitly gated streams</dt><dd>{sourceCounts.gated || "—"}</dd></div>
+            <div><dt>New planet claims</dt><dd>0</dd></div>
+          </dl>
+          <p className="releaseBoundary">Gaia DR4 and SPORES-HWO remain gated. No result depends on unreleased data.</p>
+        </aside>
       </section>
 
-      <section className="pipelineSection">
-        <p className="sectionKicker">Evidence path</p>
-        <PipelineFlow reduced={reduced} />
-      </section>
-
-      <section className="researchQuestion">
-        <p className="sectionKicker">Central question</p>
-        <h2>{data?.question ?? "How stable are exoplanet conclusions when the nuisance model changes?"}</h2>
-        <p>
-          The project tests robustness rather than rewarding a particular outcome. A more complex model
-          is useful only when it improves calibrated inference without absorbing the astrophysical signal.
-        </p>
-      </section>
-
-      <section id="evidence" className="contentSection">
-        <div className="sectionHeader">
-          <div>
-            <p className="sectionKicker">Public evidence</p>
-            <h2>Archive layer</h2>
-          </div>
-          <div className="metricPair">
-            <div><strong>{sourceCounts.usable}</strong><span>usable streams</span></div>
-            <div><strong>{sourceCounts.gated}</strong><span>explicitly gated</span></div>
-          </div>
-        </div>
-
-        <div className="segmented" role="tablist" aria-label="Research sections">
-          {(["evidence", "validation", "method"] as const).map((key) => (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={active === key}
-              className={active === key ? "selected" : ""}
-              onClick={() => setActive(key)}
-            >
-              {key === "evidence" ? "Data streams" : key === "validation" ? "Validation" : "Inference"}
-            </button>
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          {active === "evidence" && (
-            <motion.div key="evidence" className="sourceGrid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              {(data?.sources ?? []).map((source) => <SourceCard key={source.id} source={source} />)}
-            </motion.div>
-          )}
-          {active === "validation" && (
-            <motion.div key="validation" className="validationGrid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              {(data?.validation ?? []).map((item, index) => (
-                <article className="validationCard" key={item.name}>
-                  <span className="validationNumber">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{item.name}</h3>
-                  <p>{item.meaning}</p>
-                </article>
-              ))}
-            </motion.div>
-          )}
-          {active === "method" && (
-            <motion.div key="method" className="methodGrid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <article><small>RV</small><h3>Instrument-aware likelihood</h3><p>Per-era offsets, formal uncertainty, white jitter, activity terms and optional correlated covariance.</p></article>
-              <article><small>SEARCH</small><h3>Calibrated periodicity</h3><p>GLS plus observing-window analysis, false-alarm calibration, aliases and held-out epochs.</p></article>
-              <article><small>SENSITIVITY</small><h3>Injection / recovery</h3><p>Frozen injections generate completeness surfaces and K50/K90 rather than anecdotal detections.</p></article>
-              <article><small>CROSS-CHECK</small><h3>Chromatic coherence</h3><p>HARPS and NIRPS compare period, phase, semi-amplitude and activity without assuming NIR activity is weaker.</p></article>
-              <article><small>ATMOSPHERE</small><h3>Repeatability floor</h3><p>Repeated spectra/eclipses estimate additional inter-visit or inter-reduction variance.</p></article>
-              <article><small>REPORT</small><h3>Typed result state</h3><p>Every number is labelled measured, derived, fitted, simulated, literature or provisional.</p></article>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <section className="metricRail" aria-label="Public data snapshot">
+        <div><strong>41</strong><span>NETS III stars</span></div>
+        <div><strong>5,920</strong><span>public RV epochs</span></div>
+        <div><strong>1,826</strong><span>atmosphere records</span></div>
+        <div><strong>47</strong><span>scientific tests passing</span></div>
       </section>
 
       <ResultsSection />
 
-      <section id="methods" className="twoColumn">
-        <div>
-          <p className="sectionKicker">Research discipline</p>
-          <h2>The nuisance model is part of the science.</h2>
-        </div>
-        <div className="principles">
-          <p><span>01</span> Instrument upgrades and reduction versions are explicit model inputs.</p>
-          <p><span>02</span> Activity correction is tested for planet-amplitude bias, not judged by residual RMS alone.</p>
-          <p><span>03</span> Non-detections require measured sensitivity.</p>
-          <p><span>04</span> Cross-archive joins need a physical reason.</p>
-          <p><span>05</span> Novelty language requires a dated literature audit.</p>
+      <section className="questionSection">
+        <p className="sectionKicker">Research question</p>
+        <blockquote>{data?.question ?? "How stable are exoplanet conclusions when the nuisance model changes?"}</blockquote>
+        <p>
+          The programme rewards robustness, not a preferred outcome. More complex models
+          are useful only when they improve calibrated inference without erasing the
+          astrophysical signal they were meant to protect.
+        </p>
+      </section>
+
+      <section id="evidence" className="contentSection evidenceSection">
+        <header className="editorialHeader">
+          <div><p className="sectionKicker">Data registry</p><h2>Public evidence, with boundaries.</h2></div>
+          <p>Every archive is assigned a role before analysis. Availability is not scientific compatibility.</p>
+        </header>
+        <div className="sourceList">
+          {(data?.sources ?? []).map((source) => <SourceRow key={source.id} source={source} />)}
         </div>
       </section>
 
-      <section id="provenance" className="contentSection provenanceBlock">
-        <p className="sectionKicker">Traceability</p>
-        <h2>Every result can point backward.</h2>
-        <p className="wideCopy">
-          From a figure to its machine-readable table, analysis configuration, software commit,
-          manifest hash, archive query and original product identifier.
-        </p>
-        <ProvenanceDrawer />
+      <section id="methods" className="contentSection methodsSection">
+        <header className="editorialHeader">
+          <div><p className="sectionKicker">Method</p><h2>The nuisance model is part of the science.</h2></div>
+          <p>Three disciplines turn archive products into defensible evidence.</p>
+        </header>
+        <div className="methodChapters">
+          <article><span>01</span><h3>Model what changed</h3><p>Instrument eras, pipeline versions, run offsets, white jitter and activity terms are explicit inputs—not footnotes added after a detection.</p></article>
+          <article><span>02</span><h3>Measure what could be found</h3><p>Permutation-calibrated injection and recovery produces completeness surfaces and K50/K90 bounds instead of anecdotal non-detections.</p></article>
+          <article><span>03</span><h3>Ask independent data to disagree</h3><p>Held-out eras, later TESS sectors, alternate reductions and optical/NIR comparisons are tests of stability, not decoration.</p></article>
+        </div>
+        <PipelineFlow reduced={reduced} />
+      </section>
+
+      <section id="provenance" className="provenanceBlock">
+        <div>
+          <p className="sectionKicker">Reproducibility</p>
+          <h2>Every number points backward.</h2>
+        </div>
+        <div className="provenanceCopy">
+          <p>Figures resolve to tables; tables resolve to analysis configuration, software commit, manifest hash, archive query and original product identity.</p>
+          <ol>
+            <li><span>01</span> Archive product and checksum</li>
+            <li><span>02</span> Reduction, observing mode and quality state</li>
+            <li><span>03</span> Configuration hash and software commit</li>
+            <li><span>04</span> Measured, fitted, simulated or literature result state</li>
+          </ol>
+          <a href="https://github.com/Biswajit1999/open-exoplanet-discovery-lab">Open the reproducible repository <span aria-hidden="true">↗</span></a>
+        </div>
       </section>
 
       <footer>
-        <div><strong>Open Exoplanet Evidence Lab</strong><span>Biswajit Jana · 2026</span></div>
+        <div><strong>Open Exoplanet Evidence Lab</strong><span>Biswajit Jana · independent open science</span></div>
         <p>Public astronomical data retain their original citation and acknowledgement requirements.</p>
       </footer>
     </main>

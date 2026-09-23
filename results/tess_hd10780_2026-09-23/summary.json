@@ -1,17 +1,19 @@
 {
-  "configuration_hash": "d830f21983178a9dce13c6cc3a405886466fcd61e2cfbfa9f0aa1fdb0bbeee83",
+  "configuration_hash": "26b35104fe6322f66cba6ff7740f81ec0ad6ed514bcda07480b19fcbc9751317",
   "control_analytic_fap": 9.617639919059334e-78,
+  "control_circular_shift_pvalue": 0.9502487562189055,
   "control_period_days": 5.762155803576307,
   "control_sectors": [
     24,
     25
   ],
-  "generated_at_utc": "2026-09-23T08:55:22.829262+00:00",
-  "interpretation": "Photometric activity-period and temporal-coherence diagnostic. Periodogram peaks are not planet confirmations.",
+  "generated_at_utc": "2026-09-23T12:21:56.973969+00:00",
+  "interpretation": "Photometric activity-period and temporal-coherence diagnostic. Circular-shift p-values preserve within-sector ordering; periodogram peaks are not planet confirmations.",
   "phase_difference_radians_at_control_period": -1.7159649162435757,
-  "software_commit": "working-tree",
+  "software_commit": "6f450ed6c0684f95eca3e177cbe2cd8ef9c65327",
   "target": "HD 10780",
   "test_analytic_fap": 1.9487025023436545e-120,
+  "test_circular_shift_pvalue": 0.014925373134328358,
   "test_period_days": 6.0942231322754346,
   "test_sectors": [
     85,

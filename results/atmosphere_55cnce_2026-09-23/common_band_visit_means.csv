@@ -1,0 +1,11 @@
+visit,pipeline,obs_date_bjd,common_band_min_micron,common_band_max_micron,n_bins,band_mean_depth_ppm,band_mean_error_ppm,covariance_available,relationship_across_pipelines,relationship_across_visits
+1,HANSOLO,2459902.111308,3.95363,4.9102,28,8.520863011436722,3.2875075969607455,False,alternate reduction of same photons,independent visits
+1,stark,2459902.111308,3.95363,4.9102,30,26.8955425313872,3.614423492594005,False,alternate reduction of same photons,independent visits
+2,HANSOLO,2459904.32162,3.95363,4.9102,28,6.731701596912732,2.872370821696326,False,alternate reduction of same photons,independent visits
+2,stark,2459904.32162,3.95363,4.9102,30,58.51699064465699,3.573386619074854,False,alternate reduction of same photons,independent visits
+3,HANSOLO,2459906.530521,3.95363,4.9102,28,37.4844153911537,5.4965546601431265,False,alternate reduction of same photons,independent visits
+3,stark,2459906.530521,3.95363,4.9102,30,105.23405989991524,3.619004558832533,False,alternate reduction of same photons,independent visits
+4,HANSOLO,2459907.984896,3.95363,4.9102,28,30.943732936048683,4.999658479210177,False,alternate reduction of same photons,independent visits
+4,stark,2459907.984896,3.95363,4.9102,30,116.46930251186286,3.2081223070111795,False,alternate reduction of same photons,independent visits
+5,HANSOLO,2460058.997951,3.95363,4.9102,28,33.97141650043201,5.275329377464486,False,alternate reduction of same photons,independent visits
+5,stark,2460058.997951,3.95363,4.9102,30,97.99764603457194,3.5843499654540727,False,alternate reduction of same photons,independent visits

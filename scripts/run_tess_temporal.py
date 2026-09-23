@@ -227,7 +227,9 @@ def main() -> int:
         0.02,
         0.92,
         f"Control best period: {control_pg.best_period:.3f} d\n"
+        f"Control circular-shift p: {control_empirical_p:.3f}\n"
         f"Test best period: {test_pg.best_period:.3f} d\n"
+        f"Test circular-shift p: {test_empirical_p:.3f}\n"
         f"K_test / K_control: {coherence.amplitude_ratio:.3f}\n"
         f"Phase difference: {coherence.phase_difference_radians:.3f} rad",
         va="top",
