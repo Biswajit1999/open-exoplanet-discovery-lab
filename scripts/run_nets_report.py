@@ -32,8 +32,8 @@ def main() -> int:
     frame = pd.read_csv(args.rv)
     star_col = pick(frame, ["Star", "Name", "Target"])
     time_col = pick(frame, ["BJD", "BJD_TDB", "Time"])
-    rv_col = pick(frame, ["RV", "RadVel", "vrad"])
-    err_col = pick(frame, ["e_RV", "ERV", "RVerr", "eRV"])
+    rv_col = pick(frame, ["RVel", "RV", "RadVel", "vrad"])
+    err_col = pick(frame, ["e_RVel", "e_RV", "ERV", "RVerr", "eRV"])
 
     out = Path(args.output)
     out.mkdir(parents=True, exist_ok=True)
@@ -71,11 +71,15 @@ def main() -> int:
     summary.to_csv(out / "descriptive_summary.csv", index=False)
     metadata = {
         "n_targets_analyzed": int(len(summary)),
+        "n_observations_analyzed": int(summary["n"].sum()) if len(summary) else 0,
         "input": str(args.rv),
+        "rv_column": str(rv_col),
+        "rv_error_column": str(err_col),
         "note": "GLS peaks are diagnostics, not planet claims. Analytic FAP is retained as a baseline and must be supplemented by null calibration for scientific interpretation.",
     }
     (out / "report_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     print(summary.to_string(index=False))
+    print(json.dumps(metadata, indent=2))
     return 0
 
 
