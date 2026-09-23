@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
+import ResultsSection from "./ResultsSection"
 
 type Source = {
   id: string
@@ -247,6 +248,8 @@ function App() {
           )}
         </AnimatePresence>
       </section>
+
+      <ResultsSection />
 
       <section id="methods" className="twoColumn">
         <div>
