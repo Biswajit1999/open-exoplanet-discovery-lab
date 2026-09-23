@@ -34,13 +34,14 @@ def unique_epochs(frame: pd.DataFrame) -> np.ndarray:
     return np.unique(np.round(values, 8))
 
 
-def query_harps(row: object, radius_arcsec: float, timeout: int) -> tuple[object, pd.DataFrame, str]:
+def query_harps(row: object, radius_arcsec: float, timeout: int, available_columns: list[str]) -> tuple[object, pd.DataFrame, str]:
     client = ESOArchiveClient(timeout=timeout)
     query = target_instrument_query(
         "HARPS",
         ra_deg=float(row.s_ra),
         dec_deg=float(row.s_dec),
         radius_deg=float(radius_arcsec) / 3600.0,
+        available_columns=available_columns,
     )
     try:
         return row, client.query(query), ""
@@ -61,7 +62,9 @@ def main() -> int:
     output.mkdir(parents=True, exist_ok=True)
     client = ESOArchiveClient(timeout=args.timeout)
 
-    nirps_query = instrument_inventory_query("NIRPS")
+    available_columns = client.obscore_columns()
+    (output / "eso_obscore_columns.json").write_text(\n        json.dumps(sorted(available_columns), indent=2) + "\\n", encoding="utf-8"\n    )
+    nirps_query = instrument_inventory_query("NIRPS", available_columns=available_columns)
     nirps = client.query(nirps_query)
     nirps_path = output / "nirps_public_products.csv"
     nirps.to_csv(nirps_path, index=False)
@@ -72,7 +75,7 @@ def main() -> int:
         .agg(
             s_ra=("s_ra", "median"),
             s_dec=("s_dec", "median"),
-            n_nirps_products=("obs_publisher_did", "nunique"),
+            n_nirps_products=(product_id_column, "nunique"),
             nirps_t_min=("t_min", "min"),
             nirps_t_max=("t_max", "max"),
         )
@@ -86,7 +89,7 @@ def main() -> int:
     workers = max(1, min(int(args.workers), 12))
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = [
-            pool.submit(query_harps, row, args.radius_arcsec, args.timeout)
+            pool.submit(query_harps, row, args.radius_arcsec, args.timeout, available_columns)
             for row in target_rows.itertuples(index=False)
         ]
         for future in as_completed(futures):
@@ -117,7 +120,7 @@ def main() -> int:
                 "s_ra": row.s_ra,
                 "s_dec": row.s_dec,
                 "n_nirps_products": int(row.n_nirps_products),
-                "n_harps_products": int(harps["obs_publisher_did"].nunique()) if not harps.empty and "obs_publisher_did" in harps else 0,
+                "n_harps_products": int(harps[product_id_column].nunique()) if not harps.empty and product_id_column in harps else 0,
                 "n_nirps_epochs": int(tn.size),
                 "n_harps_epochs": int(th.size),
                 "nirps_first_mjd": float(np.min(tn)) if tn.size else np.nan,
