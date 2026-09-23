@@ -1,0 +1,53 @@
+{
+  "alternate_reductions_per_visit": 2,
+  "bibcode": "2024A&A...690A.159P",
+  "broadband_results": {
+    "2.12_micron": {
+      "extra_inter_visit_scatter_ppm": 35.297499368113925,
+      "mean_depth_ppm": 42.4753908642039,
+      "mean_error_ppm": 17.07557729718967,
+      "reduced_chi2_after_extra_scatter": 1.0000000000000007,
+      "visits": 5
+    },
+    "4.50_micron": {
+      "extra_inter_visit_scatter_ppm": 41.03101067319113,
+      "mean_depth_ppm": 74.34034891451704,
+      "mean_error_ppm": 20.795399786139033,
+      "reduced_chi2_after_extra_scatter": 0.9999999999999998,
+      "visits": 5
+    }
+  },
+  "common_band_micron": [
+    3.95363,
+    4.9102
+  ],
+  "configuration_hash": "aff9ecbb85587851e1481320beac6788a6f0c0ef7fffc9a057655cd614823dd4",
+  "generated_at_utc": "2026-09-23T12:15:14.099940+00:00",
+  "independent_visits": 5,
+  "limitations": [
+    "HANSOLO and stark products within a visit are alternate reductions of the same photons, not independent observations.",
+    "The archive products do not provide a spectral covariance matrix; common-band errors assume independent bins and are descriptive.",
+    "This comparison does not establish atmospheric composition or adjudicate the publication's physical interpretation."
+  ],
+  "maximum_absolute_descriptive_z": 14.39721710169017,
+  "median_absolute_pipeline_difference_ppm": 64.02622953413993,
+  "pipeline_results": {
+    "HANSOLO": {
+      "extra_inter_visit_scatter_ppm": 14.114204039147511,
+      "mean_depth_ppm": 22.979386163559596,
+      "mean_error_ppm": 6.621921705445996,
+      "reduced_chi2_after_extra_scatter": 0.9999999999999999,
+      "visits": 5
+    },
+    "stark": {
+      "extra_inter_visit_scatter_ppm": 37.13974908350164,
+      "mean_depth_ppm": 81.03630236871321,
+      "mean_error_ppm": 16.683969146493688,
+      "reduced_chi2_after_extra_scatter": 1.0000000000000002,
+      "visits": 5
+    }
+  },
+  "products": 15,
+  "software_commit": "6f450ed6c0684f95eca3e177cbe2cd8ef9c65327",
+  "target": "55 Cnc e"
+}

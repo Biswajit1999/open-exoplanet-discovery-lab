@@ -1,0 +1,21 @@
+pl_name,n_spectra,n_publications,n_instruments,n_facilities,n_types,multi_spectrum,multi_publication,cross_instrument
+HD 189733 b,64,26,14,6,2,True,True,True
+HD 209458 b,47,14,6,3,2,True,True,True
+WASP-43 b,40,17,14,15,2,True,True,True
+WASP-19 b,37,19,14,14,2,True,True,True
+WASP-12 b,36,14,7,5,2,True,True,True
+WASP-17 b,34,14,8,6,2,True,True,True
+GJ 3470 b,34,11,16,21,2,True,True,True
+WASP-18 b,34,10,4,4,2,True,True,True
+WASP-39 b,31,17,13,7,2,True,True,True
+GJ 1132 b,28,8,9,4,2,True,True,True
+GJ 1214 b,27,17,19,16,2,True,True,True
+WASP-121 b,27,15,6,4,2,True,True,True
+WASP-80 b,25,9,12,11,2,True,True,True
+HAT-P-12 b,24,10,11,9,2,True,True,True
+WASP-6 b,24,6,6,5,2,True,True,True
+WASP-76 b,23,8,3,2,2,True,True,True
+55 Cnc e,23,7,5,4,2,True,True,True
+HAT-P-2 b,23,4,2,2,2,True,True,True
+WASP-107 b,22,9,5,3,2,True,True,True
+XO-3 b,22,5,2,2,2,True,True,True

@@ -1,0 +1,18 @@
+{
+  "configuration_hash": "441576628cbfe67957c9ed1d637f7a8735d1d58ec371334add56fe05ed60de93",
+  "generated_at_utc": "2026-09-23T12:19:21.439548+00:00",
+  "grid_cells_per_model": 36,
+  "injections_per_cell": 6,
+  "interpretation": "Circular injection/recovery sensitivity under three declared nuisance models. Recovered periodicity is not classified as a planet.",
+  "max_absolute_delta_completeness": 0.45416666666666666,
+  "mean_delta_completeness": 0.02048611111111111,
+  "models": [
+    "baseline",
+    "era",
+    "era_activity"
+  ],
+  "observations": 5782,
+  "permutations_per_target_model": 100,
+  "software_commit": "6f450ed6c0684f95eca3e177cbe2cd8ef9c65327",
+  "targets": 40
+}

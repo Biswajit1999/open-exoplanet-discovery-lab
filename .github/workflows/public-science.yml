@@ -1,0 +1,37 @@
+name: public-science
+
+on:
+  pull_request:
+    paths:
+      - "scripts/build_public_snapshot.py"
+      - "scripts/analyze_nets_public.py"
+      - "scripts/analyze_atmosphere_metadata.py"
+      - "src/exolab/**"
+      - "pyproject.toml"
+      - ".github/workflows/public-science.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analyse-public-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e .[archives]
+      - run: python scripts/build_public_snapshot.py --output outputs/public_snapshot
+      - run: python scripts/analyze_nets_public.py --snapshot outputs/public_snapshot --output outputs/nets_analysis
+      - run: python scripts/analyze_atmosphere_metadata.py --input outputs/public_snapshot/nea_atmospheric_spectra_metadata.csv --output outputs/atmosphere_audit
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-science-results
+          path: |
+            outputs/public_snapshot/
+            outputs/nets_analysis/
+            outputs/atmosphere_audit/
