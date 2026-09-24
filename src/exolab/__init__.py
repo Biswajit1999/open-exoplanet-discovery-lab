@@ -32,6 +32,7 @@ from .eso import ESOTapClient, overlap_census
 from .inference import aicc, bic, fit_white_jitter, gaussian_log_likelihood
 from .injection import RecoveryResult, inject_box_transit, run_injection_recovery
 from .kepler import keplerian_rv, solve_eccentric_anomaly
+from .gaia import GaiaIdentifierMatch, GaiaTapClient, extract_gaia_dr3_identifier
 from .periodogram import generalized_lomb_scargle, gls, spectral_window
 from .provenance import (
     DatasetRecord,
@@ -106,6 +107,9 @@ __all__ = [
     "sha256_file",
     "simultaneity_counts",
     "solve_eccentric_anomaly",
+    "GaiaIdentifierMatch",
+    "GaiaTapClient",
+    "extract_gaia_dr3_identifier",
     "spectral_window",
     "verify_manifest",
     "vet_signal",
