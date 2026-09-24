@@ -61,6 +61,13 @@
       "detail": "Analysis remains gated until the consolidated public tables are verifiably accessible."
     },
     {
+      "id": "GAIA-DR3",
+      "name": "Gaia DR3 identity registry",
+      "status": "ready",
+      "role": "Canonical source identity and public astrometric context",
+      "detail": "All 41 NETS III survey targets resolve to distinct exact Gaia DR3 source identifiers; no astrometric field is treated as a companion classification."
+    },
+    {
       "id": "GAIA-DR4",
       "name": "Gaia DR4",
       "status": "future",

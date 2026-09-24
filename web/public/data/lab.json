@@ -1278,15 +1278,41 @@
       "software_commit": null,
       "source_id": "nirps_harps_overlap",
       "title": "NIRPS \u00d7 HARPS overlap"
+    },
+    {
+      "archive": "SIMBAD TAP / Gaia Archive DR3",
+      "boundary": "Identity and public astrometric context only; no companion classification.",
+      "checksum_record": "results/gaia_dr3_identity_2026-09-24/checksums.json",
+      "claim_label": "IDENTITY LAYER",
+      "configuration_hash": "c137a4d682242e5345108e46326a225ebfa02d35e63dd83f9677573d59f8fe6f",
+      "evidence_state": "canonical archive linkage",
+      "generated_at_utc": "2026-09-24T18:01:34.844821+00:00",
+      "id": "gaia-dr3-identity",
+      "primary_output": "results/gaia_dr3_identity_2026-09-24/nets3_gaia_dr3_identity.csv",
+      "software_commit": "5f45e4be011f6a2dfa22bdcef7be46365c6467bc",
+      "source_id": "41 exact Gaia DR3 source identifiers",
+      "title": "NETS III Gaia DR3 identities"
     }
   ],
-  "release": "0.3.0",
+  "release": "0.3.1",
   "schema_version": "1.0.0",
-  "snapshot_date": "2026-09-23",
+  "snapshot_date": "2026-09-24",
   "targets": [
     {
       "baseline_days": 877.8316899999045,
       "id": "hd-10476",
+      "identity": {
+        "bp_rp_mag": 1.0224853,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "96331172942614528",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.15318972,
+        "parallax_mas": 130.823369060264,
+        "phot_g_mean_mag": 4.99968,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.2618266,
+        "simbad_main_id": "* 107 Psc"
+      },
       "mean_completeness": {
         "baseline": 0.5046296296296297,
         "era": 0.42592592592592593,
@@ -1306,6 +1332,18 @@
     {
       "baseline_days": 1110.0116099999286,
       "id": "hd-10700",
+      "identity": {
+        "bp_rp_mag": 1.0512211,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2452378776434477184",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.17013045,
+        "parallax_mas": 273.80974511859966,
+        "phot_g_mean_mag": 3.3003998,
+        "reference_epoch": 2016.0,
+        "ruwe": 2.634341,
+        "simbad_main_id": "* tau Cet"
+      },
       "mean_completeness": {
         "baseline": 0.5509259259259259,
         "era": 0.587962962962963,
@@ -1325,6 +1363,18 @@
     {
       "baseline_days": 1001.9525500000454,
       "id": "hd-10780",
+      "identity": {
+        "bp_rp_mag": 0.9710283,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "512167948043650816",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.04383567,
+        "parallax_mas": 99.59015235307108,
+        "phot_g_mean_mag": 5.4103966,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.9826679,
+        "simbad_main_id": "HD  10780"
+      },
       "mean_completeness": {
         "baseline": 0.3564814814814815,
         "era": 0.30092592592592593,
@@ -1344,6 +1394,18 @@
     {
       "baseline_days": 969.6926199998707,
       "id": "hd-110897",
+      "identity": {
+        "bp_rp_mag": 0.7564149,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1521686782461765888",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.03228926,
+        "parallax_mas": 56.95876286948424,
+        "phot_g_mean_mag": 5.8030252,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.8316593,
+        "simbad_main_id": "*  10 CVn"
+      },
       "mean_completeness": {
         "baseline": 0.5601851851851852,
         "era": 0.5555555555555556,
@@ -1363,6 +1425,18 @@
     {
       "baseline_days": 1228.7532299999148,
       "id": "hd-115617",
+      "identity": {
+        "bp_rp_mag": 0.898438,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3507879565090229888",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.1455929,
+        "parallax_mas": 117.1726460991387,
+        "phot_g_mean_mag": 4.5325284,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.1792638,
+        "simbad_main_id": "*  61 Vir"
+      },
       "mean_completeness": {
         "baseline": 0.2037037037037037,
         "era": 0.13425925925925924,
@@ -1382,6 +1456,18 @@
     {
       "baseline_days": 913.7510400000028,
       "id": "hd-116442",
+      "identity": {
+        "bp_rp_mag": 0.983655,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3712538708114516736",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.02312667,
+        "parallax_mas": 60.281691403362,
+        "phot_g_mean_mag": 6.85049,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.9869559,
+        "simbad_main_id": "HD 116442"
+      },
       "mean_completeness": {
         "baseline": 0.8564814814814814,
         "era": 0.7453703703703703,
@@ -1401,6 +1487,18 @@
     {
       "baseline_days": 937.6764199999161,
       "id": "hd-126053",
+      "identity": {
+        "bp_rp_mag": 0.82366705,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3654496279558010624",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.037523143,
+        "parallax_mas": 57.27057989858388,
+        "phot_g_mean_mag": 6.092967,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.1358501,
+        "simbad_main_id": "HD 126053"
+      },
       "mean_completeness": {
         "baseline": 0.6666666666666666,
         "era": 0.625,
@@ -1420,6 +1518,18 @@
     {
       "baseline_days": 1269.702630000189,
       "id": "hd-127334",
+      "identity": {
+        "bp_rp_mag": 0.8549509,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1491593733326694912",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.017370963,
+        "parallax_mas": 42.75261450326973,
+        "phot_g_mean_mag": 6.200569,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.9719038,
+        "simbad_main_id": "HD 127334"
+      },
       "mean_completeness": {
         "baseline": 0.8240740740740741,
         "era": 0.712962962962963,
@@ -1439,6 +1549,18 @@
     {
       "baseline_days": 1252.8582000001334,
       "id": "hd-143761",
+      "identity": {
+        "bp_rp_mag": 0.79895544,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1323427759184545536",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.050787035,
+        "parallax_mas": 57.10764192152077,
+        "phot_g_mean_mag": 5.2328,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0011556,
+        "simbad_main_id": "* rho CrB"
+      },
       "mean_completeness": {
         "baseline": 0.0,
         "era": 0.0,
@@ -1458,6 +1580,18 @@
     {
       "baseline_days": 884.7488799998537,
       "id": "hd-146233",
+      "identity": {
+        "bp_rp_mag": 0.81707716,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4345775217221821312",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.06312427,
+        "parallax_mas": 70.73714672122247,
+        "phot_g_mean_mag": 5.327651,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.98405105,
+        "simbad_main_id": "*  18 Sco"
+      },
       "mean_completeness": {
         "baseline": 0.33796296296296297,
         "era": 0.39814814814814814,
@@ -1477,6 +1611,18 @@
     {
       "baseline_days": 1001.2400000002235,
       "id": "hd-154345",
+      "identity": {
+        "bp_rp_mag": 0.9049978,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1359938520253565952",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.01757417,
+        "parallax_mas": 54.73589758953965,
+        "phot_g_mean_mag": 6.5836673,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0363173,
+        "simbad_main_id": "HD 154345"
+      },
       "mean_completeness": {
         "baseline": 0.1527777777777778,
         "era": 0.28703703703703703,
@@ -1496,6 +1642,18 @@
     {
       "baseline_days": 1068.1320800003596,
       "id": "hd-157214",
+      "identity": {
+        "bp_rp_mag": 0.8206105,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1333760419707327744",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.05527961,
+        "parallax_mas": 68.55754109923836,
+        "phot_g_mean_mag": 5.2098746,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.2092994,
+        "simbad_main_id": "* w Her"
+      },
       "mean_completeness": {
         "baseline": 0.712962962962963,
         "era": 0.6111111111111112,
@@ -1515,6 +1673,18 @@
     {
       "baseline_days": 1216.9321600003168,
       "id": "hd-166620",
+      "identity": {
+        "bp_rp_mag": 1.0834298,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4610177733290768896",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.0155898025,
+        "parallax_mas": 90.12337582042169,
+        "phot_g_mean_mag": 6.1298075,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0380744,
+        "simbad_main_id": "HD 166620"
+      },
       "mean_completeness": {
         "baseline": 0.8240740740740741,
         "era": 0.7222222222222222,
@@ -1534,6 +1704,18 @@
     {
       "baseline_days": 1014.0887299999595,
       "id": "hd-168009",
+      "identity": {
+        "bp_rp_mag": 0.80211496,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2115351387048328832",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.015755154,
+        "parallax_mas": 42.934767999584665,
+        "phot_g_mean_mag": 6.149785,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.95885587,
+        "simbad_main_id": "HD 168009"
+      },
       "mean_completeness": {
         "baseline": 0.3287037037037037,
         "era": 0.33796296296296297,
@@ -1553,6 +1735,18 @@
     {
       "baseline_days": 1133.898370000068,
       "id": "hd-170657",
+      "identity": {
+        "bp_rp_mag": 1.0611329,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4093301474693288960",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.034853466,
+        "parallax_mas": 75.84760043520981,
+        "phot_g_mean_mag": 6.5646515,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.7098678,
+        "simbad_main_id": "HD 170657"
+      },
       "mean_completeness": {
         "baseline": 0.22685185185185183,
         "era": 0.125,
@@ -1572,6 +1766,18 @@
     {
       "baseline_days": 1022.2079100003466,
       "id": "hd-172051",
+      "identity": {
+        "bp_rp_mag": 0.8573408,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4079684229322231040",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.049390327,
+        "parallax_mas": 76.74052986202392,
+        "phot_g_mean_mag": 5.6792855,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.84906036,
+        "simbad_main_id": "HD 172051"
+      },
       "mean_completeness": {
         "baseline": 0.5231481481481481,
         "era": 0.4861111111111111,
@@ -1591,6 +1797,18 @@
     {
       "baseline_days": 1001.1357299997471,
       "id": "hd-179957",
+      "identity": {
+        "bp_rp_mag": 0.8281636,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2132788541955849216",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.014709061,
+        "parallax_mas": 39.578411311616,
+        "phot_g_mean_mag": 6.5395017,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.97826606,
+        "simbad_main_id": "HD 179957"
+      },
       "mean_completeness": {
         "baseline": 0.2638888888888889,
         "era": 0.2916666666666667,
@@ -1610,6 +1828,18 @@
     {
       "baseline_days": 1012.2460299995728,
       "id": "hd-182572",
+      "identity": {
+        "bp_rp_mag": 0.90421486,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4315804351350378496",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.065657094,
+        "parallax_mas": 67.01526888035684,
+        "phot_g_mean_mag": 4.9713717,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.71956986,
+        "simbad_main_id": "* b Aql"
+      },
       "mean_completeness": {
         "baseline": 0.4027777777777778,
         "era": 0.41203703703703703,
@@ -1629,6 +1859,18 @@
     {
       "baseline_days": 1229.8621399998665,
       "id": "hd-185144",
+      "identity": {
+        "bp_rp_mag": 0.9943154,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2261614264931057664",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.07480691,
+        "parallax_mas": 173.49391001786597,
+        "phot_g_mean_mag": 4.449041,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.6816003,
+        "simbad_main_id": "* sig Dra"
+      },
       "mean_completeness": {
         "baseline": 0.8101851851851852,
         "era": 0.8518518518518519,
@@ -1648,6 +1890,18 @@
     {
       "baseline_days": 944.2206999999471,
       "id": "hd-186408",
+      "identity": {
+        "bp_rp_mag": 0.8132467,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2135550755683405952",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.019748962,
+        "parallax_mas": 47.32389118459047,
+        "phot_g_mean_mag": 5.8180733,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0067511,
+        "simbad_main_id": "*  16 Cyg A"
+      },
       "mean_completeness": {
         "baseline": 0.21296296296296297,
         "era": 0.2546296296296296,
@@ -1667,6 +1921,18 @@
     {
       "baseline_days": 949.281589999795,
       "id": "hd-186427",
+      "identity": {
+        "bp_rp_mag": 0.82615995,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2135550755683407232",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.01712145,
+        "parallax_mas": 47.33016209584275,
+        "phot_g_mean_mag": 6.0734186,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.98676294,
+        "simbad_main_id": "*  16 Cyg B"
+      },
       "mean_completeness": {
         "baseline": 0.16666666666666666,
         "era": 0.0,
@@ -1686,6 +1952,18 @@
     {
       "baseline_days": 934.2685400000773,
       "id": "hd-187923",
+      "identity": {
+        "bp_rp_mag": 0.82430935,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "4303735493232528640",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.026913224,
+        "parallax_mas": 37.00266681103541,
+        "phot_g_mean_mag": 5.9979544,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.87836087,
+        "simbad_main_id": "HD 187923"
+      },
       "mean_completeness": {
         "baseline": 0.5,
         "era": 0.462962962962963,
@@ -1705,6 +1983,18 @@
     {
       "baseline_days": 1074.0813600001857,
       "id": "hd-190360",
+      "identity": {
+        "bp_rp_mag": 0.9080596,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2029433521248546304",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.03535643,
+        "parallax_mas": 62.48650893182535,
+        "phot_g_mean_mag": 5.552787,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0123955,
+        "simbad_main_id": "HD 190360"
+      },
       "mean_completeness": {
         "baseline": 0.0,
         "era": 0.032407407407407406,
@@ -1724,6 +2014,18 @@
     {
       "baseline_days": 903.6195499999449,
       "id": "hd-19373",
+      "identity": {
+        "bp_rp_mag": 0.78206515,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "436648129327098496",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.14481215,
+        "parallax_mas": 94.54120718732504,
+        "phot_g_mean_mag": 3.9026392,
+        "reference_epoch": 2016.0,
+        "ruwe": 2.6749434,
+        "simbad_main_id": "* iot Per"
+      },
       "mean_completeness": {
         "baseline": 0.6342592592592592,
         "era": 0.5694444444444444,
@@ -1743,6 +2045,18 @@
     {
       "baseline_days": 1107.0699200001545,
       "id": "hd-201091",
+      "identity": {
+        "bp_rp_mag": 1.4625897,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "1872046609345556480",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.05989728,
+        "parallax_mas": 285.9949482957812,
+        "phot_g_mean_mag": 4.766713,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.2043179,
+        "simbad_main_id": "*  61 Cyg A"
+      },
       "mean_completeness": {
         "baseline": 0.2175925925925926,
         "era": 0.4583333333333333,
@@ -1762,6 +2076,18 @@
     {
       "baseline_days": 1032.1652000001632,
       "id": "hd-217107",
+      "identity": {
+        "bp_rp_mag": 0.8883376,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2648914040357320576",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.026320018,
+        "parallax_mas": 49.78461949620748,
+        "phot_g_mean_mag": 5.9967427,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.8761036,
+        "simbad_main_id": "HD 217107"
+      },
       "mean_completeness": {
         "baseline": 0.0,
         "era": 0.0,
@@ -1781,6 +2107,18 @@
     {
       "baseline_days": 1098.9195900000632,
       "id": "hd-221354",
+      "identity": {
+        "bp_rp_mag": 1.0022283,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2011251030583236352",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.016880276,
+        "parallax_mas": 59.36696629826816,
+        "phot_g_mean_mag": 6.537038,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0221732,
+        "simbad_main_id": "HD 221354"
+      },
       "mean_completeness": {
         "baseline": 0.5787037037037037,
         "era": 0.6527777777777778,
@@ -1800,6 +2138,18 @@
     {
       "baseline_days": 901.7791100000031,
       "id": "hd-24496-a",
+      "identity": {
+        "bp_rp_mag": 0.8854923,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "43499295632961152",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.02067353,
+        "parallax_mas": 48.84903420928158,
+        "phot_g_mean_mag": 6.654032,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.97737736,
+        "simbad_main_id": "HD  24496"
+      },
       "mean_completeness": {
         "baseline": 0.16203703703703703,
         "era": 0.2592592592592593,
@@ -1819,6 +2169,18 @@
     {
       "baseline_days": 860.60951999994,
       "id": "hd-26965",
+      "identity": {
+        "bp_rp_mag": 1.0412455,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3195919528989223040",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.12083028,
+        "parallax_mas": 199.6080124181338,
+        "phot_g_mean_mag": 4.179894,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.9449321,
+        "simbad_main_id": "* omi02 Eri"
+      },
       "mean_completeness": {
         "baseline": 0.27314814814814814,
         "era": 0.2314814814814815,
@@ -1838,6 +2200,18 @@
     {
       "baseline_days": 916.6942199999467,
       "id": "hd-34411",
+      "identity": {
+        "bp_rp_mag": 0.79079056,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "188771135583573504",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.10045193,
+        "parallax_mas": 79.6021083335795,
+        "phot_g_mean_mag": 4.5258846,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.8881429,
+        "simbad_main_id": "* lam Aur"
+      },
       "mean_completeness": {
         "baseline": 0.6944444444444444,
         "era": 0.6296296296296297,
@@ -1857,6 +2231,18 @@
     {
       "baseline_days": 907.6525900000706,
       "id": "hd-38858",
+      "identity": {
+        "bp_rp_mag": 0.8163104,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3023711269067191296",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.030716265,
+        "parallax_mas": 65.74459508507027,
+        "phot_g_mean_mag": 5.805881,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0174928,
+        "simbad_main_id": "HD  38858"
+      },
       "mean_completeness": {
         "baseline": 0.12037037037037036,
         "era": 0.2314814814814815,
@@ -1876,6 +2262,18 @@
     {
       "baseline_days": 1069.8982799998485,
       "id": "hd-4614-a",
+      "identity": {
+        "bp_rp_mag": 0.8868861,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "425040000962559616",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.1663396,
+        "parallax_mas": 168.83216034019418,
+        "phot_g_mean_mag": 3.3200667,
+        "reference_epoch": 2016.0,
+        "ruwe": 3.1213033,
+        "simbad_main_id": "* eta Cas"
+      },
       "mean_completeness": {
         "baseline": 0.032407407407407406,
         "era": 0.3194444444444444,
@@ -1895,6 +2293,18 @@
     {
       "baseline_days": 1021.0322900000028,
       "id": "hd-4628",
+      "identity": {
+        "bp_rp_mag": 1.1095943,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "2552925644460225152",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.057815686,
+        "parallax_mas": 134.49484768931154,
+        "phot_g_mean_mag": 5.467689,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0807776,
+        "simbad_main_id": "HD   4628"
+      },
       "mean_completeness": {
         "baseline": 0.4027777777777778,
         "era": 0.6574074074074074,
@@ -1914,6 +2324,18 @@
     {
       "baseline_days": 951.6539400001056,
       "id": "hd-50692",
+      "identity": {
+        "bp_rp_mag": 0.7730403,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3381727613874753536",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.0906531,
+        "parallax_mas": 57.45588658838684,
+        "phot_g_mean_mag": 5.6027837,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.94982505,
+        "simbad_main_id": "*  37 Gem"
+      },
       "mean_completeness": {
         "baseline": 0.4212962962962963,
         "era": 0.462962962962963,
@@ -1933,6 +2355,18 @@
     {
       "baseline_days": 949.6691999998875,
       "id": "hd-51419",
+      "identity": {
+        "bp_rp_mag": 0.8137202,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "3379989457790428416",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.019162552,
+        "parallax_mas": 40.27333938828646,
+        "phot_g_mean_mag": 6.772278,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.0226898,
+        "simbad_main_id": "HD  51419"
+      },
       "mean_completeness": {
         "baseline": 0.7083333333333334,
         "era": 0.6481481481481481,
@@ -1952,6 +2386,18 @@
     {
       "baseline_days": 946.6560499998741,
       "id": "hd-52711",
+      "identity": {
+        "bp_rp_mag": 0.77283525,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "887822001246832384",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.043849643,
+        "parallax_mas": 52.771176020747866,
+        "phot_g_mean_mag": 5.7895827,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.2313855,
+        "simbad_main_id": "HD  52711"
+      },
       "mean_completeness": {
         "baseline": 0.5509259259259259,
         "era": 0.5462962962962963,
@@ -1971,6 +2417,18 @@
     {
       "baseline_days": 920.6083100000396,
       "id": "hd-55575",
+      "identity": {
+        "bp_rp_mag": 0.7810364,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "974887555341533440",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.05346388,
+        "parallax_mas": 59.340805456361466,
+        "phot_g_mean_mag": 5.38816,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.1051395,
+        "simbad_main_id": "HD  55575"
+      },
       "mean_completeness": {
         "baseline": 0.6481481481481481,
         "era": 0.5601851851851852,
@@ -1990,6 +2448,18 @@
     {
       "baseline_days": 973.6636900003068,
       "id": "hd-68017",
+      "identity": {
+        "bp_rp_mag": 0.85226345,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "902007870203594880",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.060918283,
+        "parallax_mas": 46.3415049253662,
+        "phot_g_mean_mag": 6.618883,
+        "reference_epoch": 2016.0,
+        "ruwe": 2.9688635,
+        "simbad_main_id": "HD  68017"
+      },
       "mean_completeness": {
         "baseline": 0.1111111111111111,
         "era": 0.1574074074074074,
@@ -2009,6 +2479,18 @@
     {
       "baseline_days": 1202.7668700003996,
       "id": "hd-86728",
+      "identity": {
+        "bp_rp_mag": 0.84054756,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "746545172372256384",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.09214865,
+        "parallax_mas": 66.99581320003026,
+        "phot_g_mean_mag": 5.2049575,
+        "reference_epoch": 2016.0,
+        "ruwe": 0.9407839,
+        "simbad_main_id": "*  20 LMi"
+      },
       "mean_completeness": {
         "baseline": 0.4722222222222222,
         "era": 0.4212962962962963,
@@ -2028,6 +2510,18 @@
     {
       "baseline_days": 1247.3253000001423,
       "id": "hd-9407",
+      "identity": {
+        "bp_rp_mag": 0.85279036,
+        "duplicated_source": false,
+        "gaia_dr3_source_id": "532057254394731776",
+        "identity_status": "unique",
+        "parallax_error_mas": 0.017119154,
+        "parallax_mas": 47.51084800424145,
+        "phot_g_mean_mag": 6.3501935,
+        "reference_epoch": 2016.0,
+        "ruwe": 1.063869,
+        "simbad_main_id": "HD   9407"
+      },
       "mean_completeness": {
         "baseline": 0.7361111111111112,
         "era": 0.5462962962962963,

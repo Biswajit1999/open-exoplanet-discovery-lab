@@ -8,9 +8,9 @@ The canonical science remains in the Python package and frozen generated product
 
 ## Implemented release surface
 
-Release 0.3.0 implements the following scientist-facing views:
+Release 0.3.1 implements the following scientist-facing views:
 
-- a searchable, sortable NETS III target atlas for the 40 stars with complete activity rows;
+- a searchable, sortable NETS III target atlas for the 40 stars with complete activity rows, linked to their exact Gaia DR3 identities and public astrometric context;
 - a numeric completeness laboratory for the three nuisance models and the run-plus-activity minus baseline difference;
 - K50 results, an explicit unbracketed K90 boundary, and held-out-era signal-transfer summaries;
 - a literature gate that separates this release's increment from excluded claims;

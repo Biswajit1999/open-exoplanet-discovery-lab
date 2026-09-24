@@ -1,0 +1,15 @@
+{
+  "gaia_dr3_rows": 41,
+  "gaia_query_hash": "c137a4d682242e5345108e46326a225ebfa02d35e63dd83f9677573d59f8fe6f",
+  "generated_at_utc": "2026-09-24T18:01:34.844821+00:00",
+  "identity_status_counts": {
+    "unique": 41
+  },
+  "interpretation": "Exact Gaia DR3 identity and public astrometric context only. No Gaia field is interpreted as evidence for a companion.",
+  "schema_version": "1.0.0",
+  "simbad_query_hash": "351973ea398e35f3bad77411fa47c0c5d70ab12ebaf8c60e276fd476b191941f",
+  "software_commit": "5f45e4be011f6a2dfa22bdcef7be46365c6467bc",
+  "target_count": 41,
+  "target_source": "VizieR J/AJ/170/264 table1",
+  "target_table_sha256": "8212ef02bb0de4eadfa23fd071bbedbbcecf184c010f3b605698eb57967f926c"
+}

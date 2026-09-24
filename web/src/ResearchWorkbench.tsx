@@ -25,6 +25,18 @@ type TargetRecord = {
   mean_completeness: Record<string, number>
   mean_delta_era_activity_minus_baseline: number
   power_thresholds: Record<string, number>
+  identity: {
+    simbad_main_id: string
+    gaia_dr3_source_id: string
+    identity_status: string
+    reference_epoch: number
+    parallax_mas: number
+    parallax_error_mas: number
+    phot_g_mean_mag: number
+    bp_rp_mag: number
+    ruwe: number
+    duplicated_source: boolean
+  }
 }
 
 type PopulationCell = {
@@ -188,7 +200,7 @@ function TargetAtlas({ targets }: { targets: TargetRecord[] }) {
         {selected && (
           <article className="targetDetail" aria-live="polite">
             <div className="targetDetailTop">
-              <div><p className="findingNumber">Selected target</p><h3>{selected.target}</h3></div>
+              <div><p className="findingNumber">Selected target</p><h3>{selected.target}</h3><p className="targetAlias">SIMBAD: {selected.identity.simbad_main_id}</p></div>
               <span className="evidencePill">Sensitivity record</span>
             </div>
             <dl className="targetMetrics">
@@ -197,13 +209,22 @@ function TargetAtlas({ targets }: { targets: TargetRecord[] }) {
               <div><dt>Baseline</dt><dd>{selected.baseline_days.toFixed(1)} d</dd></div>
               <div><dt>Median formal error</dt><dd>{selected.median_formal_error_mps.toFixed(2)} m s⁻¹</dd></div>
             </dl>
+            <dl className="targetIdentity" aria-label="Gaia DR3 identity and astrometric context">
+              <div><dt>Gaia DR3 source</dt><dd>{selected.identity.gaia_dr3_source_id}</dd></div>
+              <div><dt>Parallax</dt><dd>{selected.identity.parallax_mas.toFixed(2)} ± {selected.identity.parallax_error_mas.toFixed(2)} mas</dd></div>
+              <div><dt>G / BP−RP</dt><dd>{selected.identity.phot_g_mean_mag.toFixed(2)} / {selected.identity.bp_rp_mag.toFixed(2)} mag</dd></div>
+              <div><dt>RUWE</dt><dd>{selected.identity.ruwe.toFixed(2)}</dd></div>
+            </dl>
             <div className="targetComparison">
               <p><span>Global-offset mean recovery</span><strong>{(100 * selected.mean_completeness.baseline).toFixed(1)}%</strong></p>
               <p><span>Run + activity mean recovery</span><strong>{(100 * selected.mean_completeness.era_activity).toFixed(1)}%</strong></p>
               <p><span>Mean model shift</span><strong>{selected.mean_delta_era_activity_minus_baseline >= 0 ? "+" : ""}{selected.mean_delta_era_activity_minus_baseline.toFixed(3)}</strong></p>
             </div>
-            <p className="scopeNote">A target-level recovery fraction describes the declared injection grid. It is not a planet probability.</p>
-            <a className="textLink" href={`${REPOSITORY}/tree/main/results/nets3_completeness_2026-09-23/figures/targets`}>Open target figures <span aria-hidden="true">↗</span></a>
+            <p className="scopeNote">A target-level recovery fraction describes the declared injection grid. Gaia DR3 fields establish identity and context; RUWE is not interpreted here as a companion indicator.</p>
+            <div className="targetLinks">
+              <a className="textLink" href={`${REPOSITORY}/tree/main/results/nets3_completeness_2026-09-23/figures/targets`}>Target figures <span aria-hidden="true">↗</span></a>
+              <a className="textLink" href={`${REPOSITORY}/blob/main/results/gaia_dr3_identity_2026-09-24/nets3_gaia_dr3_identity.csv`}>Identity table <span aria-hidden="true">↗</span></a>
+            </div>
           </article>
         )}
       </div>
@@ -302,7 +323,7 @@ function LiteratureGate({ records }: { records: LiteratureGate[] }) {
 function ProvenanceIndex({ records, onInspect }: { records: ProvenanceRecord[]; onInspect: (id: string) => void }) {
   return (
     <section className="labModule provenanceIndex" id="provenance-index" aria-labelledby="provenance-index-title">
-      <header className="moduleHeader"><div><p className="sectionKicker">Provenance inspector</p><h2 id="provenance-index-title">Four results, four explicit evidence states.</h2></div><p>Open a record to trace the result to its archive, configuration, software commit and checksum manifest.</p></header>
+      <header className="moduleHeader"><div><p className="sectionKicker">Provenance inspector</p><h2 id="provenance-index-title">{records.length} records, explicit evidence states.</h2></div><p>Open a record to trace the result to its archive, configuration, software commit and checksum manifest.</p></header>
       <div className="provenanceGrid">
         {records.map((record, index) => <article id={`provenance-${record.id}`} key={record.id}>
           <div className="recordNumber">0{index + 1}</div>

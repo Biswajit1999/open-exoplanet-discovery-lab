@@ -98,7 +98,7 @@
       "status": "ready",
       "archive": "Gaia Archive",
       "url": "https://gea.esac.esa.int/archive/",
-      "notes": "Current public astrometric context and canonical-source identity."
+      "notes": "Current public astrometric context and canonical-source identity; the frozen 2026-09-24 NETS III registry resolves all 41 survey stars to 41 distinct source IDs."
     },
     {
       "id": "gaia_dr4",
