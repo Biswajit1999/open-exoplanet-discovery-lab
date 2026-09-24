@@ -36,12 +36,17 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
     tess = results / "tess_hd10780_2026-09-23"
     atmosphere = results / "atmosphere_55cnce_2026-09-23"
     eso = results / "eso_nirps_harps_2026-09-23"
+    gaia = results / "gaia_dr3_identity_2026-09-24"
 
     nets_summary = _read_json(nets / "summary.json")
     tess_summary = _read_json(tess / "summary.json")
     atmosphere_summary = _read_json(atmosphere / "summary.json")
     eso_summary = _read_json(eso / "census_summary.json")
     eso_manifest = _read_json(eso / "nirps_harps_overlap_manifest.json")
+    gaia_summary = _read_json(gaia / "summary.json")
+    gaia_by_target = {
+        row["target"]: row for row in _read_csv(gaia / "nets3_gaia_dr3_identity.csv")
+    }
 
     target_completeness = _read_csv(nets / "target_completeness.csv")
     completeness_by_target: dict[str, dict[str, list[float]]] = defaultdict(
@@ -60,6 +65,7 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
     targets = []
     for row in _read_csv(nets / "target_summary.csv"):
         target = row["target"]
+        identity = gaia_by_target[target]
         deltas = []
         for (cell_target, period, amplitude, model), value in cell_by_target.items():
             if cell_target != target or model != "era_activity":
@@ -83,6 +89,19 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
                     "baseline": float(row["baseline_power_threshold"]),
                     "era": float(row["era_power_threshold"]),
                     "era_activity": float(row["era_activity_power_threshold"]),
+                },
+                "identity": {
+                    "simbad_main_id": identity["simbad_main_id"],
+                    "gaia_dr3_source_id": identity["gaia_dr3_source_id"],
+                    "identity_status": identity["identity_status"],
+                    "reference_epoch": float(identity["gaia_ref_epoch"]),
+                    "parallax_mas": float(identity["gaia_parallax"]),
+                    "parallax_error_mas": float(identity["gaia_parallax_error"]),
+                    "phot_g_mean_mag": float(identity["gaia_phot_g_mean_mag"]),
+                    "bp_rp_mag": float(identity["gaia_bp_rp"]),
+                    "ruwe": float(identity["gaia_ruwe"]),
+                    "duplicated_source": identity["gaia_duplicated_source"].lower()
+                    == "true",
                 },
             }
         )
@@ -189,12 +208,26 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
             "checksum_record": "results/eso_nirps_harps_2026-09-23/nirps_harps_overlap_manifest.json",
             "boundary": "Product census only; no homogeneous chromatic RV comparison.",
         },
+        {
+            "id": "gaia-dr3-identity",
+            "title": "NETS III Gaia DR3 identities",
+            "claim_label": "IDENTITY LAYER",
+            "evidence_state": "canonical archive linkage",
+            "archive": "SIMBAD TAP / Gaia Archive DR3",
+            "source_id": "41 exact Gaia DR3 source identifiers",
+            "generated_at_utc": gaia_summary["generated_at_utc"],
+            "software_commit": gaia_summary["software_commit"],
+            "configuration_hash": gaia_summary["gaia_query_hash"],
+            "primary_output": "results/gaia_dr3_identity_2026-09-24/nets3_gaia_dr3_identity.csv",
+            "checksum_record": "results/gaia_dr3_identity_2026-09-24/checksums.json",
+            "boundary": "Identity and public astrometric context only; no companion classification.",
+        },
     ]
 
     return {
         "schema_version": "1.0.0",
-        "release": "0.3.0",
-        "snapshot_date": "2026-09-23",
+        "release": "0.3.1",
+        "snapshot_date": "2026-09-24",
         "targets": targets,
         "completeness": {
             "models": nets_summary["models"],

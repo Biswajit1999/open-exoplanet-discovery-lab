@@ -4,13 +4,13 @@
 [![science validation](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml)
 [![web build](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml)
 
-**Biswajit Jana · public-data research release 0.3.0 · 23 September 2026**
+**Biswajit Jana · public-data research release 0.3.1 · 24 September 2026**
 
 [Research interface](https://biswajit1999.github.io/open-exoplanet-discovery-lab/) · [validated result record](research/RESULTS_2026-09-23.md) · [data-release registry](research/DATA_RELEASE_REGISTRY.md)
 
 ## Abstract
 
-The Open Exoplanet Evidence Lab tests whether exoplanet inferences remain stable when instrument eras, stellar activity, cadence, wavelength and reduction provenance are modelled explicitly. This release completes four public-data studies: a NETS III extreme-precision radial-velocity completeness experiment, an ESO NIRPS × HARPS archive census, a temporally calibrated TESS activity comparison and a 55 Cnc e atmospheric-reduction reproducibility analysis. It makes **no new-planet claim**.
+The Open Exoplanet Evidence Lab tests whether exoplanet inferences remain stable when instrument eras, stellar activity, cadence, wavelength and reduction provenance are modelled explicitly. This release completes four public-data studies—a NETS III extreme-precision radial-velocity completeness experiment, an ESO NIRPS × HARPS archive census, a temporally calibrated TESS activity comparison and a 55 Cnc e atmospheric-reduction reproducibility analysis—and freezes a Gaia DR3 identity layer for the NETS sample. It makes **no new-planet claim**.
 
 The central result is methodological but quantitative: a nuisance model can improve short-period recovery while suppressing long-period sensitivity. Across 40 NETS III stars, adding run and activity terms changes mean completeness by only +0.0205, yet individual population-grid cells differ by as much as 0.4542. At 500 d, the richer model removes substantial injected signal power. A model that lowers residual scatter is therefore not automatically a better detection model.
 
@@ -42,6 +42,14 @@ K90 is deliberately not reported as a number: the tested amplitude grid does not
 The descriptive sample has a median 92 epochs per target, 1,001.95 d baseline, 0.34 m s⁻¹ quoted internal uncertainty and a 13.05% median change between raw and run-demeaned weighted RMS. Run de-meaning is not treated as harmless cleaning because it can absorb astrophysical power.
 
 Machine-readable outputs: [`results/nets3_completeness_2026-09-23/`](results/nets3_completeness_2026-09-23/)
+
+### Gaia DR3: canonical identity without a companion claim
+
+Exact SIMBAD identifier resolution maps all 41 NETS III survey stars to 41 distinct Gaia DR3 source IDs. The frozen table carries the SIMBAD canonical name and coordinate source alongside Gaia epoch-2016 positions, parallaxes, proper motions, photometric context and RUWE. The uploaded target list, SIMBAD query, Gaia ADQL, source-table checksum and output checksums are retained.
+
+These fields provide identity and public astrometric context only. In particular, RUWE is not interpreted as a companion detection statistic, and no Gaia DR4 product is assumed.
+
+Machine-readable outputs: [`results/gaia_dr3_identity_2026-09-24/`](results/gaia_dr3_identity_2026-09-24/)
 
 ### ESO NIRPS × HARPS: a large overlap, not yet a chromatic-RV result
 
@@ -110,7 +118,7 @@ npm run build
 
 The public interface provides a target atlas, exact numeric completeness grids, model-difference and held-out-era views, literature claim gates, result-level provenance records, shareable view state and a print-safe paper mode. Its browser data contract is generated only from the frozen result directories; publication-critical calculations stay in Python.
 
-The current suite contains 48 scientific/software tests. The deterministic validation recovers its declared synthetic 2.4 m s⁻¹, 23.7 d signal and 0.7 optical/NIR amplitude ratio. Those values validate numerical behaviour only.
+The current suite contains 51 scientific/software tests. The deterministic validation recovers its declared synthetic 2.4 m s⁻¹, 23.7 d signal and 0.7 optical/NIR amplitude ratio. Those values validate numerical behaviour only.
 
 Canonical analysis entry points are:
 
@@ -120,6 +128,7 @@ scripts/run_nets_completeness.py
 scripts/build_eso_overlap_census.py
 scripts/run_tess_temporal.py
 scripts/run_atmosphere_reproducibility.py
+scripts/build_gaia_identity_registry.py
 scripts/build_web_release_data.py
 ```
 
@@ -139,7 +148,7 @@ web/         React/TypeScript research interface
 
 ## Data and software acknowledgements
 
-This work uses public products and services from the NEID Earth Twin Survey, VizieR/CDS, the ESO Science Archive, MAST/TESS, the NASA Exoplanet Archive and the JWST/HST archive ecosystem. Consult [`research/DATA_RELEASE_REGISTRY.md`](research/DATA_RELEASE_REGISTRY.md) for release-specific source notes and access gates, and cite the original archives, data releases, software and scientific papers alongside this repository.
+This work uses public products and services from the NEID Earth Twin Survey, VizieR/CDS, SIMBAD, the Gaia Archive, the ESO Science Archive, MAST/TESS, the NASA Exoplanet Archive and the JWST/HST archive ecosystem. Consult [`research/DATA_RELEASE_REGISTRY.md`](research/DATA_RELEASE_REGISTRY.md) for release-specific source notes and access gates, and cite the original archives, data releases, software and scientific papers alongside this repository.
 
 Software in this repository is MIT-licensed unless a file states otherwise. External archive data retain their original licences, access policies, acknowledgements and citation requirements.
 

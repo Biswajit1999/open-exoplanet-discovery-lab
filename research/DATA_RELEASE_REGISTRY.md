@@ -183,6 +183,12 @@ Current role:
 - stellar context;
 - currently public astrometric products.
 
+Frozen 2026-09-24 identity product:
+- all 41 NETS III survey targets have one exact SIMBAD-linked Gaia DR3 source ID;
+- the exact-source Gaia ADQL returns 41 distinct DR3 rows;
+- target-table checksum, uploaded target list, query hashes and output checksums are retained in `results/gaia_dr3_identity_2026-09-24/`;
+- Gaia astrometric quality fields are context only and are not companion classifications.
+
 Future role:
 Gaia DR4 may enable richer orbit constraints and epoch-level astrometry, but no current analysis will assume DR4 products before they are public and the schema is verified.
 

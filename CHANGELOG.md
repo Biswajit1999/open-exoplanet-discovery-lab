@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.1 — 2026-09-24
+
+Added:
+- exact SIMBAD-to-Gaia DR3 identity resolution for all 41 NETS III survey stars;
+- a frozen Gaia DR3 identity and astrometric-context table with ADQL, input/query hashes and checksums;
+- Gaia identity, parallax, photometric context and explicitly non-diagnostic RUWE display in the Target Atlas;
+- strict completeness checks for ambiguous, missing or duplicate identity responses.
+
+Gaia DR4 remains gated, and no Gaia astrometric field is interpreted as a companion detection.
+
+## 0.3.0 — 2026-09-23
+
+Added the frozen NETS III completeness, ESO NIRPS × HARPS census, TESS temporal-context and 55 Cnc e reproducibility results; the scientist-facing Target Atlas, Completeness Lab, provenance inspector and paper mode; and the first citable A-to-Z public research release.
+
 ## 0.2.0 — 2026-09-23
 
 The repository was expanded from a TESS-first transit laboratory into the Open Exoplanet Evidence Lab.
