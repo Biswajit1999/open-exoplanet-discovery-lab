@@ -1,6 +1,6 @@
 # 2026 Data Release Registry
 
-Access-state reference date: **2026-09-23**.
+Access-state reference date: **2026-10-12**.
 
 This file records the public datasets that anchor the flagship research programme. It is not a substitute for a frozen machine-readable manifest. Every actual analysis release must create a dated manifest from archive queries and checksums.
 
@@ -87,13 +87,20 @@ VizieR catalogue:
 Catalogue description:
 - 35 years of RV information for 141 stars.
 
-Access gate on 2026-09-23:
-The catalogue page states that the target summary, RV table, signal table, trend table, sensitivity table, and references become accessible after **2026-10-04**.
+Verified public access on 2026-10-12:
+- 141 target rows;
+- 153,902 raw RV rows;
+- 109 catalogued-signal rows;
+- 74 trend rows;
+- 120 habitable-zone sensitivity rows;
+- 28 instrument rows;
+- catalogue licence CC-BY-4.0.
 
-Project rule:
-- do not fabricate a local mirror or scrape inaccessible tables;
-- an alternate official deposit may be used only after its identity and content are verified;
-- once public, reproduce selected published sensitivity products before changing assumptions.
+The frozen acquisition also queried the NASA Exoplanet Archive
+`pscomppars` table for confirmed-planet context linked by HD identifier. The
+VizieR and NASA queries, exact row counts, file checksums and access time are
+recorded under manifest hash
+`07ac357428da385a0a6aa5b7fd72cb51a7f6bcf5520d0f946b86dbec6d8a99f3`.
 
 Primary extension:
 - eccentric injection distribution;
@@ -101,7 +108,32 @@ Primary extension:
 - leave-one-instrument-out sensitivity;
 - revised M50/M90 or K50/K90 where meaningful.
 
-Status: **WAITING ON VERIFIED PUBLIC TABLE ACCESS**.
+Status: **READY; PUBLIC TABLES VERIFIED AND FROZEN FOR ANALYSIS**.
+
+## 4a. TESS Stellar Variability Catalog v1.0
+
+Role: independent short-timescale photometric-variability context for
+SPORES-HWO targets.
+
+MAST HLSP:
+- https://archive.stsci.edu/hlsp/tess-svc
+- DOI: https://doi.org/10.17909/f8pz-vj63
+
+Verified public access on 2026-10-12:
+- 84,046 stars classified as significantly periodic-variable on 0.01–13 d
+  timescales;
+- TESS Prime Mission sectors 1–26;
+- one selected 2-minute-cadence sector per star;
+- catalogue licence CC-BY-4.0.
+
+Project use:
+- resolve SPORES-HWO stars to TIC identifiers through SIMBAD;
+- join by exact TIC identifier;
+- retain catalogue solution, period, amplitude, power and sector as context;
+- never interpret a match automatically as rotation or a planet;
+- never interpret a non-match as evidence that a star is quiet.
+
+Status: **READY; VERSION 1.0 FROZEN WITH SOURCE CHECKSUM**.
 
 ## 5. TESS Sector 106 / Sector 107
 

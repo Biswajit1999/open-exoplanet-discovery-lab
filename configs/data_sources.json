@@ -1,6 +1,6 @@
 {
   "schema_version": "0.2.0",
-  "registry_date": "2026-09-23",
+  "registry_date": "2026-10-12",
   "author": "Biswajit Jana",
   "sources": [
     {
@@ -49,11 +49,24 @@
       "id": "spores_hwo_ii",
       "work_packages": ["WP0", "WP3"],
       "name": "SPORES-HWO II",
-      "status": "wait",
+      "status": "ready",
       "catalog": "J/AJ/170/343",
       "url": "https://cdsarc.cds.unistra.fr/viz-bin/w/VizieR-3?-source=J%2FAJ%2F170%2F343",
-      "available_after": "2026-10-04",
-      "notes": "Do not ingest inaccessible VizieR tables. Verify any alternate official deposit before use."
+      "access_verified": "2026-10-12",
+      "license": "CC-BY-4.0",
+      "notes": "Verified public VizieR release: 141 target rows, 153902 raw RV rows, 109 signal rows, 74 trend rows, 120 HZ-sensitivity rows and 28 instrument rows. Frozen acquisition manifest 07ac357428da385a0a6aa5b7fd72cb51a7f6bcf5520d0f946b86dbec6d8a99f3."
+    },
+    {
+      "id": "tess_svc_v1",
+      "work_packages": ["WP0", "WP3", "WP4"],
+      "name": "TESS Stellar Variability Catalog v1.0",
+      "status": "ready",
+      "archive": "MAST HLSP",
+      "doi": "10.17909/f8pz-vj63",
+      "url": "https://archive.stsci.edu/hlsp/tess-svc",
+      "access_verified": "2026-10-12",
+      "license": "CC-BY-4.0",
+      "notes": "84046 significant 0.01-13 d periodic-variable stars from one selected Prime-Mission sector; exact TIC matches provide variability context, while non-matches are not quiet-star classifications."
     },
     {
       "id": "tess_sector_106",

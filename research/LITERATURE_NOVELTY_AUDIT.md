@@ -53,7 +53,23 @@ The project will not claim that stellar activity always decreases toward the NIR
 
 ## SPORES-HWO II
 
-The project treats the 35-year, 141-star catalogue as a robustness target only after its public tables are verified accessible. The intended extension is sensitivity to eccentricity, correlated noise, and instrument removal—not another generic signal search.
+Primary reference:
+- Harada et al., *The SPORES-HWO Survey. II. Thirty-five Years of Radial
+  Velocity Monitoring of 141 Nearby Stars*, AJ 170, 343 (2025), bibcode
+  `2025AJ....170..343H`.
+- VizieR J/AJ/170/343.
+
+Published work already includes the heterogeneous 1987–2023 RV compilation,
+catalogued signals and trends, and circular-orbit habitable-zone sensitivity
+products for the eligible sample. The catalogue tables were verified public
+on 2026-10-12.
+
+This project therefore does not claim to discover the catalogue, its signals,
+or its baseline sensitivity result. Its bounded extension is a pre-declared
+no-catalogued-signal control analysis that varies instrument offsets, empirical
+white versus order-preserving nulls, eccentric injections and removal of the
+dominant instrument. Exact TESS-SVC links provide independent variability
+context, not a rotation or planet classification.
 
 ## TESS
 
