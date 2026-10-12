@@ -11,6 +11,7 @@ removal.  It is a sensitivity analysis, not a new signal search.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import Future, ProcessPoolExecutor
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -262,6 +263,7 @@ def main() -> int:
     parser.add_argument("--permutations", type=int, default=100)
     parser.add_argument("--seed", type=int, default=20261012)
     parser.add_argument("--max-targets", type=int, default=0)
+    parser.add_argument("--jobs", type=int, default=1)
     parser.add_argument("--software-commit", default="working-tree")
     args = parser.parse_args()
 
@@ -411,6 +413,7 @@ def main() -> int:
     grids: list[pd.DataFrame] = []
     threshold_rows: list[dict[str, object]] = []
     jitter_rows: list[dict[str, object]] = []
+    executor = ProcessPoolExecutor(max_workers=args.jobs) if args.jobs > 1 else None
     for target_index, target in enumerate(selected_targets):
         print(f"[{target_index + 1}/{len(selected_targets)}] {target}", flush=True)
         frame = nightly[nightly["target"] == target].sort_values("bjd").reset_index(drop=True)
@@ -443,17 +446,37 @@ def main() -> int:
                 )
             )
 
+        jobs: list[
+            tuple[
+                str,
+                pd.DataFrame,
+                Future[tuple[pd.DataFrame, dict[str, object]]] | None,
+                dict[str, object],
+            ]
+        ] = []
         for model_index, (model, model_frame, aware, model_degree, null, draws) in enumerate(model_definitions):
-            grid, diagnostics = one_model(
-                model_frame,
-                period_days=period,
-                amplitudes=amplitudes,
-                draws=draws,
-                instrument_aware=aware,
-                trend_degree=model_degree,
-                null=null,
-                permutations=args.permutations,
-                seed=args.seed + target_index * 101 + model_index,
+            kwargs: dict[str, object] = {
+                "period_days": period,
+                "amplitudes": amplitudes,
+                "draws": draws,
+                "instrument_aware": aware,
+                "trend_degree": model_degree,
+                "null": null,
+                "permutations": args.permutations,
+                "seed": args.seed + target_index * 101 + model_index,
+            }
+            future = (
+                executor.submit(one_model, model_frame, **kwargs)
+                if executor is not None
+                else None
+            )
+            jobs.append((model, model_frame, future, kwargs))
+
+        for model, model_frame, future, kwargs in jobs:
+            grid, diagnostics = (
+                future.result()
+                if future is not None
+                else one_model(model_frame, **kwargs)
             )
             grid.insert(0, "model", model)
             grid.insert(0, "target", target)
@@ -493,6 +516,9 @@ def main() -> int:
                         "jitter_mps": jitter,
                     }
                 )
+
+    if executor is not None:
+        executor.shutdown()
 
     all_grids = pd.concat(grids, ignore_index=True)
     thresholds = pd.DataFrame(threshold_rows)
