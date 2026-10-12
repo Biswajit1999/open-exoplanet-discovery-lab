@@ -39,13 +39,17 @@ def main() -> int:
     targets = pd.read_csv(args.spores)
     targets["target"] = targets["HD"].astype(str).str.strip()
     names = targets["SimbadName"].fillna(targets["target"].map(lambda x: f"HD {x}"))
+    names = names.astype(str).map(lambda value: " ".join(value.split()))
+    targets["simbad_query_name"] = names
+    targets["_spores_row"] = range(len(targets))
     simbad = Simbad()
     simbad.add_votable_fields("ids")
     identifiers = simbad.query_objects(names.tolist()).to_pandas()
     identifiers = identifiers.rename(
         columns={
-            "user_specified_id": "simbad_query_name",
+            "user_specified_id": "simbad_returned_name",
             "main_id": "simbad_main_id",
+            "object_number_id": "_simbad_object_number",
         }
     )
     identifiers["tic_id"] = identifiers["ids"].map(extract_tic_identifier)
@@ -53,13 +57,20 @@ def main() -> int:
         raise RuntimeError(
             f"SIMBAD returned {len(identifiers)} rows for {len(targets)} target queries"
         )
+    identifiers["_spores_row"] = identifiers["_simbad_object_number"].astype(int) - 1
+    if set(identifiers["_spores_row"]) != set(targets["_spores_row"]):
+        raise RuntimeError("SIMBAD object-number identifiers do not cover every SPORES query row")
+    returned_names = identifiers.sort_values("_spores_row")["simbad_returned_name"].map(
+        lambda value: " ".join(str(value).split())
+    )
+    if returned_names.tolist() != names.tolist():
+        raise RuntimeError("SIMBAD response order/name alignment failed")
     targets = targets.merge(
-        identifiers[["simbad_query_name", "simbad_main_id", "tic_id"]],
-        left_on="SimbadName",
-        right_on="simbad_query_name",
+        identifiers[["_spores_row", "simbad_returned_name", "simbad_main_id", "tic_id"]],
+        on="_spores_row",
         how="left",
         validate="one_to_one",
-    )
+    ).drop(columns="_spores_row")
 
     usecols = [
         "tess_id",
