@@ -131,7 +131,15 @@ def main() -> int:
         "simbad_fields": ["main_id", "ids"],
         "mast_hlsp": SVC_URL,
         "mast_doi": SVC_DOI,
+        "mast_release": "TESS-SVC v1.0; TESS Prime Mission sectors 1-26",
+        "scope": "significant periodic variability on 0.01-13 day timescales from one selected sector",
         "match": "exact TIC identifier extracted from SIMBAD identifier list",
+        "selected_field_semantics": {
+            "period_var_1/2": "catalogue variability periods in days",
+            "amp_var_1/2": "catalogue fitted variability amplitudes in ppm",
+            "power_1/2": "catalogue variability signal powers",
+            "Solution": "1sin, 2sin, or acf catalogue solution family",
+        },
     }
     (output / "query.json").write_text(
         json.dumps(query_record, indent=2, sort_keys=True) + "\n", encoding="utf-8"

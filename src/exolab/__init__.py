@@ -37,6 +37,7 @@ from .spores import (
     RVProjection,
     calibrated_group_power_threshold,
     clean_spores_rv,
+    completeness_threshold_with_status,
     eccentric_rv_signal,
     effective_group_errors,
     extract_tic_identifier,

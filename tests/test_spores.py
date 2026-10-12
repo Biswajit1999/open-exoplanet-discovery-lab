@@ -4,6 +4,7 @@ import pandas as pd
 from exolab.spores import (
     calibrated_group_power_threshold,
     clean_spores_rv,
+    completeness_threshold_with_status,
     eccentric_rv_signal,
     extract_tic_identifier,
     interpolate_completeness_threshold,
@@ -96,3 +97,9 @@ def test_group_null_thresholds_are_finite_and_threshold_interpolates():
         interpolate_completeness_threshold([1, 2, 3], [0.1, 0.6, 1.0], 0.5),
         1.8,
     )
+    value, status = completeness_threshold_with_status([3, 1, 2], [1.0, 0.1, 0.6], 0.5)
+    assert np.isclose(value, 1.8)
+    assert status == "bracketed"
+    value, status = completeness_threshold_with_status([1, 2], [0.0, 0.4], 0.5)
+    assert np.isnan(value)
+    assert status == "right_censored_above_grid"

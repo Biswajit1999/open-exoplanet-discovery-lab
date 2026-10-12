@@ -358,15 +358,31 @@ def interpolate_completeness_threshold(
     level: float,
 ) -> float:
     """Interpolate a monotonic K-level threshold, returning NaN if unbracketed."""
+    value, _ = completeness_threshold_with_status(amplitudes, completeness, level)
+    return value
+
+
+def completeness_threshold_with_status(
+    amplitudes: Iterable[float],
+    completeness: Iterable[float],
+    level: float,
+) -> tuple[float, str]:
+    """Return a monotonic threshold and its finite-grid censoring state."""
     x = np.asarray(amplitudes, dtype=float)
-    y = np.maximum.accumulate(np.asarray(completeness, dtype=float))
+    y = np.asarray(completeness, dtype=float)
+    finite = np.isfinite(x) & np.isfinite(y)
+    x, y = x[finite], y[finite]
     order = np.argsort(x)
     x, y = x[order], y[order]
-    if not 0 < level < 1 or x.size == 0 or np.nanmax(y) < level:
-        return float("nan")
+    y = np.maximum.accumulate(y)
+    if not 0 < level < 1 or x.size == 0:
+        return float("nan"), "invalid"
+    if np.nanmax(y) < level:
+        return float("nan"), "right_censored_above_grid"
     index = int(np.flatnonzero(y >= level)[0])
     if index == 0:
-        return float(x[0])
+        return float(x[0]), "left_censored_at_grid"
     y0, y1 = y[index - 1], y[index]
     x0, x1 = x[index - 1], x[index]
-    return float(x1 if y1 == y0 else x0 + (level - y0) * (x1 - x0) / (y1 - y0))
+    value = float(x1 if y1 == y0 else x0 + (level - y0) * (x1 - x0) / (y1 - y0))
+    return value, "bracketed"

@@ -27,8 +27,8 @@ from exolab.provenance import canonical_json_sha256, sha256_file
 from exolab.spores import (
     calibrated_group_power_threshold,
     clean_spores_rv,
+    completeness_threshold_with_status,
     effective_group_errors,
-    interpolate_completeness_threshold,
     nightly_bin_spores_rv,
     orbital_draws,
     project_spores_nuisance,
@@ -377,7 +377,19 @@ def main() -> int:
         },
         "quality": "finite BJD/RVel/e_RVel; catalogue -1 sentinels excluded; e_RVel > 0",
         "nightly_bin": "inverse-variance mean within target/instrument/floor(BJD)",
-        "amplitude_multipliers_of_published_k50": [0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 5.0],
+        "amplitude_multipliers_of_published_k50": [
+            0.25,
+            0.5,
+            0.75,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            5.0,
+            8.0,
+            12.0,
+            20.0,
+        ],
         "orbital_draws": int(args.draws),
         "eccentricity_distribution": {"family": "Beta", "a": 0.867, "b": 3.03, "reference": "Kipping 2013, MNRAS 434, L51"},
         "null_calibration": {
@@ -443,10 +455,10 @@ def main() -> int:
             grid.insert(0, "model", model)
             grid.insert(0, "target", target)
             grids.append(grid)
-            k50 = interpolate_completeness_threshold(
+            k50, k50_status = completeness_threshold_with_status(
                 grid["semi_amplitude_mps"], grid["completeness"], 0.5
             )
-            k90 = interpolate_completeness_threshold(
+            k90, k90_status = completeness_threshold_with_status(
                 grid["semi_amplitude_mps"], grid["completeness"], 0.9
             )
             threshold_rows.append(
@@ -460,6 +472,8 @@ def main() -> int:
                     "published_k90_mps": float(meta["published_k90_mps"]),
                     "k50_mps": k50,
                     "k90_mps": k90,
+                    "k50_status": k50_status,
+                    "k90_status": k90_status,
                     "k50_over_published": k50 / published_k50,
                     "power_threshold": diagnostics["power_threshold"],
                     "residual_rms_mps": diagnostics["residual_rms_mps"],
@@ -496,6 +510,12 @@ def main() -> int:
         comparison.groupby("model", as_index=False)
         .agg(
             n_targets=("target", "nunique"),
+            n_k50_bracketed=("k50_status", lambda x: int((x == "bracketed").sum())),
+            n_k50_left_censored=("k50_status", lambda x: int((x == "left_censored_at_grid").sum())),
+            n_k50_right_censored=("k50_status", lambda x: int((x == "right_censored_above_grid").sum())),
+            n_k90_bracketed=("k90_status", lambda x: int((x == "bracketed").sum())),
+            n_k90_left_censored=("k90_status", lambda x: int((x == "left_censored_at_grid").sum())),
+            n_k90_right_censored=("k90_status", lambda x: int((x == "right_censored_above_grid").sum())),
             median_k50_mps=("k50_mps", "median"),
             median_k90_mps=("k90_mps", "median"),
             median_k50_over_published=("k50_over_published", "median"),
@@ -543,6 +563,10 @@ def main() -> int:
         "selected_control_targets": int(len(selected_targets)),
         "selected_nightly_rvs": int(nightly["target"].isin(selected_targets).sum()),
         "selection_definition": "table9 HZ row; >=150 valid nightly RVs; >=2 instruments; no table6 signal",
+        "orbital_draws_per_amplitude": int(args.draws),
+        "null_permutations_per_model": int(args.permutations),
+        "empirical_fap": 0.01,
+        "amplitude_grid_max_published_k50": float(max(configuration["amplitude_multipliers_of_published_k50"])),
         "published_middle_hz_median_m50_earth": published_median_m50,
         "published_middle_hz_median_k50_mps": published_median_k50,
         "control_median_instrument_correlated_circular_k50_mps": float(by_model.loc["instrument_correlated_circular", "median_k50_mps"]),
