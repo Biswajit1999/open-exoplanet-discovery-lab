@@ -1,5 +1,9 @@
 # Open Exoplanet Evidence Lab
 
+<p align="center">
+  <img src="docs/assets/open-exoplanet-evidence-lab-cover.png" alt="Evidence-first exoplanet research: radial-velocity measurements, transit geometry, and optical-to-infrared spectra" width="100%">
+</p>
+
 [![tests](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/tests.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/tests.yml)
 [![science validation](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/science-validation.yml)
 [![web build](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml/badge.svg)](https://github.com/Biswajit1999/open-exoplanet-discovery-lab/actions/workflows/web-build.yml)
