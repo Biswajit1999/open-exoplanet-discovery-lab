@@ -47,9 +47,11 @@ def main() -> int:
 
     sample = pd.read_csv(robustness / "analysis_sample.csv")
     thresholds = pd.read_csv(robustness / "target_k50_k90.csv")
+    archive_context = pd.read_csv(robustness / "target_archive_context.csv")
     context = pd.read_csv(tess_context / "spores_tess_svc_context.csv")
     sample["target"] = sample["target"].map(normalized_target)
     thresholds["target"] = thresholds["target"].map(normalized_target)
+    archive_context["target"] = archive_context["target"].map(normalized_target)
     context["target"] = context["target"].map(normalized_target)
 
     included = sample[sample["selection_status"] == "included"].copy()
@@ -65,12 +67,28 @@ def main() -> int:
             "residual_rms_mps",
         ]
     ]
-    joined = included.merge(reference, on="target", validate="one_to_one").merge(
-        context,
-        on="target",
-        how="left",
-        validate="one_to_one",
-        suffixes=("_robustness", "_tess"),
+    joined = (
+        included.merge(reference, on="target", validate="one_to_one")
+        .merge(
+            archive_context[
+                [
+                    "target",
+                    "nasa_confirmed_planets",
+                    "nasa_planet_names",
+                    "nasa_discovery_methods",
+                ]
+            ],
+            on="target",
+            how="left",
+            validate="one_to_one",
+        )
+        .merge(
+            context,
+            on="target",
+            how="left",
+            validate="one_to_one",
+            suffixes=("_robustness", "_tess"),
+        )
     )
     if len(joined) != len(included) or joined["context_state"].isna().any():
         raise RuntimeError("TESS context does not resolve every selected control target")
@@ -81,6 +99,7 @@ def main() -> int:
     matched = joined[joined["context_state"] == "tess_svc_variability_match"].copy()
     unmatched = joined[joined["context_state"] != "tess_svc_variability_match"].copy()
     resolved_controls = int((joined["context_state"] != "no_tic_identifier").sum())
+    known_planet_context = joined[joined["nasa_confirmed_planets"] > 0]
 
     configuration = {
         "identity_match": "exact TIC identifier from SIMBAD identifier list",
@@ -98,6 +117,15 @@ def main() -> int:
         "control_resolved_tic_ids": resolved_controls,
         "control_context_counts": {key: int(value) for key, value in control_counts.items()},
         "control_tess_svc_match_fraction_of_resolved": float(len(matched) / resolved_controls),
+        "control_targets_with_nasa_confirmed_planets": int(len(known_planet_context)),
+        "nasa_confirmed_planet_context": [
+            {
+                "target": row.target,
+                "planet_count": int(row.nasa_confirmed_planets),
+                "planet_names": row.nasa_planet_names,
+            }
+            for row in known_planet_context.itertuples()
+        ],
         "matched_control_targets": matched["target"].tolist(),
         "matched_solution_counts": {
             key: int(value)
@@ -120,6 +148,9 @@ def main() -> int:
         "source_checksums": {
             "analysis_sample": sha256_file(robustness / "analysis_sample.csv"),
             "target_k50_k90": sha256_file(robustness / "target_k50_k90.csv"),
+            "target_archive_context": sha256_file(
+                robustness / "target_archive_context.csv"
+            ),
             "spores_tess_svc_context": sha256_file(
                 tess_context / "spores_tess_svc_context.csv"
             ),

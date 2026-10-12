@@ -414,8 +414,20 @@ def main() -> int:
     threshold_rows: list[dict[str, object]] = []
     jitter_rows: list[dict[str, object]] = []
     executor = ProcessPoolExecutor(max_workers=args.jobs) if args.jobs > 1 else None
+    pending_jobs: list[
+        tuple[
+            str,
+            str,
+            pd.DataFrame,
+            Future[tuple[pd.DataFrame, dict[str, object]]] | None,
+            dict[str, object],
+            float,
+            float,
+            str,
+        ]
+    ] = []
     for target_index, target in enumerate(selected_targets):
-        print(f"[{target_index + 1}/{len(selected_targets)}] {target}", flush=True)
+        print(f"[schedule {target_index + 1}/{len(selected_targets)}] {target}", flush=True)
         frame = nightly[nightly["target"] == target].sort_values("bjd").reset_index(drop=True)
         meta = selected_sample[selected_sample["target"] == target].iloc[0]
         period = float(meta["mhz_period_days"])
@@ -446,14 +458,6 @@ def main() -> int:
                 )
             )
 
-        jobs: list[
-            tuple[
-                str,
-                pd.DataFrame,
-                Future[tuple[pd.DataFrame, dict[str, object]]] | None,
-                dict[str, object],
-            ]
-        ] = []
         for model_index, (model, model_frame, aware, model_degree, null, draws) in enumerate(model_definitions):
             kwargs: dict[str, object] = {
                 "period_days": period,
@@ -470,52 +474,73 @@ def main() -> int:
                 if executor is not None
                 else None
             )
-            jobs.append((model, model_frame, future, kwargs))
+            pending_jobs.append(
+                (
+                    target,
+                    model,
+                    model_frame,
+                    future,
+                    kwargs,
+                    published_k50,
+                    float(meta["published_k90_mps"]),
+                    dominant,
+                )
+            )
 
-        for model, model_frame, future, kwargs in jobs:
-            grid, diagnostics = (
-                future.result()
-                if future is not None
-                else one_model(model_frame, **kwargs)
-            )
-            grid.insert(0, "model", model)
-            grid.insert(0, "target", target)
-            grids.append(grid)
-            k50, k50_status = completeness_threshold_with_status(
-                grid["semi_amplitude_mps"], grid["completeness"], 0.5
-            )
-            k90, k90_status = completeness_threshold_with_status(
-                grid["semi_amplitude_mps"], grid["completeness"], 0.9
-            )
-            threshold_rows.append(
+    for job_index, (
+        target,
+        model,
+        model_frame,
+        future,
+        kwargs,
+        published_k50,
+        published_k90,
+        dominant,
+    ) in enumerate(pending_jobs):
+        grid, diagnostics = (
+            future.result()
+            if future is not None
+            else one_model(model_frame, **kwargs)
+        )
+        print(f"[complete {job_index + 1}/{len(pending_jobs)}] {target} / {model}", flush=True)
+        grid.insert(0, "model", model)
+        grid.insert(0, "target", target)
+        grids.append(grid)
+        k50, k50_status = completeness_threshold_with_status(
+            grid["semi_amplitude_mps"], grid["completeness"], 0.5
+        )
+        k90, k90_status = completeness_threshold_with_status(
+            grid["semi_amplitude_mps"], grid["completeness"], 0.9
+        )
+        threshold_rows.append(
+            {
+                "target": target,
+                "model": model,
+                "n_nights": int(len(model_frame)),
+                "n_instruments": int(model_frame["instrument"].nunique()),
+                "mhz_period_days": float(grid["period_days"].iloc[0]),
+                "published_k50_mps": published_k50,
+                "published_k90_mps": published_k90,
+                "k50_mps": k50,
+                "k90_mps": k90,
+                "k50_status": k50_status,
+                "k90_status": k90_status,
+                "k50_over_published": k50 / published_k50,
+                "power_threshold": diagnostics["power_threshold"],
+                "residual_rms_mps": diagnostics["residual_rms_mps"],
+                "trend_degree": diagnostics["trend_degree"],
+                "dominant_instrument_removed": dominant if model.startswith("leave_") else "",
+            }
+        )
+        for label, jitter in diagnostics["jitters_mps"].items():
+            jitter_rows.append(
                 {
                     "target": target,
                     "model": model,
-                    "n_nights": int(len(model_frame)),
-                    "n_instruments": int(model_frame["instrument"].nunique()),
-                    "mhz_period_days": period,
-                    "published_k50_mps": published_k50,
-                    "published_k90_mps": float(meta["published_k90_mps"]),
-                    "k50_mps": k50,
-                    "k90_mps": k90,
-                    "k50_status": k50_status,
-                    "k90_status": k90_status,
-                    "k50_over_published": k50 / published_k50,
-                    "power_threshold": diagnostics["power_threshold"],
-                    "residual_rms_mps": diagnostics["residual_rms_mps"],
-                    "trend_degree": diagnostics["trend_degree"],
-                    "dominant_instrument_removed": dominant if model.startswith("leave_") else "",
+                    "instrument": label,
+                    "jitter_mps": jitter,
                 }
             )
-            for label, jitter in diagnostics["jitters_mps"].items():
-                jitter_rows.append(
-                    {
-                        "target": target,
-                        "model": model,
-                        "instrument": label,
-                        "jitter_mps": jitter,
-                    }
-                )
 
     if executor is not None:
         executor.shutdown()
