@@ -1210,19 +1210,40 @@
       "stream": "NIRPS \u00d7 HARPS"
     },
     {
-      "excluded_claim": "No novelty claim for plotting archived spectra or inferring composition.",
-      "increment": "Empirical visit/reduction reproducibility floor.",
+      "excluded_claim": "No molecular-abundance or unique composition retrieval from a narrow band without spectral covariance.",
+      "increment": "Empirical visit/reduction reproducibility floor plus blackbody brightness-temperature and model-adequacy validation.",
       "status": "bounded",
       "stream": "Atmospheres"
     },
     {
+      "excluded_claim": "No new signal search or companion classification.",
+      "increment": "Control-sample sensitivity to instrument offsets, empirical null, eccentricity and dominant-instrument removal.",
+      "status": "bounded",
+      "stream": "SPORES-HWO II"
+    },
+    {
       "excluded_claim": "No result depends on unavailable products.",
-      "increment": "None emitted until the required public data and schema are verified.",
+      "increment": "None emitted until the public release and archive schema are verified.",
       "status": "gated",
-      "stream": "SPORES-HWO II / Gaia DR4"
+      "stream": "Gaia DR4"
     }
   ],
   "provenance": [
+    {
+      "archive": "VizieR / NASA Exoplanet Archive / MAST TESS-SVC",
+      "boundary": "Control-sample sensitivity and exact-identity variability context; no companion or rotation classification.",
+      "checksum_record": "results/spores_hwo_robustness_2026-10-12/checksums.json",
+      "claim_label": "ROBUSTNESS TEST",
+      "configuration_hash": "dfd0b222e05a00e9cd450d8c6768bea3cae240a2ffab82675379597fa7dc77da",
+      "cross_archive_configuration_hash": "75b34d3727316fb7d4aa476560a5fe79ce159d4deb4c2a725cea2cef17881e1f",
+      "evidence_state": "measured sensitivity",
+      "generated_at_utc": "2026-10-12T21:16:31.761690+00:00",
+      "id": "spores-hwo-robustness",
+      "primary_output": "results/spores_hwo_robustness_2026-10-12/target_k50_k90.csv",
+      "software_commit": "5af835ecdde6c446ce6703e79d0309078dbce7e5",
+      "source_id": "J/AJ/170/343",
+      "title": "SPORES-HWO II robustness"
+    },
     {
       "archive": "VizieR / NEID Earth Twin Survey III",
       "boundary": "Circular injection/recovery sensitivity; no candidate classification.",
@@ -1252,18 +1273,19 @@
       "title": "HD 10780 temporal context"
     },
     {
-      "archive": "NASA Exoplanet Archive atmospheric spectroscopy",
-      "boundary": "No independent-pipeline significance or atmospheric composition claim.",
-      "checksum_record": "results/atmosphere_55cnce_2026-09-23/checksums.json",
+      "archive": "NASA Exoplanet Archive atmospheric spectroscopy / NASA system parameters",
+      "boundary": "Brightness-temperature and model-adequacy validation only. No molecular abundance or atmospheric-composition posterior is reported because the narrow band and unpublished spectral covariance do not support a unique retrieval.",
+      "checksum_record": "results/atmosphere_retrieval_validation_2026-10-12/checksums.json",
       "claim_label": "ROBUSTNESS TEST",
-      "configuration_hash": "aff9ecbb85587851e1481320beac6788a6f0c0ef7fffc9a057655cd614823dd4",
-      "evidence_state": "descriptive reproducibility bound",
-      "generated_at_utc": "2026-09-23T12:15:14.099940+00:00",
+      "configuration_hash": "6682c0c60ff5c908a0362dc2292696a4a8445ab0f324a18b5acffcc660c1195f",
+      "evidence_state": "bounded thermal retrieval",
+      "generated_at_utc": "2026-10-12T21:00:29.642453+00:00",
       "id": "atmosphere-55cnce",
-      "primary_output": "results/atmosphere_55cnce_2026-09-23/common_band_visit_means.csv",
-      "software_commit": "6f450ed6c0684f95eca3e177cbe2cd8ef9c65327",
+      "primary_output": "results/atmosphere_retrieval_validation_2026-10-12/visit_thermal_retrievals.csv",
+      "software_commit": "c7d26d7367a8635d18db5ef079b4d70c8d1c685d",
       "source_id": "2024A&A...690A.159P",
-      "title": "55 Cnc e reproducibility"
+      "source_reproducibility_configuration_hash": "aff9ecbb85587851e1481320beac6788a6f0c0ef7fffc9a057655cd614823dd4",
+      "title": "55 Cnc e retrieval validation"
     },
     {
       "archive": "ESO Science Archive TAP",
@@ -1294,9 +1316,9 @@
       "title": "NETS III Gaia DR3 identities"
     }
   ],
-  "release": "0.3.1",
+  "release": "0.4.0",
   "schema_version": "1.0.0",
-  "snapshot_date": "2026-09-24",
+  "snapshot_date": "2026-10-12",
   "targets": [
     {
       "baseline_days": 877.8316899999045,

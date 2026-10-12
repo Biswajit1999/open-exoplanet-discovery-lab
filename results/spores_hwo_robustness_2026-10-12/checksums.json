@@ -1,0 +1,17 @@
+{
+  "analysis_configuration.json": "839bf79fcacc5ad581ff29f60400c0fa47b10cd3f21042fcd8f29619d9759458",
+  "analysis_sample.csv": "37d859f4115dd993bcabab85ae5b228ec3064dec224b2eec71b4a9e38054c99f",
+  "catalog_reproduction.json": "8f399954af09e8ecd57ef12dbd439a69831947a793b8ea4cbd3b72edfc8f0cb9",
+  "control_sample_nightly_rv.csv": "06420a964159957c58beef1d9589619e52cea4b4cd56fdeedcfcdd9ec9da0028",
+  "figures/k50_assumption_robustness.png": "3ca06c10c7bb69078c5a8fab8781907c59bc586ed5f698b2619a9630ebc0eb9f",
+  "figures/k50_population_distribution.png": "7612bc4745e3ae2599008cdcec5838e32ce81952e890e65f54083600148892f7",
+  "figures/published_hz_sensitivity_context.png": "495f2cdf920dd22423a001561f767a236631f20e82e52950d75154b75c5e2a24",
+  "per_instrument_jitter.csv": "e7872982c0b3eecfdfbe89565cfcc423cbb1ddde9a0a01eefe3b6f683e0d628b",
+  "population_model_summary.csv": "4d0ac4c1d817b7ea47f0b4aa6f66aadd22fe58d11110cf55b57f6a66f9b60d4c",
+  "source_acquisition_summary.json": "74c735a396cecbbfd7bc1220703c6df661729d56b320f69c5410060ab1821511",
+  "source_manifest.json": "7d7dde37a01a6f3e8b5fd2771cdb23391e679fed659cfdb56fc324d185931487",
+  "summary.json": "75a9ff918589aa7adcf831566840ed8406927cb96db3f41eac09efced24a1da3",
+  "target_archive_context.csv": "869106551225ba78effc18710c2e8d5bb391a9e51b84e765e0f51041ace06198",
+  "target_completeness.csv": "031e9b3bc47371c1f39c64e5f29e9aeb0fb4adde9032399f9a623c1a83d9fbe2",
+  "target_k50_k90.csv": "0e258da5a74b1b4ea254e4dd70a8776ce745f898e937a0bb3638457853373309"
+}

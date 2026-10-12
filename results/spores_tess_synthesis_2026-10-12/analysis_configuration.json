@@ -1,0 +1,6 @@
+{
+  "identity_match": "exact TIC identifier from SIMBAD identifier list",
+  "rv_reference_model": "instrument_correlated_circular",
+  "spores_selection": "analysis_sample.selection_status == included",
+  "tess_scope": "TESS-SVC v1.0; one selected Prime-Mission sector; 0.01-13 d"
+}

@@ -1,0 +1,93 @@
+{
+  "access_time_utc": "2026-10-12T20:10:39.699946Z",
+  "archive": "VizieR/CDS + NASA Exoplanet Archive TAP",
+  "files": [
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\table3.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "9879cfd2c843ab63ad236f8a336e90a0d8e457493504c9384adccddf79912197",
+      "size_bytes": 22507,
+      "source_product_id": "J/AJ/170/343/table3",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\table5.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "d0e765a5b8a87668b096acf018aa07634610b7ff1f4ec52faf67316841605313",
+      "size_bytes": 14961883,
+      "source_product_id": "J/AJ/170/343/table5",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\table6.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "3ac27390b6291c7258e2da40bed1573cd85ed2b2341c0596412d73d0d6690a2b",
+      "size_bytes": 17815,
+      "source_product_id": "J/AJ/170/343/table6",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\table7.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "2ab9fadff31215813bf78dc74028fb447078806e3c7cc9f642ed964bba4dbb91",
+      "size_bytes": 3608,
+      "source_product_id": "J/AJ/170/343/table7",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\table9.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "be5ebd3b0bef81525ff8892f035fc5563be8afee7c1659a287002e538c2d6134",
+      "size_bytes": 13049,
+      "source_product_id": "J/AJ/170/343/table9",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\inst.csv",
+      "pipeline_version": "VizieR J/AJ/170/343 (Harada et al. 2025)",
+      "sha256": "e1a236a11f84c2259b11e07dab2d4ac51be9b5acef2a27d16815bdfa2804b552",
+      "size_bytes": 5785,
+      "source_product_id": "J/AJ/170/343/inst",
+      "source_url": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/AJ/170/343"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\ReadMe.txt",
+      "pipeline_version": "CDS catalogue documentation",
+      "sha256": "c73c8c58c1192fa2239c5a583ef0a4e42b25b6886b39ec8f013e3f6643c971b3",
+      "size_bytes": 28531,
+      "source_product_id": "J/AJ/170/343/ReadMe",
+      "source_url": "https://cdsarc.cds.unistra.fr/ftp/J/AJ/170/343/ReadMe"
+    },
+    {
+      "path": "data\\census\\spores_hwo_2026-10-12\\nasa_confirmed_planets_with_hd.csv",
+      "pipeline_version": "NASA Exoplanet Archive composite parameters",
+      "sha256": "b2891910f378bd55b1dca45d8d88ca98d55030a714e346f744e15eb885d7cbad",
+      "size_bytes": 104811,
+      "source_product_id": "NASA Exoplanet Archive pscomppars",
+      "source_url": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
+    }
+  ],
+  "manifest_hash": "07ac357428da385a0a6aa5b7fd72cb51a7f6bcf5520d0f946b86dbec6d8a99f3",
+  "notes": [
+    "Catalogue access gate rechecked after 2026-10-04 and found open.",
+    "VizieR ReadMe declares the catalogue CC-BY-4.0.",
+    "NASA rows provide known-planet context only, not discovery validation."
+  ],
+  "product_ids": [
+    "J/AJ/170/343/table3",
+    "J/AJ/170/343/table5",
+    "J/AJ/170/343/table6",
+    "J/AJ/170/343/table7",
+    "J/AJ/170/343/table9",
+    "J/AJ/170/343/inst",
+    "NASA Exoplanet Archive pscomppars"
+  ],
+  "query": "{\"nasa_exoplanet_archive\": \"select pl_name,hostname,hd_name,gaia_dr3_id,sy_pnum,discoverymethod,pl_orbper,pl_orbeccen,pl_bmasse from pscomppars where hd_name is not null\", \"vizier\": \"astroquery.vizier.get_catalogs('J/AJ/170/343'); columns=**; row_limit=-1\"}",
+  "selection_rules": {
+    "nasa_exoplanet_archive": "confirmed-planet composite rows with non-null HD identifier",
+    "scientific_filtering": "none at acquisition",
+    "vizier": "all public rows and all catalogue columns"
+  },
+  "source_id": "spores_hwo_ii_2026-10-12",
+  "source_state": "ready"
+}

@@ -208,6 +208,7 @@ def plot_k50_robustness(thresholds: pd.DataFrame, output: Path) -> None:
         label="sample median",
     )
     axis.axhline(1.0, color="#202d38", linewidth=1, linestyle="--")
+    axis.set_yscale("log")
     axis.set_xticks(range(len(models)))
     axis.set_xticklabels(
         [
@@ -222,7 +223,7 @@ def plot_k50_robustness(thresholds: pd.DataFrame, output: Path) -> None:
         ylabel="K50 / instrument-correlated circular K50",
         title="Middle-HZ sensitivity changes when assumptions change",
     )
-    axis.grid(alpha=0.2, axis="y")
+    axis.grid(alpha=0.2, axis="y", which="both")
     axis.legend(frameon=False)
     figure.tight_layout()
     figure.savefig(output, dpi=220)

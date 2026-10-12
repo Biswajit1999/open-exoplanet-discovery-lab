@@ -1,0 +1,22 @@
+{
+  "access_time_utc": "2026-10-12T20:10:39.699946+00:00",
+  "catalog": "J/AJ/170/343",
+  "catalog_bibcode": "2025AJ....170..343H",
+  "catalog_license": "CC-BY-4.0",
+  "manifest": "data\\census\\spores_hwo_2026-10-12\\manifest.json",
+  "manifest_hash": "07ac357428da385a0a6aa5b7fd72cb51a7f6bcf5520d0f946b86dbec6d8a99f3",
+  "nasa_pscomppars_rows_with_hd": 1068,
+  "queries": {
+    "nasa_exoplanet_archive": "select pl_name,hostname,hd_name,gaia_dr3_id,sy_pnum,discoverymethod,pl_orbper,pl_orbeccen,pl_bmasse from pscomppars where hd_name is not null",
+    "vizier": "astroquery.vizier.get_catalogs('J/AJ/170/343'); columns=**; row_limit=-1"
+  },
+  "query_hash": "432095e8132b8580399067005cf2cb8479265dceb37f8775e6cca87f5480a92e",
+  "row_counts": {
+    "inst": 28,
+    "table3": 141,
+    "table5": 153902,
+    "table6": 109,
+    "table7": 74,
+    "table9": 120
+  }
+}

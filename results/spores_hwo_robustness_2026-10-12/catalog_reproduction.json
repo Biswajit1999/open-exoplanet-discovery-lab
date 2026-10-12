@@ -1,0 +1,23 @@
+{
+  "catalog_hz_sensitivity_rows": 120,
+  "catalog_instrument_rows": 28,
+  "catalog_raw_rv_rows": 153902,
+  "catalog_signal_rows": 109,
+  "catalog_targets": 141,
+  "catalog_trend_rows": 74,
+  "median_reproduction_difference_earth": -0.09999999999999432,
+  "paper_abstract_middle_hz_median_m50_earth": 48.0,
+  "published_middle_hz_median_k50_mps": 4.0,
+  "published_middle_hz_median_m50_earth": 47.900000000000006,
+  "quality_accepted_nightly_rv_rows": 35777,
+  "quality_accepted_raw_rv_rows": 153789,
+  "quality_diagnostics": {
+    "accepted_rows": 153789,
+    "input_rows": 153902,
+    "missing_identity_rows": 0,
+    "non_finite_rows": 113,
+    "non_positive_error_rows": 0,
+    "sentinel_rows": 0
+  },
+  "table3_reported_nightly_rv_sum": 35794
+}

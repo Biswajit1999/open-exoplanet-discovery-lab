@@ -149,6 +149,7 @@ h2, h3 { font-family: var(--serif); font-weight: 500; }
 .snapshotStrip small { color: var(--ink-soft); font: 400 .8rem var(--mono); letter-spacing: 0; }
 
 .leadFinding { display: grid; grid-template-columns: minmax(320px, .38fr) minmax(0, .62fr); gap: clamp(40px, 7vw, 100px); margin-top: 104px; align-items: start; }
+.leadFinding + .leadFinding { margin-top: 128px; padding-top: 104px; border-top: 1px solid var(--line); }
 .findingNumber { color: var(--ochre); }
 .findingNarrative h3, .secondaryCopy h3 { margin: 0; font-size: clamp(2.25rem, 4vw, 4.5rem); line-height: .98; letter-spacing: -.04em; }
 .findingNarrative > p:not(.findingNumber):not(.scopeNote), .secondaryCopy > p:not(.findingNumber):not(.scopeNote) { margin: 32px 0 0; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.72; }
@@ -157,6 +158,8 @@ h2, h3 { font-family: var(--serif); font-weight: 500; }
 .findingStats div { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .findingStats dt { color: var(--ink-soft); font-size: .8rem; }
 .findingStats dd { margin: 0; font: 500 1rem var(--mono); }
+.compactStats { margin-top: 24px; }
+.compactStats div { padding: 10px 0; }
 .scopeNote { margin: 28px 0 0; padding-left: 18px; border-left: 3px solid var(--ochre); color: #64533f; font-size: .78rem; line-height: 1.6; }
 
 .evidenceFigure { margin: 0; background: var(--white); border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(16, 32, 51, .08); }
