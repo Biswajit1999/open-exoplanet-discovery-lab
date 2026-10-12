@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import re
+import shutil
 
 import matplotlib
 
@@ -275,6 +276,8 @@ def main() -> int:
     table9 = pd.read_csv(source / "table9.csv")
     nea = pd.read_csv(source / "nasa_confirmed_planets_with_hd.csv")
     acquisition = json.loads((source / "acquisition_summary.json").read_text(encoding="utf-8"))
+    shutil.copy2(source / "acquisition_summary.json", output / "source_acquisition_summary.json")
+    shutil.copy2(source / "manifest.json", output / "source_manifest.json")
 
     for frame in (table3, table6, table7, table9):
         frame["target"] = frame["HD"].map(target_name)
