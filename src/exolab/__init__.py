@@ -33,6 +33,18 @@ from .inference import aicc, bic, fit_white_jitter, gaussian_log_likelihood
 from .injection import RecoveryResult, inject_box_transit, run_injection_recovery
 from .kepler import keplerian_rv, solve_eccentric_anomaly
 from .gaia import GaiaIdentifierMatch, GaiaTapClient, extract_gaia_dr3_identifier
+from .spores import (
+    RVProjection,
+    calibrated_group_power_threshold,
+    clean_spores_rv,
+    eccentric_rv_signal,
+    effective_group_errors,
+    interpolate_completeness_threshold,
+    nightly_bin_spores_rv,
+    orbital_draws,
+    project_spores_nuisance,
+    run_hz_injection_grid,
+)
 from .periodogram import generalized_lomb_scargle, gls, spectral_window
 from .provenance import (
     DatasetRecord,
