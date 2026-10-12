@@ -39,6 +39,7 @@ from .spores import (
     clean_spores_rv,
     eccentric_rv_signal,
     effective_group_errors,
+    extract_tic_identifier,
     interpolate_completeness_threshold,
     nightly_bin_spores_rv,
     orbital_draws,

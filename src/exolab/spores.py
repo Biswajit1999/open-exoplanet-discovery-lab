@@ -8,6 +8,7 @@ orbital assumptions; they do not classify new signals.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Iterable, Literal, Sequence
 
 import numpy as np
@@ -25,6 +26,17 @@ class RVProjection:
     residuals: np.ndarray
     coefficients: np.ndarray
     terms: tuple[str, ...]
+
+
+def extract_tic_identifier(identifier_list: object) -> str | None:
+    """Extract one exact TIC identifier from a SIMBAD ``ids`` field."""
+    matches = []
+    for identifier in str(identifier_list).split("|"):
+        match = re.fullmatch(r"TIC\s+(\d+)", identifier.strip())
+        if match is not None:
+            matches.append(match.group(1))
+    unique = sorted(set(matches))
+    return unique[0] if len(unique) == 1 else None
 
 
 def clean_spores_rv(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:

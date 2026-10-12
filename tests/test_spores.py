@@ -5,6 +5,7 @@ from exolab.spores import (
     calibrated_group_power_threshold,
     clean_spores_rv,
     eccentric_rv_signal,
+    extract_tic_identifier,
     interpolate_completeness_threshold,
     nightly_bin_spores_rv,
     orbital_draws,
@@ -30,6 +31,12 @@ def test_catalogue_cleaning_and_nightly_binning_are_explicit():
     assert len(binned) == 1
     assert np.isclose(binned.iloc[0]["rv_mps"], 2.0)
     assert np.isclose(binned.iloc[0]["rv_error_mps"], np.sqrt(0.5))
+
+
+def test_tic_identifier_requires_one_exact_match():
+    assert extract_tic_identifier("Gaia DR3 1|TIC 12345|HD 1") == "12345"
+    assert extract_tic_identifier("HD 1|Gaia DR3 1") is None
+    assert extract_tic_identifier("TIC 1|TIC 2") is None
 
 
 def test_instrument_and_trend_projection_removes_declared_nuisance():
