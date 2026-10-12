@@ -1,0 +1,68 @@
+{
+  "configuration_hash": "75b34d3727316fb7d4aa476560a5fe79ce159d4deb4c2a725cea2cef17881e1f",
+  "control_context_counts": {
+    "no_tess_svc_variability_match": 21,
+    "tess_svc_variability_match": 5
+  },
+  "control_resolved_tic_ids": 26,
+  "control_targets": 26,
+  "control_targets_with_nasa_confirmed_planets": 3,
+  "control_tess_svc_match_fraction_of_resolved": 0.19230769230769232,
+  "full_sample_context_counts": {
+    "no_tess_svc_variability_match": 72,
+    "no_tic_identifier": 6,
+    "tess_svc_variability_match": 63
+  },
+  "generated_at_utc": "2026-10-12T21:16:42.724551+00:00",
+  "interpretation": "Exact cross-archive variability context only. TESS-SVC membership does not identify rotation or planets, and a non-match is not evidence of quietness. The matched/unmatched K50 medians are descriptive and not a causal test.",
+  "matched_control_targets": [
+    "100623 A",
+    "10476",
+    "122064",
+    "209100",
+    "65907 A"
+  ],
+  "matched_solution_counts": {
+    "1sin": 4,
+    "2sin": 1
+  },
+  "matched_variability_amplitude_ppm": {
+    "maximum": 317.65,
+    "median": 43.0,
+    "minimum": 20.793
+  },
+  "matched_variability_period_days": {
+    "maximum": 12.0417,
+    "median": 6.4134,
+    "minimum": 3.33681
+  },
+  "nasa_confirmed_planet_context": [
+    {
+      "planet_count": 2,
+      "planet_names": "HD 140901 b;HD 140901 c",
+      "target": "140901 A"
+    },
+    {
+      "planet_count": 1,
+      "planet_names": "eps Ind A b",
+      "target": "209100"
+    },
+    {
+      "planet_count": 1,
+      "planet_names": "HD 86728 b",
+      "target": "86728 A"
+    }
+  ],
+  "reference_k50_mps_by_context": {
+    "other_context_median": 1.875,
+    "tess_svc_match_median": 1.609375
+  },
+  "software_commit": "741fde7c747a5cf856fba54a02fde89f7b292447",
+  "source_checksums": {
+    "analysis_sample": "37d859f4115dd993bcabab85ae5b228ec3064dec224b2eec71b4a9e38054c99f",
+    "spores_tess_svc_context": "49ecdd807ff8779676e0ed6f4a65f6b235b2d785eb9c83ed372d008c9f1f8075",
+    "target_archive_context": "869106551225ba78effc18710c2e8d5bb391a9e51b84e765e0f51041ace06198",
+    "target_k50_k90": "0e258da5a74b1b4ea254e4dd70a8776ce745f898e937a0bb3638457853373309"
+  },
+  "spores_catalog_targets": 141
+}

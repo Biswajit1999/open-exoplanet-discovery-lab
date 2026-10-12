@@ -53,7 +53,23 @@ The project will not claim that stellar activity always decreases toward the NIR
 
 ## SPORES-HWO II
 
-The project treats the 35-year, 141-star catalogue as a robustness target only after its public tables are verified accessible. The intended extension is sensitivity to eccentricity, correlated noise, and instrument removal—not another generic signal search.
+Primary reference:
+- Harada et al., *The SPORES-HWO Survey. II. Thirty-five Years of Radial
+  Velocity Monitoring of 141 Nearby Stars*, AJ 170, 343 (2025), bibcode
+  `2025AJ....170..343H`.
+- VizieR J/AJ/170/343.
+
+Published work already includes the heterogeneous 1987–2023 RV compilation,
+catalogued signals and trends, and circular-orbit habitable-zone sensitivity
+products for the eligible sample. The catalogue tables were verified public
+on 2026-10-12.
+
+This project therefore does not claim to discover the catalogue, its signals,
+or its baseline sensitivity result. Its bounded extension is a pre-declared
+no-catalogued-signal control analysis that varies instrument offsets, empirical
+white versus order-preserving nulls, eccentric injections and removal of the
+dominant instrument. Exact TESS-SVC links provide independent variability
+context, not a rotation or planet classification.
 
 ## TESS
 
@@ -69,10 +85,26 @@ A BLS peak alone is not novel.
 
 NASA Exoplanet Archive's current `spectra` table groups published spectra and explicitly preserves multiple reductions as separate spectra when publications provide them.
 
-The project question is reproducibility:
-How much between-visit, between-reduction, or between-instrument scatter is required to reconcile independent published measurements?
+Primary 55 Cnc e reference:
+- Patel et al. (2024), *JWST reveals a rapid and strong day side variability
+  of 55 Cancri e*, A&A 690, A159, DOI 10.1051/0004-6361/202450748;
+  arXiv:2407.12898. That work already performs atmospheric retrievals and
+  explicitly discusses visit-dependent interpretations of the NIRCam eclipse
+  data.
 
-A simple overplot of spectra is not considered a research result.
+The project question is therefore narrower than repeating that retrieval: how
+much between-visit and between-reduction scatter is required to reconcile the
+public measurements, and how stable is a deliberately bounded blackbody
+brightness-temperature fit under those choices? The release compares a
+blackbody, constant spectrum and linear slope by BIC, tests stellar-temperature
+sensitivity, estimates random-effects visit scatter and performs
+leave-one-visit-out prediction.
+
+A simple overplot of spectra is not considered a research result. The public
+3.95–4.92 µm products do not include a spectral covariance matrix and the two
+reductions share photons. Consequently this repository reports no molecular
+abundance posterior, no independent-pipeline significance and no unique
+composition inference.
 
 ## Rocky Worlds
 

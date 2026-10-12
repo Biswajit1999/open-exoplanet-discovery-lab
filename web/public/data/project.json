@@ -1,5 +1,5 @@
 {
-  "release": "2026.09",
+  "release": "0.4.0",
   "author": "Biswajit Jana",
   "title": "Open Exoplanet Evidence Lab",
   "question": "How stable are exoplanet inferences and survey-completeness claims when instrumental zero points, stellar activity, chromatic RV behaviour, temporal sampling, reduction provenance and independent observing modalities are modelled explicitly?",
@@ -50,15 +50,22 @@
       "id": "NEA-SPECTRA",
       "name": "NASA Atmospheric Spectroscopy",
       "status": "ready",
-      "role": "Cross-publication spectral reproducibility",
-      "detail": "Unified spectrum-level metadata with publication provenance; independent observations are separated from alternate reductions."
+      "role": "Spectral reproducibility and bounded thermal retrieval",
+      "detail": "Five 55 Cnc e visits and two public reductions support brightness-temperature, BIC and held-out-visit tests; the narrow band and missing covariance explicitly preclude a molecular-abundance claim."
     },
     {
       "id": "SPORES-HWO-II",
       "name": "SPORES-HWO II",
-      "status": "wait",
+      "status": "ready",
       "role": "Long-baseline RV robustness",
-      "detail": "Analysis remains gated until the consolidated public tables are verifiably accessible."
+      "detail": "Verified public VizieR tables provide 153,902 raw RV rows for 141 targets; a frozen 26-star control sample tests instrument, null, eccentricity and leave-dominant-instrument assumptions."
+    },
+    {
+      "id": "TESS-SVC-V1",
+      "name": "TESS Stellar Variability Catalog v1.0",
+      "status": "ready",
+      "role": "Independent variability context for HWO targets",
+      "detail": "Exact SIMBAD-to-TIC links connect SPORES-HWO targets to the 84,046-row MAST catalogue without treating non-matches as quiet-star labels."
     },
     {
       "id": "GAIA-DR3",

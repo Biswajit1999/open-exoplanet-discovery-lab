@@ -6,9 +6,13 @@ from .atmosphere import (
     BandMean,
     RandomEffectsEstimate,
     RandomEffectsResult,
+    ThermalRetrieval,
+    blackbody_eclipse_depth_ppm,
     estimate_extra_scatter,
+    fit_blackbody_temperature,
     random_effects_mean,
     weighted_band_mean,
+    weighted_polynomial_fit_statistics,
 )
 from .chromatic import (
     ChromaticSignalComparison,
@@ -33,6 +37,20 @@ from .inference import aicc, bic, fit_white_jitter, gaussian_log_likelihood
 from .injection import RecoveryResult, inject_box_transit, run_injection_recovery
 from .kepler import keplerian_rv, solve_eccentric_anomaly
 from .gaia import GaiaIdentifierMatch, GaiaTapClient, extract_gaia_dr3_identifier
+from .spores import (
+    RVProjection,
+    calibrated_group_power_threshold,
+    clean_spores_rv,
+    completeness_threshold_with_status,
+    eccentric_rv_signal,
+    effective_group_errors,
+    extract_tic_identifier,
+    interpolate_completeness_threshold,
+    nightly_bin_spores_rv,
+    orbital_draws,
+    project_spores_nuisance,
+    run_hz_injection_grid,
+)
 from .periodogram import generalized_lomb_scargle, gls, spectral_window
 from .provenance import (
     DatasetRecord,
@@ -65,6 +83,7 @@ __all__ = [
     "RVInjectionRecovery",
     "RandomEffectsEstimate",
     "RandomEffectsResult",
+    "ThermalRetrieval",
     "RecoveryResult",
     "ResultEnvelope",
     "SinusoidFit",
@@ -75,6 +94,7 @@ __all__ = [
     "aicc",
     "angular_separation_arcsec",
     "bic",
+    "blackbody_eclipse_depth_ppm",
     "canonical_json_sha256",
     "clean_lightcurve",
     "compare_bands",
@@ -83,6 +103,7 @@ __all__ = [
     "detrend_lightcurve",
     "estimate_extra_scatter",
     "fit_instrument_offsets",
+    "fit_blackbody_temperature",
     "fit_shared_sinusoid",
     "fit_sinusoid",
     "fit_white_jitter",
@@ -117,6 +138,7 @@ __all__ = [
     "weighted_mean",
     "weighted_rms",
     "weighted_band_mean",
+    "weighted_polynomial_fit_statistics",
     "write_manifest",
     "write_result",
 ]

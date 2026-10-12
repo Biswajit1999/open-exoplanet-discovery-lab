@@ -1,0 +1,3 @@
+pipeline,visits,mean_brightness_temperature_k,mean_error_k,extra_inter_visit_scatter_k,reduced_chi2_after_extra_scatter,blackbody_bic_preferred_visits,constant_bic_preferred_visits,linear_bic_preferred_visits
+HANSOLO,5,1248.806644437747,133.93785221817404,286.0155903908294,1.0000000000000002,4,0,1
+stark,5,2129.2674440147716,236.53805470820558,526.4562824289715,0.9999999999999999,4,0,1

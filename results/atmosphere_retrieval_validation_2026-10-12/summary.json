@@ -1,0 +1,41 @@
+{
+  "archive_equilibrium_temperature_k": 1958.0,
+  "archive_radius_ratio": 0.0182,
+  "archive_stellar_temperature_k": 5172.0,
+  "claim_boundary": "Brightness-temperature and model-adequacy validation only. No molecular abundance or atmospheric-composition posterior is reported because the narrow band and unpublished spectral covariance do not support a unique retrieval.",
+  "configuration_hash": "6682c0c60ff5c908a0362dc2292696a4a8445ab0f324a18b5acffcc660c1195f",
+  "generated_at_utc": "2026-10-12T21:00:29.642453+00:00",
+  "independent_visits": 5,
+  "maximum_absolute_leave_one_visit_out_predictive_z": 2.584396485537279,
+  "median_same_visit_hansolo_minus_stark_temperature_k": -935.9949025023813,
+  "pipeline_results": {
+    "HANSOLO": {
+      "bic_preferred_visit_counts": {
+        "blackbody": 4,
+        "constant": 0,
+        "linear": 1
+      },
+      "extra_inter_visit_scatter_k": 286.0155903908294,
+      "mean_brightness_temperature_k": 1248.806644437747,
+      "mean_error_k": 133.93785221817404
+    },
+    "stark": {
+      "bic_preferred_visit_counts": {
+        "blackbody": 4,
+        "constant": 0,
+        "linear": 1
+      },
+      "extra_inter_visit_scatter_k": 526.4562824289715,
+      "mean_brightness_temperature_k": 2129.2674440147716,
+      "mean_error_k": 236.53805470820558
+    }
+  },
+  "software_commit": "c7d26d7367a8635d18db5ef079b4d70c8d1c685d",
+  "source_checksums": {
+    "broadband_visit_depths": "2e7ff0588ceace3e0566c49ac5f35613d8e49835003bb832cd7c300eee652319",
+    "spectral_bins": "2345616de8e0b6b116a23a8280c43f1876ec53247f0bcca7b8c9c5055d9828da"
+  },
+  "spectral_retrievals": 10,
+  "target": "55 Cnc e",
+  "two_band_blackbody_preferred_visits": 3
+}

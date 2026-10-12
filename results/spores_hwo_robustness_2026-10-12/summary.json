@@ -1,0 +1,22 @@
+{
+  "amplitude_grid_max_published_k50": 20.0,
+  "catalog": "J/AJ/170/343",
+  "catalog_bibcode": "2025AJ....170..343H",
+  "catalog_manifest_hash": "07ac357428da385a0a6aa5b7fd72cb51a7f6bcf5520d0f946b86dbec6d8a99f3",
+  "configuration_hash": "dfd0b222e05a00e9cd450d8c6768bea3cae240a2ffab82675379597fa7dc77da",
+  "control_median_instrument_correlated_circular_k50_mps": 1.8,
+  "empirical_fap": 0.01,
+  "generated_at_utc": "2026-10-12T21:16:31.761690+00:00",
+  "interpretation": "Middle-HZ detection sensitivity for a pre-declared no-catalogued-signal control sample. Values compare nuisance, null, eccentricity and instrument-removal assumptions; they are not companion detections.",
+  "median_eccentric_to_circular_k50_ratio": 1.0888888888888888,
+  "median_global_white_to_instrument_correlated_k50_ratio": 1.2542735042735043,
+  "median_leave_dominant_to_full_k50_ratio": 1.4000000000000001,
+  "null_permutations_per_model": 500,
+  "orbital_draws_per_amplitude": 24,
+  "published_middle_hz_median_k50_mps": 4.0,
+  "published_middle_hz_median_m50_earth": 47.900000000000006,
+  "selected_control_targets": 26,
+  "selected_nightly_rvs": 8260,
+  "selection_definition": "table9 HZ row; >=150 valid nightly RVs; >=2 instruments; no table6 signal",
+  "software_commit": "5af835ecdde6c446ce6703e79d0309078dbce7e5"
+}

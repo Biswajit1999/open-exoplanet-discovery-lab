@@ -35,15 +35,21 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
     nets = results / RELEASE_DIRECTORY
     tess = results / "tess_hd10780_2026-09-23"
     atmosphere = results / "atmosphere_55cnce_2026-09-23"
+    atmosphere_retrieval = results / "atmosphere_retrieval_validation_2026-10-12"
     eso = results / "eso_nirps_harps_2026-09-23"
     gaia = results / "gaia_dr3_identity_2026-09-24"
+    spores = results / "spores_hwo_robustness_2026-10-12"
+    spores_tess = results / "spores_tess_synthesis_2026-10-12"
 
     nets_summary = _read_json(nets / "summary.json")
     tess_summary = _read_json(tess / "summary.json")
     atmosphere_summary = _read_json(atmosphere / "summary.json")
+    atmosphere_retrieval_summary = _read_json(atmosphere_retrieval / "summary.json")
     eso_summary = _read_json(eso / "census_summary.json")
     eso_manifest = _read_json(eso / "nirps_harps_overlap_manifest.json")
     gaia_summary = _read_json(gaia / "summary.json")
+    spores_summary = _read_json(spores / "summary.json")
+    spores_tess_summary = _read_json(spores_tess / "summary.json")
     gaia_by_target = {
         row["target"]: row for row in _read_csv(gaia / "nets3_gaia_dr3_identity.csv")
     }
@@ -153,6 +159,21 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
 
     provenance = [
         {
+            "id": "spores-hwo-robustness",
+            "title": "SPORES-HWO II robustness",
+            "claim_label": "ROBUSTNESS TEST",
+            "evidence_state": "measured sensitivity",
+            "archive": "VizieR / NASA Exoplanet Archive / MAST TESS-SVC",
+            "source_id": spores_summary["catalog"],
+            "generated_at_utc": spores_summary["generated_at_utc"],
+            "software_commit": spores_summary["software_commit"],
+            "configuration_hash": spores_summary["configuration_hash"],
+            "primary_output": "results/spores_hwo_robustness_2026-10-12/target_k50_k90.csv",
+            "checksum_record": "results/spores_hwo_robustness_2026-10-12/checksums.json",
+            "boundary": "Control-sample sensitivity and exact-identity variability context; no companion or rotation classification.",
+            "cross_archive_configuration_hash": spores_tess_summary["configuration_hash"],
+        },
+        {
             "id": "nets3-completeness",
             "title": "NETS III completeness",
             "claim_label": "ROBUSTNESS TEST",
@@ -182,17 +203,18 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
         },
         {
             "id": "atmosphere-55cnce",
-            "title": "55 Cnc e reproducibility",
+            "title": "55 Cnc e retrieval validation",
             "claim_label": "ROBUSTNESS TEST",
-            "evidence_state": "descriptive reproducibility bound",
-            "archive": "NASA Exoplanet Archive atmospheric spectroscopy",
+            "evidence_state": "bounded thermal retrieval",
+            "archive": "NASA Exoplanet Archive atmospheric spectroscopy / NASA system parameters",
             "source_id": atmosphere_summary["bibcode"],
-            "generated_at_utc": atmosphere_summary["generated_at_utc"],
-            "software_commit": atmosphere_summary["software_commit"],
-            "configuration_hash": atmosphere_summary["configuration_hash"],
-            "primary_output": "results/atmosphere_55cnce_2026-09-23/common_band_visit_means.csv",
-            "checksum_record": "results/atmosphere_55cnce_2026-09-23/checksums.json",
-            "boundary": "No independent-pipeline significance or atmospheric composition claim.",
+            "generated_at_utc": atmosphere_retrieval_summary["generated_at_utc"],
+            "software_commit": atmosphere_retrieval_summary["software_commit"],
+            "configuration_hash": atmosphere_retrieval_summary["configuration_hash"],
+            "primary_output": "results/atmosphere_retrieval_validation_2026-10-12/visit_thermal_retrievals.csv",
+            "checksum_record": "results/atmosphere_retrieval_validation_2026-10-12/checksums.json",
+            "boundary": atmosphere_retrieval_summary["claim_boundary"],
+            "source_reproducibility_configuration_hash": atmosphere_summary["configuration_hash"],
         },
         {
             "id": "eso-nirps-harps",
@@ -226,8 +248,8 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
 
     return {
         "schema_version": "1.0.0",
-        "release": "0.3.1",
-        "snapshot_date": "2026-09-24",
+        "release": "0.4.0",
+        "snapshot_date": "2026-10-12",
         "targets": targets,
         "completeness": {
             "models": nets_summary["models"],
@@ -253,13 +275,19 @@ def build_web_release_data(repository: Path) -> dict[str, Any]:
             {
                 "stream": "Atmospheres",
                 "status": "bounded",
-                "increment": "Empirical visit/reduction reproducibility floor.",
-                "excluded_claim": "No novelty claim for plotting archived spectra or inferring composition.",
+                "increment": "Empirical visit/reduction reproducibility floor plus blackbody brightness-temperature and model-adequacy validation.",
+                "excluded_claim": "No molecular-abundance or unique composition retrieval from a narrow band without spectral covariance.",
             },
             {
-                "stream": "SPORES-HWO II / Gaia DR4",
+                "stream": "SPORES-HWO II",
+                "status": "bounded",
+                "increment": "Control-sample sensitivity to instrument offsets, empirical null, eccentricity and dominant-instrument removal.",
+                "excluded_claim": "No new signal search or companion classification.",
+            },
+            {
+                "stream": "Gaia DR4",
                 "status": "gated",
-                "increment": "None emitted until the required public data and schema are verified.",
+                "increment": "None emitted until the public release and archive schema are verified.",
                 "excluded_claim": "No result depends on unavailable products.",
             },
         ],

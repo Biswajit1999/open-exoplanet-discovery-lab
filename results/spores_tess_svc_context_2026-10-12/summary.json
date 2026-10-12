@@ -1,0 +1,17 @@
+{
+  "context_state_counts": {
+    "no_tess_svc_variability_match": 72,
+    "no_tic_identifier": 6,
+    "tess_svc_variability_match": 63
+  },
+  "generated_at_utc": "2026-10-12T20:30:56.313578+00:00",
+  "interpretation": "Independent MAST periodic-variability context. Matches are not assigned a stellar-rotation or planetary interpretation; non-matches are not null detections.",
+  "query_hash": "55ca17aacc91fb3e217d9ea4281eb0db4285076c0968c8c08a4fb0e8e1e9167f",
+  "software_commit": "60bd1d35b2fec4fd75f2fea27ae38b36ea234217",
+  "source_checksums": {
+    "spores_table3": "9879cfd2c843ab63ad236f8a336e90a0d8e457493504c9384adccddf79912197",
+    "tess_svc_v1": "6c0ba9aa391b007f9c803f3d847c387adfcf7a7b65c68142fd2440ec1936d7c4"
+  },
+  "spores_targets": 141,
+  "tess_svc_catalog_rows": 84046
+}

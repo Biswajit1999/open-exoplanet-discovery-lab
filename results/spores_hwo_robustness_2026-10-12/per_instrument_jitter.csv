@@ -1,0 +1,457 @@
+target,model,instrument,jitter_mps
+100623 A,global_white_circular,all,7.416324604574813
+100623 A,instrument_white_circular,HARPS-post,0.9151604337048602
+100623 A,instrument_white_circular,HARPS-pre,0.7805853555787358
+100623 A,instrument_white_circular,HIRES-post,2.515502865772163
+100623 A,instrument_white_circular,HIRES-pre,2.056232418443499
+100623 A,instrument_white_circular,PFS-post,1.6097814850244792
+100623 A,instrument_white_circular,PFS-pre,1.6938103905648572
+100623 A,instrument_white_circular,UCLES,3.5650275758182044
+100623 A,instrument_correlated_circular,HARPS-post,0.9151604337048602
+100623 A,instrument_correlated_circular,HARPS-pre,0.7805853555787358
+100623 A,instrument_correlated_circular,HIRES-post,2.515502865772163
+100623 A,instrument_correlated_circular,HIRES-pre,2.056232418443499
+100623 A,instrument_correlated_circular,PFS-post,1.6097814850244792
+100623 A,instrument_correlated_circular,PFS-pre,1.6938103905648572
+100623 A,instrument_correlated_circular,UCLES,3.5650275758182044
+100623 A,instrument_correlated_eccentric,HARPS-post,0.9151604337048602
+100623 A,instrument_correlated_eccentric,HARPS-pre,0.7805853555787358
+100623 A,instrument_correlated_eccentric,HIRES-post,2.515502865772163
+100623 A,instrument_correlated_eccentric,HIRES-pre,2.056232418443499
+100623 A,instrument_correlated_eccentric,PFS-post,1.6097814850244792
+100623 A,instrument_correlated_eccentric,PFS-pre,1.6938103905648572
+100623 A,instrument_correlated_eccentric,UCLES,3.5650275758182044
+100623 A,leave_dominant_correlated_circular,HARPS-post,0.9125755612636192
+100623 A,leave_dominant_correlated_circular,HARPS-pre,0.7738101273932981
+100623 A,leave_dominant_correlated_circular,HIRES-post,2.4875376535551585
+100623 A,leave_dominant_correlated_circular,HIRES-pre,2.041596724926661
+100623 A,leave_dominant_correlated_circular,PFS-post,1.6188776012099881
+100623 A,leave_dominant_correlated_circular,PFS-pre,1.7033326338485981
+101501,global_white_circular,all,8.335700833130815
+101501,instrument_white_circular,EXPRES,5.318837686390171
+101501,instrument_white_circular,HIRES-post,8.445642727663
+101501,instrument_white_circular,Hamilton,8.65729013560565
+101501,instrument_white_circular,Levy,7.178933427792515
+101501,instrument_correlated_circular,EXPRES,5.318837686390171
+101501,instrument_correlated_circular,HIRES-post,8.445642727663
+101501,instrument_correlated_circular,Hamilton,8.65729013560565
+101501,instrument_correlated_circular,Levy,7.178933427792515
+101501,instrument_correlated_eccentric,EXPRES,5.318837686390171
+101501,instrument_correlated_eccentric,HIRES-post,8.445642727663
+101501,instrument_correlated_eccentric,Hamilton,8.65729013560565
+101501,instrument_correlated_eccentric,Levy,7.178933427792515
+101501,leave_dominant_correlated_circular,EXPRES,5.319176136250604
+101501,leave_dominant_correlated_circular,HIRES-post,8.437708521662339
+101501,leave_dominant_correlated_circular,Hamilton,8.658048886356902
+102365,global_white_circular,all,5375.449214309193
+102365,instrument_white_circular,CES-LC,9.299568378601045
+102365,instrument_white_circular,CES-VLC,4.212755644230948
+102365,instrument_white_circular,HARPS-post,0.8629475544619352
+102365,instrument_white_circular,HARPS-pre,2.680422678156898
+102365,instrument_white_circular,HIRES-post,4.829461134876437
+102365,instrument_white_circular,PFS-post,2.8405969535341002
+102365,instrument_white_circular,PFS-pre,1.9574990628655529
+102365,instrument_white_circular,UCLES,3.075119160472106
+102365,instrument_correlated_circular,CES-LC,9.299568378601045
+102365,instrument_correlated_circular,CES-VLC,4.212755644230948
+102365,instrument_correlated_circular,HARPS-post,0.8629475544619352
+102365,instrument_correlated_circular,HARPS-pre,2.680422678156898
+102365,instrument_correlated_circular,HIRES-post,4.829461134876437
+102365,instrument_correlated_circular,PFS-post,2.8405969535341002
+102365,instrument_correlated_circular,PFS-pre,1.9574990628655529
+102365,instrument_correlated_circular,UCLES,3.075119160472106
+102365,instrument_correlated_eccentric,CES-LC,9.299568378601045
+102365,instrument_correlated_eccentric,CES-VLC,4.212755644230948
+102365,instrument_correlated_eccentric,HARPS-post,0.8629475544619352
+102365,instrument_correlated_eccentric,HARPS-pre,2.680422678156898
+102365,instrument_correlated_eccentric,HIRES-post,4.829461134876437
+102365,instrument_correlated_eccentric,PFS-post,2.8405969535341002
+102365,instrument_correlated_eccentric,PFS-pre,1.9574990628655529
+102365,instrument_correlated_eccentric,UCLES,3.075119160472106
+102365,leave_dominant_correlated_circular,CES-LC,9.299568378601045
+102365,leave_dominant_correlated_circular,CES-VLC,4.212755644230948
+102365,leave_dominant_correlated_circular,HARPS-post,0.8629475544619352
+102365,leave_dominant_correlated_circular,HARPS-pre,2.680422678156898
+102365,leave_dominant_correlated_circular,HIRES-post,4.829461134876437
+102365,leave_dominant_correlated_circular,PFS-post,2.8405969535341002
+102365,leave_dominant_correlated_circular,PFS-pre,1.9574990628655529
+10476,global_white_circular,all,3.6240653691222686
+10476,instrument_white_circular,HIRES-post,2.68461592893589
+10476,instrument_white_circular,HIRES-pre,3.621458034034098
+10476,instrument_white_circular,Hamilton,5.7455338425816365
+10476,instrument_white_circular,Levy,3.21874384759164
+10476,instrument_correlated_circular,HIRES-post,2.68461592893589
+10476,instrument_correlated_circular,HIRES-pre,3.621458034034098
+10476,instrument_correlated_circular,Hamilton,5.7455338425816365
+10476,instrument_correlated_circular,Levy,3.21874384759164
+10476,instrument_correlated_eccentric,HIRES-post,2.68461592893589
+10476,instrument_correlated_eccentric,HIRES-pre,3.621458034034098
+10476,instrument_correlated_eccentric,Hamilton,5.7455338425816365
+10476,instrument_correlated_eccentric,Levy,3.21874384759164
+10476,leave_dominant_correlated_circular,HIRES-post,2.68461592893589
+10476,leave_dominant_correlated_circular,HIRES-pre,3.621458034034098
+10476,leave_dominant_correlated_circular,Hamilton,5.7455338425816365
+109358,global_white_circular,all,4866.117867950872
+109358,instrument_white_circular,HIRES-post,4.463753073738233
+109358,instrument_white_circular,HIRES-pre,2.533736541963068
+109358,instrument_white_circular,Levy,2.88233890073045
+109358,instrument_white_circular,SOPHIE,25.974460965859798
+109358,instrument_correlated_circular,HIRES-post,4.463753073738233
+109358,instrument_correlated_circular,HIRES-pre,2.533736541963068
+109358,instrument_correlated_circular,Levy,2.88233890073045
+109358,instrument_correlated_circular,SOPHIE,25.974460965859798
+109358,instrument_correlated_eccentric,HIRES-post,4.463753073738233
+109358,instrument_correlated_eccentric,HIRES-pre,2.533736541963068
+109358,instrument_correlated_eccentric,Levy,2.88233890073045
+109358,instrument_correlated_eccentric,SOPHIE,25.974460965859798
+109358,leave_dominant_correlated_circular,HIRES-post,4.463753073738233
+109358,leave_dominant_correlated_circular,HIRES-pre,2.5337365418256317
+109358,leave_dominant_correlated_circular,Levy,2.88233890073045
+110897,global_white_circular,all,43559.15954026944
+110897,instrument_white_circular,HIRES-post,5.438004531394963
+110897,instrument_white_circular,Levy,3.5528420874770275
+110897,instrument_white_circular,SOPHIE,640.1945239264055
+110897,instrument_correlated_circular,HIRES-post,5.438004531394963
+110897,instrument_correlated_circular,Levy,3.5528420874770275
+110897,instrument_correlated_circular,SOPHIE,640.1945239264055
+110897,instrument_correlated_eccentric,HIRES-post,5.438004531394963
+110897,instrument_correlated_eccentric,Levy,3.5528420874770275
+110897,instrument_correlated_eccentric,SOPHIE,640.1945239264055
+110897,leave_dominant_correlated_circular,HIRES-post,5.438004531394963
+110897,leave_dominant_correlated_circular,SOPHIE,640.1945239264055
+122064,global_white_circular,all,2.6154601371978066
+122064,instrument_white_circular,HIRES-post,2.042311174045917
+122064,instrument_white_circular,HIRES-pre,0.951380236691246
+122064,instrument_white_circular,Levy,2.641349951171658
+122064,instrument_correlated_circular,HIRES-post,2.042311174045917
+122064,instrument_correlated_circular,HIRES-pre,0.951380236691246
+122064,instrument_correlated_circular,Levy,2.641349951171658
+122064,instrument_correlated_eccentric,HIRES-post,2.042311174045917
+122064,instrument_correlated_eccentric,HIRES-pre,0.951380236691246
+122064,instrument_correlated_eccentric,Levy,2.641349951171658
+122064,leave_dominant_correlated_circular,HIRES-post,2.0351618781181107
+122064,leave_dominant_correlated_circular,HIRES-pre,0.9321701398494845
+131156 A,global_white_circular,all,777.1287821203042
+131156 A,instrument_white_circular,HIRES-post,71.31192897764237
+131156 A,instrument_white_circular,Hamilton,103.36669597319967
+131156 A,instrument_white_circular,Levy,43.600296751109646
+131156 A,instrument_white_circular,SOPHIE,124.13851971749257
+131156 A,instrument_correlated_circular,HIRES-post,71.31192897764237
+131156 A,instrument_correlated_circular,Hamilton,103.36669597319967
+131156 A,instrument_correlated_circular,Levy,43.600296751109646
+131156 A,instrument_correlated_circular,SOPHIE,124.13851971749257
+131156 A,instrument_correlated_eccentric,HIRES-post,71.31192897764237
+131156 A,instrument_correlated_eccentric,Hamilton,103.36669597319967
+131156 A,instrument_correlated_eccentric,Levy,43.600296751109646
+131156 A,instrument_correlated_eccentric,SOPHIE,124.13851971749257
+131156 A,leave_dominant_correlated_circular,HIRES-post,208.70882043649436
+131156 A,leave_dominant_correlated_circular,Hamilton,63.27736847864947
+131156 A,leave_dominant_correlated_circular,SOPHIE,84.73242703406444
+140901 A,global_white_circular,all,1222.6537335329185
+140901 A,instrument_white_circular,HARPS-pre,3049.1931522467316
+140901 A,instrument_white_circular,PFS-post,2.2047911981548753
+140901 A,instrument_white_circular,PFS-pre,15.23956718938404
+140901 A,instrument_white_circular,UCLES,11.666388844115753
+140901 A,instrument_correlated_circular,HARPS-pre,3049.1931522467316
+140901 A,instrument_correlated_circular,PFS-post,2.2047911981548753
+140901 A,instrument_correlated_circular,PFS-pre,15.23956718938404
+140901 A,instrument_correlated_circular,UCLES,11.666388844115753
+140901 A,instrument_correlated_eccentric,HARPS-pre,3049.1931522467316
+140901 A,instrument_correlated_eccentric,PFS-post,2.2047911981548753
+140901 A,instrument_correlated_eccentric,PFS-pre,15.23956718938404
+140901 A,instrument_correlated_eccentric,UCLES,11.666388844115753
+140901 A,leave_dominant_correlated_circular,HARPS-pre,3049.68936146558
+140901 A,leave_dominant_correlated_circular,PFS-post,2.230535295184026
+140901 A,leave_dominant_correlated_circular,PFS-pre,14.18175491405359
+149661,global_white_circular,all,7.851869553684074
+149661,instrument_white_circular,HARPS-pre,7.117381538567375
+149661,instrument_white_circular,HIRES-post,8.62908118409865
+149661,instrument_white_circular,HIRES-pre,7.39340620633427
+149661,instrument_white_circular,Hamilton,8.676541827845508
+149661,instrument_white_circular,Levy,6.352812440723744
+149661,instrument_white_circular,UCLES,7.585829594008181
+149661,instrument_correlated_circular,HARPS-pre,7.117381538567375
+149661,instrument_correlated_circular,HIRES-post,8.62908118409865
+149661,instrument_correlated_circular,HIRES-pre,7.39340620633427
+149661,instrument_correlated_circular,Hamilton,8.676541827845508
+149661,instrument_correlated_circular,Levy,6.352812440723744
+149661,instrument_correlated_circular,UCLES,7.585829594008181
+149661,instrument_correlated_eccentric,HARPS-pre,7.117381538567375
+149661,instrument_correlated_eccentric,HIRES-post,8.62908118409865
+149661,instrument_correlated_eccentric,HIRES-pre,7.39340620633427
+149661,instrument_correlated_eccentric,Hamilton,8.676541827845508
+149661,instrument_correlated_eccentric,Levy,6.352812440723744
+149661,instrument_correlated_eccentric,UCLES,7.585829594008181
+149661,leave_dominant_correlated_circular,HARPS-pre,7.117381538567375
+149661,leave_dominant_correlated_circular,HIRES-post,8.62908118409865
+149661,leave_dominant_correlated_circular,HIRES-pre,7.39340620633427
+149661,leave_dominant_correlated_circular,Levy,6.352812440707921
+149661,leave_dominant_correlated_circular,UCLES,7.585829594008238
+156026,global_white_circular,all,3.400238084003714
+156026,instrument_white_circular,HIRES-post,3.462388094227644
+156026,instrument_white_circular,HIRES-pre,4.259154811488719
+156026,instrument_white_circular,Levy,3.2082143773155942
+156026,instrument_white_circular,PFS-post,2.008835229140313
+156026,instrument_white_circular,PFS-pre,1.5652165518332009
+156026,instrument_white_circular,UCLES,5.792603970685161
+156026,instrument_correlated_circular,HIRES-post,3.462388094227644
+156026,instrument_correlated_circular,HIRES-pre,4.259154811488719
+156026,instrument_correlated_circular,Levy,3.2082143773155942
+156026,instrument_correlated_circular,PFS-post,2.008835229140313
+156026,instrument_correlated_circular,PFS-pre,1.5652165518332009
+156026,instrument_correlated_circular,UCLES,5.792603970685161
+156026,instrument_correlated_eccentric,HIRES-post,3.462388094227644
+156026,instrument_correlated_eccentric,HIRES-pre,4.259154811488719
+156026,instrument_correlated_eccentric,Levy,3.2082143773155942
+156026,instrument_correlated_eccentric,PFS-post,2.008835229140313
+156026,instrument_correlated_eccentric,PFS-pre,1.5652165518332009
+156026,instrument_correlated_eccentric,UCLES,5.792603970685161
+156026,leave_dominant_correlated_circular,HIRES-post,3.462388094227644
+156026,leave_dominant_correlated_circular,HIRES-pre,4.259154811488719
+156026,leave_dominant_correlated_circular,PFS-post,2.008835229140841
+156026,leave_dominant_correlated_circular,PFS-pre,1.5652165518332009
+156026,leave_dominant_correlated_circular,UCLES,5.792603970685161
+157214,global_white_circular,all,2.801118432256609
+157214,instrument_white_circular,HIRES-post,3.427134997497812
+157214,instrument_white_circular,HIRES-pre,2.464509389291679
+157214,instrument_white_circular,Hamilton,5.203639659015939
+157214,instrument_white_circular,Levy,2.1322865981748427
+157214,instrument_correlated_circular,HIRES-post,3.427134997497812
+157214,instrument_correlated_circular,HIRES-pre,2.464509389291679
+157214,instrument_correlated_circular,Hamilton,5.203639659015939
+157214,instrument_correlated_circular,Levy,2.1322865981748427
+157214,instrument_correlated_eccentric,HIRES-post,3.427134997497812
+157214,instrument_correlated_eccentric,HIRES-pre,2.464509389291679
+157214,instrument_correlated_eccentric,Hamilton,5.203639659015939
+157214,instrument_correlated_eccentric,Levy,2.1322865981748427
+157214,leave_dominant_correlated_circular,HIRES-post,3.42713499750237
+157214,leave_dominant_correlated_circular,HIRES-pre,2.464509389281841
+157214,leave_dominant_correlated_circular,Hamilton,5.203639659015939
+166620,global_white_circular,all,2.9892932332188313
+166620,instrument_white_circular,HIRES-post,2.109280594017392
+166620,instrument_white_circular,HIRES-pre,3.2046166719877696
+166620,instrument_white_circular,Hamilton,5.648703586003015
+166620,instrument_white_circular,Levy,2.3536420919658694
+166620,instrument_correlated_circular,HIRES-post,2.109280594017392
+166620,instrument_correlated_circular,HIRES-pre,3.2046166719877696
+166620,instrument_correlated_circular,Hamilton,5.648703586003015
+166620,instrument_correlated_circular,Levy,2.3536420919658694
+166620,instrument_correlated_eccentric,HIRES-post,2.109280594017392
+166620,instrument_correlated_eccentric,HIRES-pre,3.2046166719877696
+166620,instrument_correlated_eccentric,Hamilton,5.648703586003015
+166620,instrument_correlated_eccentric,Levy,2.3536420919658694
+166620,leave_dominant_correlated_circular,HIRES-post,2.1092805940203565
+166620,leave_dominant_correlated_circular,HIRES-pre,3.2046166719877696
+166620,leave_dominant_correlated_circular,Levy,2.3536420919658694
+182572,global_white_circular,all,23815.38987447476
+182572,instrument_white_circular,ELODIE,12.767850812253158
+182572,instrument_white_circular,HIRES-post,3.1976796149615407
+182572,instrument_white_circular,HIRES-pre,3.8521066760388143
+182572,instrument_white_circular,Levy,2.6757400959768267
+182572,instrument_correlated_circular,ELODIE,12.767850812253158
+182572,instrument_correlated_circular,HIRES-post,3.1976796149615407
+182572,instrument_correlated_circular,HIRES-pre,3.8521066760388143
+182572,instrument_correlated_circular,Levy,2.6757400959768267
+182572,instrument_correlated_eccentric,ELODIE,12.767850812253158
+182572,instrument_correlated_eccentric,HIRES-post,3.1976796149615407
+182572,instrument_correlated_eccentric,HIRES-pre,3.8521066760388143
+182572,instrument_correlated_eccentric,Levy,2.6757400959768267
+182572,leave_dominant_correlated_circular,ELODIE,12.767850812253158
+182572,leave_dominant_correlated_circular,HIRES-post,3.1976796149615407
+182572,leave_dominant_correlated_circular,HIRES-pre,3.8521066760388143
+190248,global_white_circular,all,2.6931372786918644
+190248,instrument_white_circular,HARPS-post,0.9858871724128022
+190248,instrument_white_circular,HARPS-pre,1.3001341146067134
+190248,instrument_white_circular,UCLES,4.011865608395661
+190248,instrument_correlated_circular,HARPS-post,0.9858871724128022
+190248,instrument_correlated_circular,HARPS-pre,1.3001341146067134
+190248,instrument_correlated_circular,UCLES,4.011865608395661
+190248,instrument_correlated_eccentric,HARPS-post,0.9858871724128022
+190248,instrument_correlated_eccentric,HARPS-pre,1.3001341146067134
+190248,instrument_correlated_eccentric,UCLES,4.011865608395661
+190248,leave_dominant_correlated_circular,HARPS-post,1.020602539012634
+190248,leave_dominant_correlated_circular,UCLES,3.9177124347088954
+19373,global_white_circular,all,3.909558498902611
+19373,instrument_white_circular,HIRES-post,3.039086360273295
+19373,instrument_white_circular,HIRES-pre,3.461897682567253
+19373,instrument_white_circular,Hamilton,5.23214242798984
+19373,instrument_white_circular,Levy,3.4358179724535862
+19373,instrument_correlated_circular,HIRES-post,3.039086360273295
+19373,instrument_correlated_circular,HIRES-pre,3.461897682567253
+19373,instrument_correlated_circular,Hamilton,5.23214242798984
+19373,instrument_correlated_circular,Levy,3.4358179724535862
+19373,instrument_correlated_eccentric,HIRES-post,3.039086360273295
+19373,instrument_correlated_eccentric,HIRES-pre,3.461897682567253
+19373,instrument_correlated_eccentric,Hamilton,5.23214242798984
+19373,instrument_correlated_eccentric,Levy,3.4358179724535862
+19373,leave_dominant_correlated_circular,HIRES-post,3.0311072012381493
+19373,leave_dominant_correlated_circular,HIRES-pre,3.4699885601776357
+19373,leave_dominant_correlated_circular,Levy,3.4444694360065204
+209100,global_white_circular,all,6.349588558624715
+209100,instrument_white_circular,CES-LC,6.478465900023421
+209100,instrument_white_circular,CES-VLC,1.52244580466668
+209100,instrument_white_circular,HARPS-post,3.142342632770402
+209100,instrument_white_circular,HARPS-pre,3.055075860396379
+209100,instrument_white_circular,UVES,3.0777114922531683
+209100,instrument_correlated_circular,CES-LC,6.478465900023421
+209100,instrument_correlated_circular,CES-VLC,1.52244580466668
+209100,instrument_correlated_circular,HARPS-post,3.142342632770402
+209100,instrument_correlated_circular,HARPS-pre,3.055075860396379
+209100,instrument_correlated_circular,UVES,3.0777114922531683
+209100,instrument_correlated_eccentric,CES-LC,6.478465900023421
+209100,instrument_correlated_eccentric,CES-VLC,1.52244580466668
+209100,instrument_correlated_eccentric,HARPS-post,3.142342632770402
+209100,instrument_correlated_eccentric,HARPS-pre,3.055075860396379
+209100,instrument_correlated_eccentric,UVES,3.0777114922531683
+209100,leave_dominant_correlated_circular,CES-LC,6.612661436535552
+209100,leave_dominant_correlated_circular,CES-VLC,1.6003309602617506
+209100,leave_dominant_correlated_circular,HARPS-pre,3.124504261430798
+209100,leave_dominant_correlated_circular,UVES,2.3586808688979803
+2151,global_white_circular,all,10491.715582264156
+2151,instrument_white_circular,CES-LC,16.266159932498038
+2151,instrument_white_circular,CES-VLC,5.917750351042294e-06
+2151,instrument_white_circular,HARPS-pre,4.07013049886798
+2151,instrument_white_circular,UCLES,4.597477604916803
+2151,instrument_correlated_circular,CES-LC,16.266159932498038
+2151,instrument_correlated_circular,CES-VLC,5.917750351042294e-06
+2151,instrument_correlated_circular,HARPS-pre,4.07013049886798
+2151,instrument_correlated_circular,UCLES,4.597477604916803
+2151,instrument_correlated_eccentric,CES-LC,16.266159932498038
+2151,instrument_correlated_eccentric,CES-VLC,5.917750351042294e-06
+2151,instrument_correlated_eccentric,HARPS-pre,4.07013049886798
+2151,instrument_correlated_eccentric,UCLES,4.597477604916803
+2151,leave_dominant_correlated_circular,CES-LC,15.062676103863765
+2151,leave_dominant_correlated_circular,CES-VLC,3.592307145488445e-06
+2151,leave_dominant_correlated_circular,HARPS-pre,3.140849154407325
+32923,global_white_circular,all,15416.979249581702
+32923,instrument_white_circular,HIRES-post,4.166662717027403
+32923,instrument_white_circular,Hamilton,4.05147377469729
+32923,instrument_white_circular,Levy,5.903243979804687
+32923,instrument_white_circular,SOPHIE,139.86904098934147
+32923,instrument_correlated_circular,HIRES-post,4.166662717027403
+32923,instrument_correlated_circular,Hamilton,4.05147377469729
+32923,instrument_correlated_circular,Levy,5.903243979804687
+32923,instrument_correlated_circular,SOPHIE,139.86904098934147
+32923,instrument_correlated_eccentric,HIRES-post,4.166662717027403
+32923,instrument_correlated_eccentric,Hamilton,4.05147377469729
+32923,instrument_correlated_eccentric,Levy,5.903243979804687
+32923,instrument_correlated_eccentric,SOPHIE,139.86904098934147
+32923,leave_dominant_correlated_circular,HIRES-post,4.184008134371109
+32923,leave_dominant_correlated_circular,Hamilton,4.0431825386876925
+32923,leave_dominant_correlated_circular,SOPHIE,139.8652340514279
+34411,global_white_circular,all,3.959277610846997
+34411,instrument_white_circular,EXPRES,1.507659067340514
+34411,instrument_white_circular,HIRES-post,2.485895132461748
+34411,instrument_white_circular,HIRES-pre,1.592941781697017
+34411,instrument_white_circular,Hamilton,6.3410238613372325
+34411,instrument_white_circular,Levy,1.91710320972554
+34411,instrument_correlated_circular,EXPRES,1.507659067340514
+34411,instrument_correlated_circular,HIRES-post,2.485895132461748
+34411,instrument_correlated_circular,HIRES-pre,1.592941781697017
+34411,instrument_correlated_circular,Hamilton,6.3410238613372325
+34411,instrument_correlated_circular,Levy,1.91710320972554
+34411,instrument_correlated_eccentric,EXPRES,1.507659067340514
+34411,instrument_correlated_eccentric,HIRES-post,2.485895132461748
+34411,instrument_correlated_eccentric,HIRES-pre,1.592941781697017
+34411,instrument_correlated_eccentric,Hamilton,6.3410238613372325
+34411,instrument_correlated_eccentric,Levy,1.91710320972554
+34411,leave_dominant_correlated_circular,EXPRES,1.507659067340514
+34411,leave_dominant_correlated_circular,HIRES-post,2.485895132461748
+34411,leave_dominant_correlated_circular,HIRES-pre,1.592941781697017
+34411,leave_dominant_correlated_circular,Levy,1.91710320972554
+4628,global_white_circular,all,2.7921887342263783
+4628,instrument_white_circular,HARPS-post,0.7325728005325679
+4628,instrument_white_circular,HARPS-pre,1.6694908510436854
+4628,instrument_white_circular,HIRES-post,2.6366319743476607
+4628,instrument_white_circular,Hamilton,6.752835298743678
+4628,instrument_white_circular,Levy,2.526384473186055
+4628,instrument_correlated_circular,HARPS-post,0.7325728005325679
+4628,instrument_correlated_circular,HARPS-pre,1.6694908510436854
+4628,instrument_correlated_circular,HIRES-post,2.6366319743476607
+4628,instrument_correlated_circular,Hamilton,6.752835298743678
+4628,instrument_correlated_circular,Levy,2.526384473186055
+4628,instrument_correlated_eccentric,HARPS-post,0.7325728005325679
+4628,instrument_correlated_eccentric,HARPS-pre,1.6694908510436854
+4628,instrument_correlated_eccentric,HIRES-post,2.6366319743476607
+4628,instrument_correlated_eccentric,Hamilton,6.752835298743678
+4628,instrument_correlated_eccentric,Levy,2.526384473186055
+4628,leave_dominant_correlated_circular,HARPS-post,0.7325728005325679
+4628,leave_dominant_correlated_circular,HARPS-pre,1.6694908510436854
+4628,leave_dominant_correlated_circular,HIRES-post,2.6366319743476607
+4628,leave_dominant_correlated_circular,Hamilton,6.752835298743678
+50692,global_white_circular,all,3.7056129390756327
+50692,instrument_white_circular,HIRES-post,4.472350285417183
+50692,instrument_white_circular,HIRES-pre,3.562534984177488
+50692,instrument_white_circular,Hamilton,3.501659922557844
+50692,instrument_white_circular,Levy,2.4823316024229136
+50692,instrument_correlated_circular,HIRES-post,4.472350285417183
+50692,instrument_correlated_circular,HIRES-pre,3.562534984177488
+50692,instrument_correlated_circular,Hamilton,3.501659922557844
+50692,instrument_correlated_circular,Levy,2.4823316024229136
+50692,instrument_correlated_eccentric,HIRES-post,4.472350285417183
+50692,instrument_correlated_eccentric,HIRES-pre,3.562534984177488
+50692,instrument_correlated_eccentric,Hamilton,3.501659922557844
+50692,instrument_correlated_eccentric,Levy,2.4823316024229136
+50692,leave_dominant_correlated_circular,HIRES-post,4.472350285417183
+50692,leave_dominant_correlated_circular,HIRES-pre,3.562534984177382
+50692,leave_dominant_correlated_circular,Hamilton,3.501659922557844
+65907 A,global_white_circular,all,106.51480312520285
+65907 A,instrument_white_circular,HARPS-post,0.9446237254718208
+65907 A,instrument_white_circular,HARPS-pre,121.55541974042026
+65907 A,instrument_correlated_circular,HARPS-post,0.9446237254718208
+65907 A,instrument_correlated_circular,HARPS-pre,121.55541974042026
+65907 A,instrument_correlated_eccentric,HARPS-post,0.9446237254718208
+65907 A,instrument_correlated_eccentric,HARPS-pre,121.55541974042026
+65907 A,leave_dominant_correlated_circular,HARPS-post,0.9445521915148558
+72673,global_white_circular,all,2.045488445167839
+72673,instrument_white_circular,HARPS-post,1.0709459232153757
+72673,instrument_white_circular,HARPS-pre,1.398880979779372
+72673,instrument_white_circular,HIRES-post,2.583163705457211
+72673,instrument_white_circular,HIRES-pre,3.18058496760878
+72673,instrument_white_circular,PFS-pre,1.8113740748651794
+72673,instrument_white_circular,UCLES,2.610311083139407
+72673,instrument_correlated_circular,HARPS-post,1.0709459232153757
+72673,instrument_correlated_circular,HARPS-pre,1.398880979779372
+72673,instrument_correlated_circular,HIRES-post,2.583163705457211
+72673,instrument_correlated_circular,HIRES-pre,3.18058496760878
+72673,instrument_correlated_circular,PFS-pre,1.8113740748651794
+72673,instrument_correlated_circular,UCLES,2.610311083139407
+72673,instrument_correlated_eccentric,HARPS-post,1.0709459232153757
+72673,instrument_correlated_eccentric,HARPS-pre,1.398880979779372
+72673,instrument_correlated_eccentric,HIRES-post,2.583163705457211
+72673,instrument_correlated_eccentric,HIRES-pre,3.18058496760878
+72673,instrument_correlated_eccentric,PFS-pre,1.8113740748651794
+72673,instrument_correlated_eccentric,UCLES,2.610311083139407
+72673,leave_dominant_correlated_circular,HARPS-post,1.0709459232153757
+72673,leave_dominant_correlated_circular,HIRES-post,2.583163705455136
+72673,leave_dominant_correlated_circular,HIRES-pre,3.1805849675803244
+72673,leave_dominant_correlated_circular,PFS-pre,1.8113740748651794
+72673,leave_dominant_correlated_circular,UCLES,2.6103110831393996
+84737,global_white_circular,all,3.2266672243833363
+84737,instrument_white_circular,HIRES-post,3.2471754577192002
+84737,instrument_white_circular,Hamilton,5.377580105999957
+84737,instrument_white_circular,Levy,2.1471219898616476
+84737,instrument_correlated_circular,HIRES-post,3.2471754577192002
+84737,instrument_correlated_circular,Hamilton,5.377580105999957
+84737,instrument_correlated_circular,Levy,2.1471219898616476
+84737,instrument_correlated_eccentric,HIRES-post,3.2471754577192002
+84737,instrument_correlated_eccentric,Hamilton,5.377580105999957
+84737,instrument_correlated_eccentric,Levy,2.1471219898616476
+84737,leave_dominant_correlated_circular,HIRES-post,3.247175457714198
+84737,leave_dominant_correlated_circular,Hamilton,5.3775801060836175
+86728 A,global_white_circular,all,45215.81603836926
+86728 A,instrument_white_circular,HIRES-post,7.465749915720538
+86728 A,instrument_white_circular,Hamilton,4.8541903804807145
+86728 A,instrument_white_circular,Levy,2.568865931733316
+86728 A,instrument_white_circular,NEID,4.2637455382095375
+86728 A,instrument_correlated_circular,HIRES-post,7.465749915720538
+86728 A,instrument_correlated_circular,Hamilton,4.8541903804807145
+86728 A,instrument_correlated_circular,Levy,2.568865931733316
+86728 A,instrument_correlated_circular,NEID,4.2637455382095375
+86728 A,instrument_correlated_eccentric,HIRES-post,7.465749915720538
+86728 A,instrument_correlated_eccentric,Hamilton,4.8541903804807145
+86728 A,instrument_correlated_eccentric,Levy,2.568865931733316
+86728 A,instrument_correlated_eccentric,NEID,4.2637455382095375
+86728 A,leave_dominant_correlated_circular,HIRES-post,7.465749915720538
+86728 A,leave_dominant_correlated_circular,Hamilton,4.8541903804807145
+86728 A,leave_dominant_correlated_circular,NEID,4.2637455382095375

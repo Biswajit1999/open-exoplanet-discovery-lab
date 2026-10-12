@@ -1,0 +1,46 @@
+{
+  "amplitude_multipliers_of_published_k50": [
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.5,
+    2.0,
+    3.0,
+    5.0,
+    8.0,
+    12.0,
+    20.0
+  ],
+  "catalog": "J/AJ/170/343",
+  "eccentricity_distribution": {
+    "a": 0.867,
+    "b": 3.03,
+    "family": "Beta",
+    "reference": "Kipping 2013, MNRAS 434, L51"
+  },
+  "nightly_bin": "inverse-variance mean within target/instrument/floor(BJD)",
+  "null_calibration": {
+    "correlated": "within-instrument time-ordered circular shift",
+    "false_alarm_probability": 0.01,
+    "permutations": 500,
+    "white": "within-instrument standardized-residual permutation"
+  },
+  "orbital_draws": 24,
+  "quality": "finite BJD/RVel/e_RVel; catalogue -1 sentinels excluded; e_RVel > 0",
+  "recovery": {
+    "harmonics": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "period_tolerance_fraction": 0.05
+  },
+  "seed": 20261012,
+  "selection": {
+    "minimum_instruments": 2,
+    "minimum_valid_nightly_rvs": 150,
+    "requires_no_table6_signal": true,
+    "requires_table9_hz_row": true
+  }
+}

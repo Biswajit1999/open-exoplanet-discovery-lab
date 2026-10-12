@@ -6,6 +6,7 @@ __pycache__/
 .coverage
 htmlcov/
 outputs/
+results/_*/
 data/raw/
 data/census/
 data/cache/

@@ -174,7 +174,7 @@ function App() {
         <aside className="releaseNote" aria-label="Release scope">
           <div className="releaseNoteTop">
             <span>Release note / 01</span>
-            <span>24 Sep 2026</span>
+            <span>12 Oct 2026</span>
           </div>
           <p className="releaseQuote">“A null result is only meaningful after sensitivity has been measured.”</p>
           <dl>
@@ -182,15 +182,15 @@ function App() {
             <div><dt>Explicitly gated streams</dt><dd>{sourceCounts.gated || "—"}</dd></div>
             <div><dt>New planet claims</dt><dd>0</dd></div>
           </dl>
-          <p className="releaseBoundary">Gaia DR4 and SPORES-HWO remain gated. No result depends on unreleased data.</p>
+          <p className="releaseBoundary">SPORES-HWO II is now a verified public-data result. Gaia DR4 remains gated; no result depends on unreleased data.</p>
         </aside>
       </section>
 
       <section className="metricRail" aria-label="Public data snapshot">
-        <div><strong>41</strong><span>NETS III stars</span></div>
-        <div><strong>5,920</strong><span>public RV epochs</span></div>
+        <div><strong>141</strong><span>SPORES-HWO stars</span></div>
+        <div><strong>153,902</strong><span>archived RV rows</span></div>
         <div><strong>1,826</strong><span>atmosphere records</span></div>
-        <div><strong>51</strong><span>scientific tests passing</span></div>
+        <div><strong>58</strong><span>scientific tests passing</span></div>
       </section>
 
       <ResultsSection onInspect={inspectProvenance} />

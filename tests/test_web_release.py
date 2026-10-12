@@ -21,7 +21,13 @@ def test_web_release_contract_matches_frozen_results(tmp_path):
     }
     assert len(payload["completeness"]["delta"]) == 36
     assert all(row["k90_mps"] is None for row in payload["completeness"]["k_thresholds"])
-    assert len(payload["provenance"]) == 5
+    assert len(payload["provenance"]) == 6
+    spores = next(item for item in payload["provenance"] if item["id"] == "spores-hwo-robustness")
+    assert spores["evidence_state"] == "measured sensitivity"
+    atmosphere = next(item for item in payload["provenance"] if item["id"] == "atmosphere-55cnce")
+    assert atmosphere["evidence_state"] == "bounded thermal retrieval"
+    assert "molecular abundance" in atmosphere["boundary"]
+    assert payload["release"] == "0.4.0"
 
     output = write_web_release_data(REPOSITORY, tmp_path / "lab.json")
     decoded = json.loads(output.read_text(encoding="utf-8"))
