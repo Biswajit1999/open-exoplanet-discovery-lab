@@ -85,10 +85,26 @@ A BLS peak alone is not novel.
 
 NASA Exoplanet Archive's current `spectra` table groups published spectra and explicitly preserves multiple reductions as separate spectra when publications provide them.
 
-The project question is reproducibility:
-How much between-visit, between-reduction, or between-instrument scatter is required to reconcile independent published measurements?
+Primary 55 Cnc e reference:
+- Patel et al. (2024), *JWST reveals a rapid and strong day side variability
+  of 55 Cancri e*, A&A 690, A159, DOI 10.1051/0004-6361/202450748;
+  arXiv:2407.12898. That work already performs atmospheric retrievals and
+  explicitly discusses visit-dependent interpretations of the NIRCam eclipse
+  data.
 
-A simple overplot of spectra is not considered a research result.
+The project question is therefore narrower than repeating that retrieval: how
+much between-visit and between-reduction scatter is required to reconcile the
+public measurements, and how stable is a deliberately bounded blackbody
+brightness-temperature fit under those choices? The release compares a
+blackbody, constant spectrum and linear slope by BIC, tests stellar-temperature
+sensitivity, estimates random-effects visit scatter and performs
+leave-one-visit-out prediction.
+
+A simple overplot of spectra is not considered a research result. The public
+3.95–4.92 µm products do not include a spectral covariance matrix and the two
+reductions share photons. Consequently this repository reports no molecular
+abundance posterior, no independent-pipeline significance and no unique
+composition inference.
 
 ## Rocky Worlds
 

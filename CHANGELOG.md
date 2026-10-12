@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.4.0 — 2026-10-12
+
+Added:
+- verified public acquisition of all six SPORES-HWO II VizieR tables, with
+  exact row-count gates, source checksums and NASA Exoplanet Archive context;
+- a pre-declared 26-star, 8,260-night middle-habitable-zone RV sensitivity
+  experiment comparing global/instrument offsets, white/correlation-preserving
+  nulls, circular/eccentric injections and dominant-instrument removal;
+- explicit finite-grid censoring states, an amplitude grid extending to 20
+  times the published K50, 500 null permutations and 24 frozen orbital
+  geometries per amplitude in the release run;
+- exact SIMBAD-to-TIC linkage against the 84,046-row MAST TESS-SVC v1.0
+  catalogue, with unresolved identities and non-matches kept explicit;
+- a cross-archive control table that preserves known-planet context and avoids
+  describing the no-table-6-signal sample as planet-free;
+- a bounded 55 Cnc e blackbody thermal-retrieval validation across five visits
+  and both public reductions, including BIC model comparisons, stellar-
+  temperature sensitivity, random-effects visit scatter and leave-one-visit-
+  out prediction;
+- scientist-facing SPORES-HWO result, figures and provenance in the public web
+  interface.
+
+Gaia DR4 remains gated. No new companion, rotation, quiet-star or atmospheric-
+composition classification is made; the thermal retrieval is limited to
+brightness temperature and model adequacy because no spectral covariance is
+published for the narrow-band products.
+
 ## 0.3.1 — 2026-09-24
 
 Added:

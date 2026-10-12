@@ -1,0 +1,17 @@
+{
+  "comparators": [
+    "constant eclipse depth",
+    "linear eclipse depth vs wavelength"
+  ],
+  "forward_model": "isothermal planet blackbody / stellar blackbody",
+  "model_score": "BIC",
+  "nasa_query": "select pl_name,st_teff,st_rad,pl_rade,pl_ratror,pl_orbsmax,pl_eqt from pscomppars where pl_name='55 Cnc e'",
+  "radius_ratio": 0.0182,
+  "stellar_temperature_k": 5172.0,
+  "stellar_temperature_sensitivity_k": 5269.0,
+  "temperature_prior_k": [
+    300.0,
+    5000.0
+  ],
+  "uncertainty": "delta-chi-square=1 profile interval; diagonal published errors"
+}

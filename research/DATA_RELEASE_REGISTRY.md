@@ -203,7 +203,19 @@ Project use:
 - identify planets with independent repeated spectra;
 - distinguish separate observations from alternative reductions of the same photons;
 - estimate an empirical inter-study or inter-reduction variance term;
+- fit deliberately bounded blackbody brightness temperatures and compare
+  thermal, constant and linear models without converting the result into an
+  unsupported molecular-abundance posterior;
 - link every spectrum to its original paper.
+
+Frozen 55 Cnc e validation (2026-10-12):
+- ten spectra from five independent visits and two reductions, plus five
+  two-band products from Patel et al. (2024, A&A 690, A159);
+- live NASA `pscomppars` query frozen with the fitted system parameters;
+- visit-level thermal fits, stellar-temperature sensitivity, random-effects
+  scatter and leave-one-visit-out prediction stored with checksums;
+- no spectral covariance is available in the archive products, so composition
+  retrieval is outside the validated claim boundary.
 
 Status: **READY**.
 

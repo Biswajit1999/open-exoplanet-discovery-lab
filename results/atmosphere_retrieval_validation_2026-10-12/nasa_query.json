@@ -1,0 +1,5 @@
+{
+  "endpoint": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync",
+  "query": "select pl_name,st_teff,st_rad,pl_rade,pl_ratror,pl_orbsmax,pl_eqt from pscomppars where pl_name='55 Cnc e'",
+  "query_hash": "19dc58ffdbb9d387c918057046cd8e0c9cebde6d725d36a2f61d2b811d276e4b"
+}
